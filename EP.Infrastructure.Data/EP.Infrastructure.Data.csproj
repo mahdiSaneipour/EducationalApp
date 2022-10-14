@@ -16,4 +16,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EP.Domain\EP.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
