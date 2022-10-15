@@ -26,7 +26,7 @@ namespace EP.Domain.Entities.User
 
         #region Relations
 
-        public virtual List<Role> Roles { get; set; }
+        public virtual List<UserRole> UserRoles { get; set; }
 
         #endregion
     }

@@ -1,7 +1,23 @@
+using EP.Infrastructure.Data.Context;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+IServiceCollection services = builder.Services;
+
+string EPConnection = builder.Configuration.GetConnectionString("EPConnection");
+
+#region Database
+
+services.AddDbContext<EPContext>(options =>
+{
+    options.UseSqlServer(EPConnection);
+});
+
+#endregion
 
 var app = builder.Build();
 
