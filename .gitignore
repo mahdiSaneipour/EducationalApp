@@ -361,3 +361,14 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+/EP.Web/wwwroot/main-template/images/pic/1.jpg
+/EP.Web/wwwroot/main-template/images/pic/2.jpg
+/EP.Web/wwwroot/main-template/images/pic/3.jpg
+/EP.Web/wwwroot/main-template/images/pic/4.jpg
+/EP.Web/wwwroot/main-template/images/pic/5.jpg
+/EP.Web/wwwroot/main-template/images/pic/6.jpg
+/EP.Web/wwwroot/main-template/images/pic/7.jpg
+/EP.Web/wwwroot/main-template/images/pic/8.jpg
+/EP.Web/wwwroot/main-template/images/pic/9.jpg
+/EP.Web/wwwroot/main-template/images/pic/avatar.jpg
