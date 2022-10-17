@@ -3,25 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EP.Core", "EP.Core", "{B62E6F00-FD39-4BA5-98B2-DE553DA1CEB6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EPCore", "EPCore", "{B62E6F00-FD39-4BA5-98B2-DE553DA1CEB6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EP.Domain", "EP.Domain", "{157C8046-0CF4-4A65-821A-144D5488C53E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EPDomain", "EPDomain", "{157C8046-0CF4-4A65-821A-144D5488C53E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EP.Infrastructure.Data", "EP.Infrastructure.Data", "{A594BFCD-FEC4-45EC-A98F-9B30F15F2159}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EPInfrastructure.Data", "EPInfrastructure.Data", "{A594BFCD-FEC4-45EC-A98F-9B30F15F2159}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EP.Infrastructure.IoC", "EP.Infrastructure.IoC", "{F3A03AC2-E3B1-45C9-BD05-9B4F15A0EDA1}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EPInfrastructure.IoC", "EPInfrastructure.IoC", "{F3A03AC2-E3B1-45C9-BD05-9B4F15A0EDA1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EP.Web", "EP.Web", "{9E028F94-B40C-4AE5-903E-6F4402E006FC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EPWeb", "EPWeb", "{9E028F94-B40C-4AE5-903E-6F4402E006FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EP.Core", "EP.Core\EP.Core.csproj", "{0A52C6BC-FED6-4EFB-95B8-E95F0D17B749}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EP.Core", "EP.Core\EP.Core.csproj", "{0A52C6BC-FED6-4EFB-95B8-E95F0D17B749}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EP.Domain", "EP.Domain\EP.Domain.csproj", "{4108DAB9-B954-4E3E-9B6F-676A6DEC2256}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EP.Domain", "EP.Domain\EP.Domain.csproj", "{4108DAB9-B954-4E3E-9B6F-676A6DEC2256}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EP.Infrastructure.Data", "EP.Infrastructure.Data\EP.Infrastructure.Data.csproj", "{504196D8-51FB-4AE0-9FD6-40480C83BB2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EP.Infrastructure.Data", "EP.Infrastructure.Data\EP.Infrastructure.Data.csproj", "{504196D8-51FB-4AE0-9FD6-40480C83BB2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EP.Infrastructure.IoC", "EP.Infrastructure.IoC\EP.Infrastructure.IoC.csproj", "{B58F86DC-2B58-423C-B17E-F2BAE15D88DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EP.Infrastructure.IoC", "EP.Infrastructure.IoC\EP.Infrastructure.IoC.csproj", "{B58F86DC-2B58-423C-B17E-F2BAE15D88DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EP.Web", "EP.Web\EP.Web.csproj", "{B6B4D4FB-58AA-4027-BF37-7BF9C48DFFB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EP.Web", "EP.Web\EP.Web.csproj", "{B6B4D4FB-58AA-4027-BF37-7BF9C48DFFB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -28,7 +28,7 @@ namespace EP.Domain.Entities.User
         [MaxLength(200,ErrorMessage = "{0} نمیتواند بیشتر از {1} کاراکتر باشد")]
         public string Email { get; set; }
 
-        [Display(Name = "رمز")]
+        [Display(Name = "رمز عبور")]
         [Required(ErrorMessage = "فیلد {0} نمیتواند خالی باشد")]
         [MaxLength(200,ErrorMessage = "{0} نمیتواند بیشتر از {1} کاراکتر باشد")]
         public string Password { get; set; }
