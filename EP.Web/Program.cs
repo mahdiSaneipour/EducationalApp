@@ -1,4 +1,8 @@
+using EP.Core.Interfaces.User;
+using EP.Core.Services.User;
+using EP.Domain.Interfaces.User;
 using EP.Infrastructure.Data.Context;
+using EP.Infrastructure.Data.Repository.User;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +20,13 @@ services.AddDbContext<EPContext>(options =>
 {
     options.UseSqlServer(EPConnection);
 });
+
+#endregion
+
+#region IoC
+
+services.AddScoped<IUserServices, UserServices>();
+services.AddScoped<IUserRepository, UserRepository>();
 
 #endregion
 
