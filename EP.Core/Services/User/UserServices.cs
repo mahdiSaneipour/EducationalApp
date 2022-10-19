@@ -1,4 +1,5 @@
-﻿using EP.Core.Interfaces.User;
+﻿using EP.Core.DTOs.AccountViewModels;
+using EP.Core.Interfaces.User;
 using EP.Domain.Interfaces.User;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,20 @@ namespace EP.Core.Services.User
         public bool IsUserNameExist(string username)
         {
             return _userRepository.IsUserNameExist(username);
+        }
+
+        public int AddUser(RegisterUserViewModel register)
+        {
+            EP.Domain.Entities.User.User user = new Domain.Entities.User.User()
+            {
+                Email = register.Email,
+                UserName = register.UserName,
+                
+            };
+
+
+
+            throw new NotImplementedException();
         }
     }
 }

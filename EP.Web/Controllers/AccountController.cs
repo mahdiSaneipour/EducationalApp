@@ -1,6 +1,6 @@
 ﻿using EP.Core.DTOs.AccountViewModels;
 using EP.Core.Interfaces.User;
-using EP.Core.Tools;
+using EP.Core.Tools.FixTexts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
