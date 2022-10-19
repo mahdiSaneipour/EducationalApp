@@ -32,6 +32,7 @@ namespace EP.Web.Controllers
 
             string email = register.Email;
             string username = register.UserName;
+            int userId = 0;
 
             if (_userServices.IsEmailExist(FixText.FixEmail(email)))
             {
@@ -45,7 +46,9 @@ namespace EP.Web.Controllers
                 return View(register);
             }
 
-            //TODO: Register User
+            userId = _userServices.AddUser(register);
+
+            //TODO ccreate authorization
 
             return View();
         }

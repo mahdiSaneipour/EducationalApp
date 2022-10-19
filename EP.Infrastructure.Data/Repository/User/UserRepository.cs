@@ -1,4 +1,5 @@
-﻿using EP.Domain.Interfaces.User;
+﻿using EP.Domain.Entities.User;
+using EP.Domain.Interfaces.User;
 using EP.Infrastructure.Data.Context;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,17 @@ namespace EP.Infrastructure.Data.Repository.User
         public bool IsUserNameExist(string username)
         {
             return _context.Users.Any(u => u.UserName == username);
+        }
+
+        public int AddUser(EP.Domain.Entities.User.User user)
+        {
+            _context.Users.Add(user);
+            return user.UserId;
+        }
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
         }
     }
 }

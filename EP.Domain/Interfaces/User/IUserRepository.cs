@@ -11,5 +11,9 @@ namespace EP.Domain.Interfaces.User
         public bool IsUserNameExist(string username);
 
         public bool IsEmailExist(string email);
+
+        public int AddUser(EP.Domain.Entities.User.User user);
+
+        public void SaveChanges();
     }
 }

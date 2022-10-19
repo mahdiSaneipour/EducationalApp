@@ -1,5 +1,7 @@
 ﻿using EP.Core.DTOs.AccountViewModels;
 using EP.Core.Interfaces.User;
+using EP.Core.Tools.Generator;
+using EP.Core.Tools.Security;
 using EP.Domain.Interfaces.User;
 using System;
 using System.Collections.Generic;
@@ -34,10 +36,15 @@ namespace EP.Core.Services.User
             {
                 Email = register.Email,
                 UserName = register.UserName,
-                
+                UserCode = NameGenerator.GenerateUniqCode(),
+                IsActive = true,
+                Password = PasswordHelper.EncodePasswordMd5(register.Password),
+                RegisterDate = DateTime.Now,
+                UserAvatar = "Defult.jpg"
             };
 
-
+            _userRepository.AddUser(user);
+            _userRepository.SaveChanges();
 
             throw new NotImplementedException();
         }
