@@ -67,7 +67,7 @@ namespace EP.Core.Services.User
                 Domain.Entities.User.User user = _userRepository.LoginUser(email, password);
 
                 status.IsPasswordTrue = user != null ? true : false;
-                status.IsActive = user.IsActive;
+                status.IsActive = user != null ? user.IsActive : false;
             }
 
             return status;

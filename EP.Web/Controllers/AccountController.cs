@@ -87,16 +87,19 @@ namespace EP.Web.Controllers
                     {
                         //TODO LOGIN
                         return Redirect("/");
-                    }
-                    else
+                    } else
                     {
                         ModelState.AddModelError("Email", "حساب کاربری فعال نیست");
                     }
+                } else
+                {
+                    ModelState.AddModelError("Password", "رمز عبور اشتباه است");
                 }
-                ModelState.AddModelError("Email", "رمز عبور اشتباه است");
+            } else
+            {
+                ModelState.AddModelError("Email", "کاربری با این ایمیل پیدا نشد");
             }
-
-            ModelState.AddModelError("Email","کاربری با این ایمیل پیدا نشد");
+            
 
             return View(login);
         }
