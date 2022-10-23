@@ -1,4 +1,5 @@
 ﻿using EP.Core.DTOs.AccountViewModels;
+using EP.Core.ServiceModels.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace EP.Core.Interfaces.User
         public bool IsEmailExist(string Email);
 
         public int AddUser(RegisterUserViewModel register);
+
+        public LoginServiceModel LoginUser(LoginUserViewModel login);
     }
 }

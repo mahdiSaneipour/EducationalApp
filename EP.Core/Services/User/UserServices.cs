@@ -1,7 +1,10 @@
 ﻿using EP.Core.DTOs.AccountViewModels;
 using EP.Core.Interfaces.User;
+using EP.Core.ServiceModels.Account;
+using EP.Core.Tools.FixTexts;
 using EP.Core.Tools.Generator;
 using EP.Core.Tools.Security;
+using EP.Domain.Entities.User;
 using EP.Domain.Interfaces.User;
 using System;
 using System.Collections.Generic;
@@ -37,7 +40,7 @@ namespace EP.Core.Services.User
                 Email = register.Email,
                 UserName = register.UserName,
                 UserCode = NameGenerator.GenerateUniqCode(),
-                IsActive = true,
+                IsActive = false,
                 Password = PasswordHelper.EncodePasswordMd5(register.Password),
                 RegisterDate = DateTime.Now,
                 UserAvatar = "Defult.jpg"
@@ -46,7 +49,29 @@ namespace EP.Core.Services.User
             _userRepository.AddUser(user);
             _userRepository.SaveChanges();
 
-            throw new NotImplementedException();
+            return user.UserId;
+        }
+
+        public LoginServiceModel LoginUser(LoginUserViewModel login)
+        {
+            LoginServiceModel status = new LoginServiceModel();
+
+            string password = PasswordHelper.EncodePasswordMd5(login.Password);
+            string email = FixText.FixEmail(login.Email);
+
+
+            status.IsUserExist = _userRepository.IsEmailExist(email);
+
+            if (status.IsUserExist)
+            {
+                Domain.Entities.User.User user = _userRepository.LoginUser(email, password);
+
+                status.IsPasswordTrue = user != null ? true : false;
+                status.IsActive = user.IsActive;
+            }
+
+            return status;
+
         }
     }
 }

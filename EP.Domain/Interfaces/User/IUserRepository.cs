@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EP.Domain.Entities.User;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,8 @@ namespace EP.Domain.Interfaces.User
         public bool IsEmailExist(string email);
 
         public int AddUser(EP.Domain.Entities.User.User user);
+
+        public Entities.User.User LoginUser(string email, string password);
 
         public void SaveChanges();
     }

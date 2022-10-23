@@ -34,6 +34,11 @@ namespace EP.Infrastructure.Data.Repository.User
             return user.UserId;
         }
 
+        public EP.Domain.Entities.User.User LoginUser(string email, string password)
+        {
+            return _context.Users.SingleOrDefault(u => u.Email == email && u.Password == password);
+        }
+
         public void SaveChanges()
         {
             _context.SaveChanges();
