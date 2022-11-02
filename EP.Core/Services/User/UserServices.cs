@@ -73,5 +73,33 @@ namespace EP.Core.Services.User
             return status;
 
         }
+
+        public Enums.UserEnums.ActiveUserEnum SetActiveAccount(string userCode, bool activeStatus)
+        {
+
+            Domain.Entities.User.User user = _userRepository.GetUserFromActiveCode(userCode);
+
+            if(user == null)
+            {
+                return Enums.UserEnums.ActiveUserEnum.CodeIsNotValid;
+            }
+
+            if (user.IsActive == activeStatus)
+            {
+                return Enums.UserEnums.ActiveUserEnum.CurrentStatus;
+            }
+
+            user.IsActive = true;
+            user.UserCode = NameGenerator.GenerateUniqCode();
+
+            _userRepository.SaveChanges();
+
+            if (user.IsActive != activeStatus || user.UserCode == userCode)
+            {
+                return Enums.UserEnums.ActiveUserEnum.ServerError;
+            }
+
+            return Enums.UserEnums.ActiveUserEnum.Successful;
+        }
     }
 }

@@ -39,6 +39,11 @@ namespace EP.Infrastructure.Data.Repository.User
             return _context.Users.SingleOrDefault(u => u.Email == email && u.Password == password);
         }
 
+        public Domain.Entities.User.User GetUserFromActiveCode(string userCode)
+        {
+            return _context.Users.FirstOrDefault(u => u.UserCode == userCode);
+        }
+
         public void SaveChanges()
         {
             _context.SaveChanges();

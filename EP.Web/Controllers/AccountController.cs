@@ -1,4 +1,5 @@
 ﻿using EP.Core.DTOs.AccountViewModels;
+using EP.Core.Enums.UserEnums;
 using EP.Core.Interfaces.User;
 using EP.Core.ServiceModels.Account;
 using EP.Core.Tools.FixTexts;
@@ -86,7 +87,8 @@ namespace EP.Web.Controllers
                     if (status.IsActive)
                     {
                         //TODO LOGIN
-                        return Redirect("/");
+                        ViewBag.IsSuccess = true;
+                        return View();
                     } else
                     {
                         ModelState.AddModelError("Email", "حساب کاربری فعال نیست");
@@ -102,6 +104,24 @@ namespace EP.Web.Controllers
             
 
             return View(login);
+        }
+
+        #endregion
+
+        #region Active Account
+
+        public IActionResult ActiveAccount(string id)
+        {
+            ViewBag.IsActive = false;
+            
+            ActiveUserEnum result = _userServices.SetActiveAccount(id,true);
+
+            if (result == ActiveUserEnum.Successful)
+            {
+                ViewBag.IsActive = true;
+            }
+
+            return View();
         }
 
         #endregion

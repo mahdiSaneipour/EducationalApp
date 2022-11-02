@@ -17,5 +17,7 @@ namespace EP.Core.Interfaces.User
         public int AddUser(RegisterUserViewModel register);
 
         public LoginServiceModel LoginUser(LoginUserViewModel login);
+
+        public Enums.UserEnums.ActiveUserEnum SetActiveAccount(string userCode, bool activeStatus);
     }
 }

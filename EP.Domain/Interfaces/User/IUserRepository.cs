@@ -17,6 +17,8 @@ namespace EP.Domain.Interfaces.User
 
         public Entities.User.User LoginUser(string email, string password);
 
+        public Domain.Entities.User.User GetUserFromActiveCode(string userCode);
+
         public void SaveChanges();
     }
 }
