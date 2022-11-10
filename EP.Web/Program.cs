@@ -3,6 +3,7 @@ using EP.Core.Services.User;
 using EP.Domain.Interfaces.User;
 using EP.Infrastructure.Data.Context;
 using EP.Infrastructure.Data.Repository.User;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,20 @@ string EPConnection = builder.Configuration.GetConnectionString("EPConnection");
 services.AddDbContext<EPContext>(options =>
 {
     options.UseSqlServer(EPConnection);
+});
+
+#endregion
+
+#region Authentication
+
+services.AddAuthentication(options => {
+    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+}).AddCookie(options => {
+    options.LoginPath = "/Login";
+    options.LogoutPath = "/Logout";
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(43200);
 });
 
 #endregion
@@ -44,6 +59,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

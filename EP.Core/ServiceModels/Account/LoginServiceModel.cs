@@ -15,5 +15,7 @@ namespace EP.Core.ServiceModels.Account
 
         public bool IsActive { get; set; }
 
+        public Domain.Entities.User.User User { get; set; }
+
     }
 }

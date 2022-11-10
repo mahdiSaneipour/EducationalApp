@@ -9,6 +9,7 @@ using EP.Domain.Interfaces.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -65,6 +66,8 @@ namespace EP.Core.Services.User
             if (status.IsUserExist)
             {
                 Domain.Entities.User.User user = _userRepository.LoginUser(email, password);
+
+                status.User = user;
 
                 status.IsPasswordTrue = user != null ? true : false;
                 status.IsActive = user != null ? user.IsActive : false;

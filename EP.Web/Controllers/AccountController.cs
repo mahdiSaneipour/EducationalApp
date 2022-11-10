@@ -3,8 +3,12 @@ using EP.Core.Enums.UserEnums;
 using EP.Core.Interfaces.User;
 using EP.Core.ServiceModels.Account;
 using EP.Core.Tools.FixTexts;
+using EP.Domain.Entities.User;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Security.Claims;
 
 namespace EP.Web.Controllers
 {
@@ -86,9 +90,27 @@ namespace EP.Web.Controllers
                 {
                     if (status.IsActive)
                     {
-                        //TODO LOGIN
+
+                        User user = status.User;
+
+                        var claims = new List<Claim>(){
+                            new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+                            new Claim(ClaimTypes.Name, user.UserName)
+                        };
+
+                        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var principal = new ClaimsPrincipal(identity);
+
+                        var properties = new AuthenticationProperties()
+                        {
+                            IsPersistent = login.RememberMe
+                        };
+
+                        HttpContext.SignInAsync(principal,properties);
+
                         ViewBag.IsSuccess = true;
                         return View();
+
                     } else
                     {
                         ModelState.AddModelError("Email", "حساب کاربری فعال نیست");
@@ -104,6 +126,17 @@ namespace EP.Web.Controllers
             
 
             return View(login);
+        }
+
+        #endregion
+
+        #region
+
+        [Route("Logout")]
+        public IActionResult Logout()
+        {
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login");
         }
 
         #endregion
