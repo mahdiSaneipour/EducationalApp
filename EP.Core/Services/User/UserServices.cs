@@ -1,15 +1,19 @@
 ﻿using EP.Core.DTOs.AccountViewModels;
+using EP.Core.Enums.UserEnums;
 using EP.Core.Interfaces.User;
 using EP.Core.ServiceModels.Account;
 using EP.Core.Tools.FixTexts;
 using EP.Core.Tools.Generator;
+using EP.Core.Tools.RenderViewToString;
 using EP.Core.Tools.Security;
+using EP.Core.Tools.Senders;
 using EP.Domain.Entities.User;
 using EP.Domain.Interfaces.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,10 +22,12 @@ namespace EP.Core.Services.User
     public class UserServices : IUserServices
     {
         private readonly IUserRepository _userRepository;
+        private readonly IViewRenderService _viewRenderService;
 
-        public UserServices(IUserRepository userRepository)
+        public UserServices(IUserRepository userRepository, IViewRenderService viewRenderService)
         {
             _userRepository = userRepository;
+            _viewRenderService = viewRenderService;
         }
 
         public bool IsEmailExist(string email)
@@ -49,6 +55,20 @@ namespace EP.Core.Services.User
 
             _userRepository.AddUser(user);
             _userRepository.SaveChanges();
+
+            #region Send Email
+
+            ActiveEmailViewModel activeEmailViewModel = new ActiveEmailViewModel()
+            {
+                Username = user.UserName,
+                UserCode = user.UserCode
+            };
+
+            string body = _viewRenderService.RenderToStringAsync("ExternalView/Email/_ActiveEmail", activeEmailViewModel);
+            SendEmail.Send(user.Email,"فعالسازی ایمیل",body);
+
+
+            #endregion
 
             return user.UserId;
         }
@@ -103,6 +123,75 @@ namespace EP.Core.Services.User
             }
 
             return Enums.UserEnums.ActiveUserEnum.Successful;
+        }
+
+        public ForgotPasswordEnum ForgotPassword(ForgotPasswordViewModel forgotPassword)
+        {
+            string email = FixText.FixEmail(forgotPassword.Email);
+
+            Domain.Entities.User.User user = _userRepository.GetUserByEmail(email);
+
+            if (user == null)
+            {
+                return ForgotPasswordEnum.EmailIsNotValid;
+            }
+
+            try {
+
+                ForgotPasswordEmailViewModel forgotPasswordEmailViewModel = new ForgotPasswordEmailViewModel()
+                {
+                    UserCode = user.UserCode,
+                    Username = user.UserName
+                };
+
+                string body = _viewRenderService.RenderToStringAsync("ExternalView/Email/_ForgotPasswordEmailView"
+                    ,forgotPasswordEmailViewModel);
+
+                SendEmail.Send(email,"فراموشی رمز عبور",body);
+
+                return ForgotPasswordEnum.Successful;
+            }
+            catch {
+                return ForgotPasswordEnum.ServerError;
+            }
+
+        }
+
+        public ResetPasswordEnums ResetPassword(ResetPasswordViewModel resetPassword)
+        {
+
+            string userCode = resetPassword.UserCode;
+            string password = resetPassword.Password;
+            string confriemPassword = resetPassword.ConfirmPassword;
+
+            Domain.Entities.User.User user = _userRepository.GetUserFromActiveCode(userCode);
+
+            if (user == null)
+            {
+                return ResetPasswordEnums.UserCodeIsNotValid;
+            }
+
+            if(password != confriemPassword)
+            {
+                return ResetPasswordEnums.PasswordAndConfirmPasswordAreNotMatch;
+            }
+
+            try {
+                string newHashPassword = PasswordHelper.EncodePasswordMd5(password);
+
+                user.Password = newHashPassword;
+                user.UserCode = NameGenerator.GenerateUniqCode();
+
+                _userRepository.UpdateUser(user);
+                _userRepository.SaveChanges();
+
+                return ResetPasswordEnums.Successful;
+            }
+            catch {
+                return ResetPasswordEnums.ServerError;
+            }
+
+            
         }
     }
 }

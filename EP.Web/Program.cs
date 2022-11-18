@@ -1,5 +1,6 @@
 using EP.Core.Interfaces.User;
 using EP.Core.Services.User;
+using EP.Core.Tools.RenderViewToString;
 using EP.Domain.Interfaces.User;
 using EP.Infrastructure.Data.Context;
 using EP.Infrastructure.Data.Repository.User;
@@ -42,6 +43,7 @@ services.AddAuthentication(options => {
 
 services.AddScoped<IUserServices, UserServices>();
 services.AddScoped<IUserRepository, UserRepository>();
+services.AddScoped<IViewRenderService, RenderViewToString>();
 
 #endregion
 

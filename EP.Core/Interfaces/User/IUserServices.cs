@@ -1,4 +1,5 @@
 ﻿using EP.Core.DTOs.AccountViewModels;
+using EP.Core.Enums.UserEnums;
 using EP.Core.ServiceModels.Account;
 using System;
 using System.Collections.Generic;
@@ -19,5 +20,9 @@ namespace EP.Core.Interfaces.User
         public LoginServiceModel LoginUser(LoginUserViewModel login);
 
         public Enums.UserEnums.ActiveUserEnum SetActiveAccount(string userCode, bool activeStatus);
+
+        public ForgotPasswordEnum ForgotPassword(ForgotPasswordViewModel forgotPassword);
+
+        public ResetPasswordEnums ResetPassword(ResetPasswordViewModel resetPassword);
     }
 }

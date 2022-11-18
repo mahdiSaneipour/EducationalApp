@@ -3,6 +3,7 @@ using EP.Core.Enums.UserEnums;
 using EP.Core.Interfaces.User;
 using EP.Core.ServiceModels.Account;
 using EP.Core.Tools.FixTexts;
+using EP.Core.Tools.RenderViewToString;
 using EP.Domain.Entities.User;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -16,10 +17,13 @@ namespace EP.Web.Controllers
     {
 
         private readonly IUserServices _userServices;
+        private readonly IViewRenderService _viewRenderService;
 
-        public AccountController(IUserServices userServices)
+        public AccountController(
+            IUserServices userServices, IViewRenderService viewRenderService)
         {
             _userServices = userServices;
+            _viewRenderService = viewRenderService;
         }
 
         #region Register
@@ -56,8 +60,6 @@ namespace EP.Web.Controllers
             }
 
             userId = _userServices.AddUser(register);
-
-            //TODO ccreate authorization
 
             return View();
         }
@@ -130,7 +132,7 @@ namespace EP.Web.Controllers
 
         #endregion
 
-        #region
+        #region Logout
 
         [Route("Logout")]
         public IActionResult Logout()
@@ -153,6 +155,63 @@ namespace EP.Web.Controllers
             {
                 ViewBag.IsActive = true;
             }
+
+            return View();
+        }
+
+        #endregion
+
+        #region Forgot Password
+
+        [Route("ForgotPassword")]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("ForgotPassword")]
+        public IActionResult ForgotPassword(ForgotPasswordViewModel forgotPassword)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return View(forgotPassword);
+            }
+
+            ForgotPasswordEnum result = _userServices.ForgotPassword(forgotPassword);
+
+            ViewBag.Result = result;
+
+            return View();
+        }
+
+        #endregion
+
+        #region Reset Password
+
+        [Route("ResetPassword/{userCode}")]
+        public IActionResult ResetPassword(string userCode)
+        {
+            return View(new ResetPasswordViewModel()
+            {
+                UserCode = userCode
+            });
+        }
+
+        [HttpPost]
+        [Route("ResetPassword/{userCode}")]
+        public IActionResult ResetPassword(ResetPasswordViewModel resetPasswordViewModel)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            ResetPasswordEnums result = _userServices.ResetPassword(resetPasswordViewModel);
+            
+            ViewBag.Result = result;
 
             return View();
         }

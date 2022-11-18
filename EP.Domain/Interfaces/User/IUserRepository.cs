@@ -13,11 +13,15 @@ namespace EP.Domain.Interfaces.User
 
         public bool IsEmailExist(string email);
 
-        public int AddUser(EP.Domain.Entities.User.User user);
+        public int AddUser(Domain.Entities.User.User user);
+
+        public Domain.Entities.User.User GetUserByEmail(string email);
 
         public Entities.User.User LoginUser(string email, string password);
 
         public Domain.Entities.User.User GetUserFromActiveCode(string userCode);
+
+        public int UpdateUser(Domain.Entities.User.User user);
 
         public void SaveChanges();
     }

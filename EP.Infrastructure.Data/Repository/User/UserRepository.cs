@@ -48,5 +48,16 @@ namespace EP.Infrastructure.Data.Repository.User
         {
             _context.SaveChanges();
         }
+
+        public Domain.Entities.User.User GetUserByEmail(string email)
+        {
+            return _context.Users.FirstOrDefault(u => u.Email == email);
+        }
+
+        public int UpdateUser(Domain.Entities.User.User user)
+        {
+            _context.Update(user);
+            return user.UserId;
+        }
     }
 }
