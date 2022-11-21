@@ -19,12 +19,12 @@ using System.Threading.Tasks;
 
 namespace EP.Core.Services.User
 {
-    public class UserServices : IUserServices
+    public class UserAccountServices : IUserAccountServices
     {
         private readonly IUserRepository _userRepository;
         private readonly IViewRenderService _viewRenderService;
 
-        public UserServices(IUserRepository userRepository, IViewRenderService viewRenderService)
+        public UserAccountServices(IUserRepository userRepository, IViewRenderService viewRenderService)
         {
             _userRepository = userRepository;
             _viewRenderService = viewRenderService;

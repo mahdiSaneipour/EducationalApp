@@ -41,9 +41,19 @@ services.AddAuthentication(options => {
 
 #region IoC
 
-services.AddScoped<IUserServices, UserServices>();
-services.AddScoped<IUserRepository, UserRepository>();
+#region Injection In EPCore
+
+services.AddScoped<IUserAccountServices, UserAccountServices>();
+services.AddScoped<IUserPanelServices, UserPanelServices>();
 services.AddScoped<IViewRenderService, RenderViewToString>();
+
+#endregion
+
+#region Injection In EPDomain
+
+services.AddScoped<IUserRepository, UserRepository>();
+
+#endregion
 
 #endregion
 
@@ -67,7 +77,12 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
+      name: "areas",
+      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();

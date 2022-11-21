@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EP.Core.Interfaces.User
 {
-    public interface IUserServices
+    public interface IUserAccountServices
     {
         public bool IsUserNameExist(string Username);
 

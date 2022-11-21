@@ -16,11 +16,11 @@ namespace EP.Web.Controllers
     public class AccountController : Controller
     {
 
-        private readonly IUserServices _userServices;
+        private readonly IUserAccountServices _userServices;
         private readonly IViewRenderService _viewRenderService;
 
         public AccountController(
-            IUserServices userServices, IViewRenderService viewRenderService)
+            IUserAccountServices userServices, IViewRenderService viewRenderService)
         {
             _userServices = userServices;
             _viewRenderService = viewRenderService;

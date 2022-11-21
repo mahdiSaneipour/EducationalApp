@@ -17,6 +17,8 @@ namespace EP.Domain.Interfaces.User
 
         public Domain.Entities.User.User GetUserByEmail(string email);
 
+        public Domain.Entities.User.User GetUserByUserId(int userId);
+
         public Entities.User.User LoginUser(string email, string password);
 
         public Domain.Entities.User.User GetUserFromActiveCode(string userCode);
