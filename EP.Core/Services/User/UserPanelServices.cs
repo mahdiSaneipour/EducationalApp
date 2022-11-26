@@ -18,6 +18,20 @@ namespace EP.Core.Services.User
             _userRepository = userRepository;
         }
 
+        public SideBarViewModel GetSideBarInfromationByUserId(string userId)
+        {
+            SideBarViewModel result = new SideBarViewModel();
+
+            int id = Convert.ToInt32(userId);
+            Domain.Entities.User.User user = _userRepository.GetUserByUserId(id);
+
+            result.RegisterDate = user.RegisterDate;
+            result.ImageAddress = user.UserAvatar;
+            result.Username = user.UserName;
+
+            return result;
+        }
+
         public UserPanelViewModel GetUserInformationForUserPanel(string userId)
         {
             UserPanelViewModel result = new UserPanelViewModel();

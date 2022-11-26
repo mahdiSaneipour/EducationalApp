@@ -22,10 +22,16 @@ namespace EP.Web.Areas.UserPanel.Controllers
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             UserPanelViewModel result = new UserPanelViewModel();
-            Console.WriteLine("t : " + userId);
+
             result = _userPanelServices.GetUserInformationForUserPanel(userId);
 
             return View("UserPanelIndex",result);
+        }
+
+        [Route("UserPanel/EditProfile")]
+        public IActionResult EditProfile()
+        {
+            return View();
         }
     }
 }

@@ -12,5 +12,7 @@ namespace EP.Core.Interfaces.User
     public interface IUserPanelServices
     {
         public UserPanelViewModel GetUserInformationForUserPanel(string userId);
+
+        public SideBarViewModel GetSideBarInfromationByUserId(string userId);
     }
 }
