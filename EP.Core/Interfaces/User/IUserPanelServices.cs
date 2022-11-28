@@ -1,5 +1,7 @@
 ﻿using EP.Core.DTOs.UserPanelViewModels;
+using EP.Core.ServiceModels.UserPanel;
 using EP.Domain.Interfaces.User;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.Collections.Generic;
@@ -14,5 +16,7 @@ namespace EP.Core.Interfaces.User
         public UserPanelViewModel GetUserInformationForUserPanel(string userId);
 
         public SideBarViewModel GetSideBarInfromationByUserId(string userId);
+
+        public ChangeAvatarServiceModel UploadImageAndDeletePreviousOne(IFormFile newAvatar, string previousAvatar);
     }
 }

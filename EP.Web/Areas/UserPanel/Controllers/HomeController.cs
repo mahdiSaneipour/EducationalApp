@@ -33,5 +33,14 @@ namespace EP.Web.Areas.UserPanel.Controllers
         {
             return View();
         }
+
+        public IActionResult ChangeProfile(IFormFile file)
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            
+
+            return Redirect("");
+        }
     }
 }
