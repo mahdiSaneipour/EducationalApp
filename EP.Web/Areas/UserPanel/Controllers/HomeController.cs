@@ -1,6 +1,10 @@
 ﻿using EP.Core.DTOs.UserPanelViewModels;
+using EP.Core.Enums.UserPanel;
 using EP.Core.Interfaces.User;
+using EP.Core.JsonModel.UserPanel;
+using EP.Core.ServiceModels.UserPanel;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -34,13 +38,67 @@ namespace EP.Web.Areas.UserPanel.Controllers
             return View();
         }
 
-        public IActionResult ChangeProfile(IFormFile file)
+        [HttpPost]
+        public IActionResult UploadAvatarAndDeletePreviousOne(IFormFile avatar, string previousAvatar)
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ChangeAvatarServiceModel model = new ChangeAvatarServiceModel();
 
-            
+            /*string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string previousAvatar = avatarModel.PreviousSelectedAvatar;
+            IFormFile avatar = avatarModel.SelectedAvatarFile;*/
 
-            return Redirect("");
+            model = _userPanelServices.UploadImageAndDeletePreviousOne(avatar, previousAvatar);
+
+            ChangeAvatarEnums status = model.Status;
+            string avatarAddress = model.AvatarAddress;
+
+            ResultUploadAvatarJsonModel result = new ResultUploadAvatarJsonModel();
+
+            switch (status)
+            {
+
+                case ChangeAvatarEnums.Successful:
+
+                    result = SetResultUploadAvatarJsonModel(avatarAddress,"successful");
+
+                    break;
+
+                case ChangeAvatarEnums.AvatarFileIsNull:
+
+                    result = SetResultUploadAvatarJsonModel(avatarAddress, "successful");
+
+                    break;
+
+                case ChangeAvatarEnums.PreviousAvatarNotFound:
+
+                    result = SetResultUploadAvatarJsonModel(avatarAddress, "successful");
+
+                    break;
+
+                case ChangeAvatarEnums.ServerError:
+
+                    result = SetResultUploadAvatarJsonModel(avatarAddress, "successful");
+
+                    break;
+
+                default:
+
+                    return BadRequest();
+            }
+
+            return new JsonResult(result);
+
+        }
+
+        private ResultUploadAvatarJsonModel SetResultUploadAvatarJsonModel (string avatarAddress, string status) {
+
+            ResultUploadAvatarJsonModel result = new ResultUploadAvatarJsonModel();
+
+            result.avatarAddress = avatarAddress;
+            result.status = status;
+
+
+            return result;
         }
     }
 }

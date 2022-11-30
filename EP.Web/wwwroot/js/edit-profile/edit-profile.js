@@ -36,19 +36,28 @@ saveProfile.addEventListener("click", function () {
     cropper.getCroppedCanvas({
 
     }).toBlob(function (blob) {
-        
-        let data = new FormData();
-        data.set("file", blob);
+
+        let avatarModel = new FormData();
+        avatarModel.set("avatar", blob);
+        avatarModel.set("previousAvatar","NoPreviousAvatar");
 
         var xhr = new XMLHttpRequest();
 
+        /*var avatarModel = { PreviousSelectedAvatar: "NoPreviousAvatar", SelectedAvatarFile: avatar }*/
+
         xhr.responseType = 'json';
-        xhr.open('POST', '/UserPanel/Home/ChangeProfile', true);
-        xhr.send(data);
+        xhr.open('POST', '/UserPanel/Home/UploadAvatarAndDeletePreviousOne', true);
+        xhr.send(avatarModel);
 
         xhr.onreadystatechange = function () {
 
-            location.reload();
+            if (this.readyState == 4 && this.status == 200) {
+
+                console.log("avatar address : " + this.response.avatarAddress)
+                console.log("status : " + this.response.status)
+
+            }
+
 
         }
     })

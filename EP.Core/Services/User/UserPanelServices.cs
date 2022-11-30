@@ -72,11 +72,17 @@ namespace EP.Core.Services.User
 
                     }
 
-                    string avatarName = Path.Combine(Tools.Generator.NameGenerator.GenerateUniqCode()
-                        ,newAvatar.ContentType.Replace("image/", "."));
+                    string avatarName = Tools.Generator.NameGenerator.GenerateUniqCode() + 
+                        newAvatar.ContentType.Replace("image/", ".");
+
                     string avatarPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/profile-images", avatarName);
 
-                    return SetChangeAvatarServiceModel(ChangeAvatarEnums.Successful, avatarPath); ;
+                    using (var stream = new FileStream(avatarPath, FileMode.Create))
+                    {
+                        newAvatar.CopyTo(stream);
+                    }
+
+                    return SetChangeAvatarServiceModel(ChangeAvatarEnums.Successful, avatarName); ;
 
                 }
                 else
