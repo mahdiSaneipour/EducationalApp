@@ -43,10 +43,6 @@ namespace EP.Web.Areas.UserPanel.Controllers
         {
             ChangeAvatarServiceModel model = new ChangeAvatarServiceModel();
 
-            /*string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            string previousAvatar = avatarModel.PreviousSelectedAvatar;
-            IFormFile avatar = avatarModel.SelectedAvatarFile;*/
-
             model = _userPanelServices.UploadImageAndDeletePreviousOne(avatar, previousAvatar);
 
             ChangeAvatarEnums status = model.Status;
@@ -65,19 +61,19 @@ namespace EP.Web.Areas.UserPanel.Controllers
 
                 case ChangeAvatarEnums.AvatarFileIsNull:
 
-                    result = SetResultUploadAvatarJsonModel(avatarAddress, "successful");
+                    result = SetResultUploadAvatarJsonModel(avatarAddress, "avatarFileIsNull");
 
                     break;
 
                 case ChangeAvatarEnums.PreviousAvatarNotFound:
 
-                    result = SetResultUploadAvatarJsonModel(avatarAddress, "successful");
+                    result = SetResultUploadAvatarJsonModel(avatarAddress, "previousAvatarNotFound");
 
                     break;
 
                 case ChangeAvatarEnums.ServerError:
 
-                    result = SetResultUploadAvatarJsonModel(avatarAddress, "successful");
+                    result = SetResultUploadAvatarJsonModel(avatarAddress, "serverError");
 
                     break;
 

@@ -37,26 +37,15 @@
                                         setTimeout(function () { window.location = "/"; }, delay);
                                     </script>
                                 }
-
-                                <input type="hidden" asp-for="UserAvatar" />
                                
                                 <div class="row">
                                     <div class="col-md-7 col-sm-8 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon" id="username"><i class="zmdi zmdi-account"></i></span>
                                             <input type="text" class="form-control" asp-for="Username" placeholder="نام کاربری" aria-describedby="username">
+                                            <input type="text" id="user-avatar" asp-for="UserAvatar" hidden/>
                                         </div>
                                     </div>
-
-
-                                    @*<div class="col-md-7 col-sm-8 col-xs-12">
-                                        <p class="help-block">
-                                            آواتار
-                                        </p>
-                                        <input type="file" asp-for="UserAvatar"/>
-                                        <p>لطفا فقط تصویر انتخاب کنید</p>
-                                        <img class="thumbnail" src="/UserAvatar/@Model.AvatarName" style="max-width: 150px"/>
-                                    </div>*@
 
                                     <div class="col-md-7 col-sm-8 col-xs-12">
                                         <div style="text-align: center;">
@@ -66,7 +55,9 @@
                                             </div>
 
                                             <input name="SelectedAvatarFile" id="file" type="file" class="cropper-hidden" />
-                                            <input name="PreviousSelectedAvatar" id="previous-selected-avatar" hidden />
+                                            <input name="PreviousSelectedAvatar" type="text" id="previous-selected-avatar" value="NoPreviousAvatar" hidden />
+
+
 
                                             <button form="" id="save-profile" style="padding:5px; border-radius:5px; background-color:green; color:white; border:none; margin-top:20px;">ثبت عکس</button>
                                         </div>
