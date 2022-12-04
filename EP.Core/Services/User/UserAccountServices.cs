@@ -50,7 +50,7 @@ namespace EP.Core.Services.User
                 IsActive = false,
                 Password = PasswordHelper.EncodePasswordMd5(register.Password),
                 RegisterDate = DateTime.Now,
-                UserAvatar = "Defult.jpg"
+                UserAvatar = "Default.jpg"
             };
 
             _userRepository.AddUser(user);

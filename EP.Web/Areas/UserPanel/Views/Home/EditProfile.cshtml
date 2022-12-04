@@ -43,15 +43,18 @@
                                         <div class="input-group">
                                             <span class="input-group-addon" id="username"><i class="zmdi zmdi-account"></i></span>
                                             <input type="text" class="form-control" asp-for="Username" placeholder="نام کاربری" aria-describedby="username">
-                                            <input type="text" id="user-avatar" asp-for="UserAvatar" hidden/>
+                                            <input type="text" asp-for="UserAvatar" hidden/>
+                                            <input type="text" id="user-avatar" asp-for="SelectedAvatar" hidden/>
+                                            <input type="text" asp-for="UserId" hidden/>
                                         </div>
+                                        <span asp-validation-for="Username"></span>
                                     </div>
 
                                     <div class="col-md-7 col-sm-8 col-xs-12">
                                         <div style="text-align: center;">
 
                                             <div style="width:100%">
-                                                <img id="image" src="/images/profile-images/Defult.jpg" />
+                                                <img id="image" src="/images/profile-images/@Model.UserAvatar" />
                                             </div>
 
                                             <input name="SelectedAvatarFile" id="file" type="file" class="cropper-hidden" />
@@ -61,7 +64,6 @@
 
                                             <button form="" id="save-profile" style="padding:5px; border-radius:5px; background-color:green; color:white; border:none; margin-top:20px;">ثبت عکس</button>
                                         </div>
-                                        <input type="submit" value="ثبت تغییرات" style="padding:5px; border-radius:5px; background-color:green; color:white; border:none; margin-top:20px;" />
                                     </div>
 
                                     <div class="col-md-7 col-sm-8 col-xs-12">

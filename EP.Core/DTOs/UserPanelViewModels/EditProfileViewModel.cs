@@ -11,6 +11,9 @@ namespace EP.Core.DTOs.UserPanelViewModels
 {
     public class EditProfileViewModel
     {
+        [Display(Name = "شناسه کاربر")]
+        public int UserId { get; set; }
+
         [Display(Name = "نام کاربری")]
         [Required(ErrorMessage = "فیلد {0} نمیتواند خالی باشد")]
         [MaxLength(200, ErrorMessage = "{0} نمیتواند بیشتر از {1} کاراکتر باشد")]

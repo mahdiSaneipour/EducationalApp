@@ -1,4 +1,5 @@
 ﻿using EP.Core.DTOs.UserPanelViewModels;
+using EP.Core.Enums.UserPanel;
 using EP.Core.ServiceModels.UserPanel;
 using EP.Domain.Interfaces.User;
 using Microsoft.AspNetCore.Http;
@@ -18,5 +19,9 @@ namespace EP.Core.Interfaces.User
         public SideBarViewModel GetSideBarInfromationByUserId(string userId);
 
         public ChangeAvatarServiceModel UploadImageAndDeletePreviousOne(IFormFile newAvatar, string previousAvatar);
+
+        public EditProfileViewModel GetEditProfileInformation(string userId);
+
+        public ChangeProfileEnums EditProfileByUserPanel(EditProfileViewModel profile);
     }
 }

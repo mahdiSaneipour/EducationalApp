@@ -3,6 +3,7 @@ using EP.Core.Enums.UserPanel;
 using EP.Core.Interfaces.User;
 using EP.Core.JsonModel.UserPanel;
 using EP.Core.ServiceModels.UserPanel;
+using EP.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -35,7 +36,49 @@ namespace EP.Web.Areas.UserPanel.Controllers
         [Route("UserPanel/EditProfile")]
         public IActionResult EditProfile()
         {
-            return View();
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            EditProfileViewModel data = new EditProfileViewModel();
+
+            data = _userPanelServices.GetEditProfileInformation(userId);
+
+            return View(data);
+        }
+
+        [HttpPost]
+        [Route("UserPanel/EditProfile")]
+        public IActionResult EditProfile(EditProfileViewModel profile)
+        {
+
+            ChangeProfileEnums result = _userPanelServices.EditProfileByUserPanel(profile);
+            EditProfileViewModel data = new EditProfileViewModel();
+
+            if (result != ChangeProfileEnums.Successful)
+            {
+                string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                data = _userPanelServices.GetEditProfileInformation(userId);
+            }
+
+            if (result == ChangeProfileEnums.UsernameIsRepetitious)
+            {
+                ModelState.AddModelError("Username"," قبلا انتخاب شده است" + profile.Username);
+                return View(data);
+            }
+
+            if (result == ChangeProfileEnums.PreviousImageNotFound)
+            {
+                ModelState.AddModelError("Username", "آواتار قبلی برای حذف پیدا نشد");
+                return View(data);
+            }
+
+            if(result == ChangeProfileEnums.ServerError)
+            {
+                ModelState.AddModelError("Username", "مشکلی در سیستم پیش آمده است");
+                return View(data);
+            }
+
+            return Redirect("/UserPanel");
         }
 
         [HttpPost]

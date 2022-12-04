@@ -107,5 +107,75 @@ namespace EP.Core.Services.User
 
             return result;
         }
+
+        public EditProfileViewModel GetEditProfileInformation(string userId)
+        {
+
+            int id = Int32.Parse(userId);
+
+            Domain.Entities.User.User user = new Domain.Entities.User.User();
+
+            user = _userRepository.GetUserByUserId(id);
+
+            EditProfileViewModel result = new EditProfileViewModel()
+            {
+                SelectedAvatar = user.UserAvatar,
+                UserAvatar = user.UserAvatar,
+                Username = user.UserName,
+                UserId = user.UserId
+            };
+
+            return result;
+        }
+
+        public ChangeProfileEnums EditProfileByUserPanel(EditProfileViewModel profile)
+        {
+            int userId = profile.UserId;
+            string username = profile.Username;
+            string avatar = profile.SelectedAvatar;
+            string previousAvatar = profile.UserAvatar;
+
+            try {
+
+                Domain.Entities.User.User user = new Domain.Entities.User.User();
+                user = _userRepository.GetUserByUserId(userId);
+
+                if (_userRepository.IsUserNameExist(username) && username != user.UserName)
+                {
+                    return ChangeProfileEnums.UsernameIsRepetitious;
+                }
+
+                if (previousAvatar != "Default.jpg")
+                {
+                    string previousAvatarPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/profile-images", previousAvatar);
+
+                    if (File.Exists(previousAvatarPath))
+                    {
+                        File.Delete(previousAvatarPath);
+                    }
+                    else
+                    {
+                        return ChangeProfileEnums.PreviousImageNotFound;
+                    }
+                }
+
+
+
+                user.UserName = username;
+                user.UserAvatar = avatar;
+
+                _userRepository.UpdateUser(user);
+                _userRepository.SaveChanges();
+
+                Console.WriteLine(user.UserName);
+
+                return ChangeProfileEnums.Successful;
+
+            }
+            catch
+            {
+                return ChangeProfileEnums.ServerError;
+            }
+        }
     }
 }
