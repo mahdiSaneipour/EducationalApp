@@ -23,5 +23,7 @@ namespace EP.Core.Interfaces.User
         public EditProfileViewModel GetEditProfileInformation(string userId);
 
         public ChangeProfileEnums EditProfileByUserPanel(EditProfileViewModel profile);
+
+        public ChangePasswordEnums ChangePassword(ChangePasswordViewModel model);
     }
 }

@@ -30,7 +30,7 @@ namespace EP.Web.Areas.UserPanel.Controllers
 
             result = _userPanelServices.GetUserInformationForUserPanel(userId);
 
-            return View("UserPanelIndex",result);
+            return View("UserPanel",result);
         }
 
         [Route("UserPanel/EditProfile")]
@@ -49,6 +49,11 @@ namespace EP.Web.Areas.UserPanel.Controllers
         [Route("UserPanel/EditProfile")]
         public IActionResult EditProfile(EditProfileViewModel profile)
         {
+
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
 
             ChangeProfileEnums result = _userPanelServices.EditProfileByUserPanel(profile);
             EditProfileViewModel data = new EditProfileViewModel();
@@ -138,6 +143,41 @@ namespace EP.Web.Areas.UserPanel.Controllers
 
 
             return result;
+        }
+
+        [Route("UserPanel/ChangePassword")]
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("UserPanel/ChangePassword")]
+        public IActionResult ChangePassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            model.userId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            ChangePasswordEnums result = _userPanelServices.ChangePassword(model);
+
+            Console.WriteLine("result : " + result);
+
+            if (result == ChangePasswordEnums.CurrentPasswordIsNotTrue)
+            {
+                ModelState.AddModelError("CurrentPassword","رمزعبور فعلی صحیح نمیباشد");
+                return View();
+            }
+            else if (result == ChangePasswordEnums.ServerError)
+            {
+                ModelState.AddModelError("CurrentPassword", "با عرز پوزش خطایی در سیستم رخ داده, لطفا بعدا تلاش کنید");
+                return View();
+            }
+
+            return Redirect("/UserPanel");
         }
     }
 }

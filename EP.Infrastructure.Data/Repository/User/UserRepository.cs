@@ -59,6 +59,11 @@ namespace EP.Infrastructure.Data.Repository.User
             return _context.Users.FirstOrDefault(u => u.UserId == userId);
         }
 
+        public bool CheckPassword(string password, int userId)
+        {
+            return !_context.Users.Where(u => u.UserId == userId && u.Password == password).Any();
+        }
+
         public int UpdateUser(Domain.Entities.User.User user)
         {
             _context.Update(user);

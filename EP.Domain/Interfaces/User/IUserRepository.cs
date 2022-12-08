@@ -25,6 +25,8 @@ namespace EP.Domain.Interfaces.User
 
         public int UpdateUser(Domain.Entities.User.User user);
 
+        public bool CheckPassword(string password, int userId);
+
         public void SaveChanges();
     }
 }

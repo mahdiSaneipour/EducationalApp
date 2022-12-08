@@ -1,3 +1,7 @@
 ﻿.field-validation-error {
     color: red;
 }
+
+.field-validation-valid {
+    display: none;
+}

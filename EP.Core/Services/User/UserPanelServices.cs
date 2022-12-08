@@ -177,5 +177,33 @@ namespace EP.Core.Services.User
                 return ChangeProfileEnums.ServerError;
             }
         }
+
+        public ChangePasswordEnums ChangePassword(ChangePasswordViewModel model)
+        {
+            try
+            {
+                string currentPassword = Tools.Security.PasswordHelper.EncodePasswordMd5(model.CurrentPassword);
+                string password = Tools.Security.PasswordHelper.EncodePasswordMd5(model.Password);
+                int userId = model.userId;
+
+                if (_userRepository.CheckPassword(currentPassword, userId))
+                {
+                    return ChangePasswordEnums.CurrentPasswordIsNotTrue;
+                }
+
+                Domain.Entities.User.User user = _userRepository.GetUserByUserId(userId);
+
+                user.Password = password;
+
+                _userRepository.UpdateUser(user);
+                _userRepository.SaveChanges();
+
+                return ChangePasswordEnums.Successful;
+            }
+            catch
+            {
+                return ChangePasswordEnums.ServerError;
+            }
+        }
     }
 }
