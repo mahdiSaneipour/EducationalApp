@@ -44,11 +44,6 @@ namespace EP.Infrastructure.Data.Repository.User
             return _context.Users.FirstOrDefault(u => u.UserCode == userCode);
         }
 
-        public void SaveChanges()
-        {
-            _context.SaveChanges();
-        }
-
         public Domain.Entities.User.User GetUserByEmail(string email)
         {
             return _context.Users.FirstOrDefault(u => u.Email == email);
@@ -68,6 +63,11 @@ namespace EP.Infrastructure.Data.Repository.User
         {
             _context.Update(user);
             return user.UserId;
+        }
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
         }
     }
 }

@@ -3,6 +3,7 @@ using EP.Core.Enums.UserPanel;
 using EP.Core.Interfaces.User;
 using EP.Core.ServiceModels.UserPanel;
 using EP.Domain.Interfaces.User;
+using EP.Domain.Interfaces.Wallet;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,12 @@ namespace EP.Core.Services.User
     public class UserPanelServices : IUserPanelServices
     {
         private readonly IUserRepository _userRepository;
+        private readonly IWalletRepository _walletRepository;
 
-        public UserPanelServices(IUserRepository userRepository)
+        public UserPanelServices(IUserRepository userRepository, IWalletRepository walletRepository)
         {
             _userRepository = userRepository;
+            _walletRepository = walletRepository;
         }
 
         public SideBarViewModel GetSideBarInfromationByUserId(string userId)
@@ -45,7 +48,7 @@ namespace EP.Core.Services.User
             result.RegisterDate = user.RegisterDate;
             result.Username = user.UserName;
             result.Email = user.Email;
-            result.Wallet = 0;
+            result.Wallet = _walletRepository.BalanceUserWallet(id);
 
             return result;
         }

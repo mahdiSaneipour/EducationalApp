@@ -4,6 +4,7 @@ using EP.Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EP.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(EPContext))]
-    partial class EPContextModelSnapshot : ModelSnapshot
+    [Migration("20221209181314_Add_Wallet")]
+    partial class Add_Wallet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -135,11 +137,14 @@ namespace EP.Infrastructure.Data.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<int>("walletTypeTypeId")
+                        .HasColumnType("int");
+
                     b.HasKey("WalletId");
 
-                    b.HasIndex("TypeId");
-
                     b.HasIndex("UserId");
+
+                    b.HasIndex("walletTypeTypeId");
 
                     b.ToTable("Wallets");
                 });
@@ -180,21 +185,21 @@ namespace EP.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("EP.Domain.Entities.Wallet.Wallet", b =>
                 {
-                    b.HasOne("EP.Domain.Entities.Wallet.WalletType", "Type")
-                        .WithMany("Wallets")
-                        .HasForeignKey("TypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("EP.Domain.Entities.User.User", "User")
                         .WithMany("Wallets")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Type");
+                    b.HasOne("EP.Domain.Entities.Wallet.WalletType", "walletType")
+                        .WithMany("Wallets")
+                        .HasForeignKey("walletTypeTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
+
+                    b.Navigation("walletType");
                 });
 
             modelBuilder.Entity("EP.Domain.Entities.User.Role", b =>

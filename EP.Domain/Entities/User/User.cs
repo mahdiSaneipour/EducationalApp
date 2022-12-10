@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EP.Domain.Entities.Wallet;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -51,6 +52,8 @@ namespace EP.Domain.Entities.User
         #region Relations
 
         public virtual List<UserRole> UserRoles { get; set; }
+
+        public virtual ICollection<Wallet.Wallet> Wallets { get; set; }
 
         #endregion
     }

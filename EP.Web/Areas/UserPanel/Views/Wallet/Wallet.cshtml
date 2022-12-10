@@ -1,0 +1,77 @@
+﻿@model EP.Core.DTOs.UserPanelViewModels.ChargeWalletViewModel
+@{
+    ViewData["title"] = "کیف پول";
+    List<WalletViewModel> wallets = ViewData["wallets"] as List<WalletViewModel>;
+}
+
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">آموزش</a></li>
+            <li class="breadcrumb-item active" aria-current="page">پنل کاربری </li>
+            <li class="breadcrumb-item active" aria-current="page">کیف پول</li>
+        </ul>
+    </nav>
+</div>
+
+<main>
+    <div class="container">
+        <div class="user-account">
+            <div class="row">
+                <partial name="_SideBar" />
+                <div class="col-md-9 col-sm-8 col-xs-12">
+                    <section class="user-account-content">
+                        <header><h1>کیف پول</h1></header>
+                        <div class="inner form-layer">
+                            <form asp-action="Index" method="post">
+
+                                <div class="row">
+                                    <div class="col-md-7 col-sm-8 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="zmdi zmdi-balance-wallet"></i></span>
+                                            <input type="number" class="form-control" asp-for="Amount" placeholder="مبلغ به تومان">
+                                        </div>
+                                        <span asp-validation-for="Amount"></span>
+
+                                    </div>
+
+                                    <div class="col-md-7 col-sm-8 col-xs-12">
+                                        <button class="btn btn-success">ثبت</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                            <br />
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>مبلغ</th>
+                                    <th>تاریخ</th>
+                                    <th>نوع تراکنش</th>
+                                    <th>شرح</th>
+
+                                </tr>
+                                @foreach (var wallet in wallets)
+                                {
+                                    <tr>
+                                        <td>@wallet.Amount.ToString("#,0 تومان")</td>
+                                        <td>@wallet.CreateDate.ToSolarCalendar()</td>
+                                        <td>
+
+                                            @if(wallet.Type == 1){
+                                                <p class="text-success">واریز به حساب</p>
+                                            } else if(wallet.Type == 2) {
+                                                <p class="text-danger">برداشت از حساب</p>
+                                            }
+
+                                        </td>
+                                        <td>@wallet.Description</td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

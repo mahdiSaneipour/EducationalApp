@@ -1,9 +1,13 @@
 using EP.Core.Interfaces.User;
+using EP.Core.Interfaces.Wallet;
 using EP.Core.Services.User;
+using EP.Core.Services.Wallet;
 using EP.Core.Tools.RenderViewToString;
 using EP.Domain.Interfaces.User;
+using EP.Domain.Interfaces.Wallet;
 using EP.Infrastructure.Data.Context;
 using EP.Infrastructure.Data.Repository.User;
+using EP.Infrastructure.Data.Repository.Wallet;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -44,13 +48,15 @@ services.AddAuthentication(options => {
 #region Injection In EPCore
 
 services.AddScoped<IUserAccountServices, UserAccountServices>();
-services.AddScoped<IUserPanelServices, UserPanelServices>();
 services.AddScoped<IViewRenderService, RenderViewToString>();
+services.AddScoped<IUserPanelServices, UserPanelServices>();
+services.AddScoped<IWalletServices, WalletServices>();
 
 #endregion
 
 #region Injection In EPDomain
 
+services.AddScoped<IWalletRepository, WalletRepository>();
 services.AddScoped<IUserRepository, UserRepository>();
 
 #endregion
