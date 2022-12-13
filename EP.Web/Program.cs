@@ -63,6 +63,12 @@ services.AddScoped<IUserRepository, UserRepository>();
 
 #endregion
 
+#region Razor Page
+
+services.AddRazorPages();
+
+#endregion
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -76,8 +82,9 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseRouting();
+app.MapRazorPages();
 
+app.UseRouting();
 app.UseAuthentication();
 
 app.UseAuthorization();
