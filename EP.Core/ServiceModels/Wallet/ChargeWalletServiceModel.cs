@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace EP.Core.ServiceModels.UserPanel
+namespace EP.Core.ServiceModels.Wallet
 {
     public class ChargeWalletServiceModel
     {

@@ -1,6 +1,6 @@
 ﻿using EP.Core.DTOs.UserPanelViewModels;
 using EP.Core.Interfaces.Wallet;
-using EP.Core.ServiceModels.UserPanel;
+using EP.Core.ServiceModels.Wallet;
 using EP.Domain.Interfaces.Wallet;
 using System;
 using System.Collections.Generic;
@@ -42,7 +42,7 @@ namespace EP.Core.Services.Wallet
             return result;
         }
 
-        public bool AddWallet(ChargeWalletServiceModel model)
+        public string AddWallet(ChargeWalletServiceModel model)
         {
             
             Domain.Entities.Wallet.Wallet wallet = new Domain.Entities.Wallet.Wallet()
@@ -60,13 +60,51 @@ namespace EP.Core.Services.Wallet
             result = _walletRepository.AddWallet(wallet);
             _walletRepository.SaveChanges();
 
-            if (wallet != null)
+            if (result != null)
             {
-                return true;
-            }else
-            {
-                return false;
+
+                #region Payment
+
+                var payment = new ZarinpalSandbox.Payment(wallet.Amount);
+
+                var res = payment.PaymentRequest("شارژ کیف پول", "https://localhost:44320/UserPanel/Wallet/OnlinePayment/" + wallet.WalletId);
+
+                if (res.Result.Status == 100)
+                {
+                    return res.Result.Authority;
+                }
+
+                return "";
+
+                #endregion
             }
+            else
+            {
+                return "";
+            }
+        }
+
+        public long OnlinePayment(OnlinePaymentServiceModel model)
+        {
+
+            Domain.Entities.Wallet.Wallet wallet = new Domain.Entities.Wallet.Wallet();
+
+            wallet = _walletRepository.GetWalletByWalletId(model.walletId);
+
+            var payment = new ZarinpalSandbox.Payment(wallet.Amount);
+            var res = payment.Verification(model.authority).Result;
+
+            if (res.Status == 100)
+            {
+                wallet.IsPay = true;
+
+                _walletRepository.UpdateWallet(wallet);
+                _walletRepository.SaveChanges();
+
+                return res.RefId;
+            }
+
+            return 0;
         }
     }
 }

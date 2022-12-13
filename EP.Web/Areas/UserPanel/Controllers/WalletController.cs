@@ -1,6 +1,6 @@
 ﻿using EP.Core.DTOs.UserPanelViewModels;
 using EP.Core.Interfaces.Wallet;
-using EP.Core.ServiceModels.UserPanel;
+using EP.Core.ServiceModels.Wallet;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -45,19 +45,19 @@ namespace EP.Web.Areas.UserPanel.Controllers
                 return View("Wallet",model);
             }
 
-            bool result = false;
+            string result = "";
 
             ChargeWalletServiceModel wallet = new ChargeWalletServiceModel();
 
             wallet.Description = "شارژ حساب";
             wallet.Amount = model.Amount;
             wallet.UserId = userId;
-            wallet.IsPay = true;
+            wallet.IsPay = false;
             wallet.Type = 1;
 
             result = _walletServices.AddWallet(wallet);
 
-            if (!result)
+            if (result == "" || result == null)
             {
                 List<WalletViewModel> wallets = _walletServices.GetUserWalletViewModel(userId);
 
@@ -66,7 +66,41 @@ namespace EP.Web.Areas.UserPanel.Controllers
                 return View("Wallet",model);
             }
 
-            return Redirect("/UserPanel");
+            return Redirect("https://sandbox.zarinpal.com/pg/StartPay/" + result);
+        }
+
+        [Route("UserPanel/Wallet/OnlinePayment/{id}")]
+        public IActionResult OnlinePayment(int Id)
+        {
+
+            if (HttpContext.Request.Query["Status"].ToString().ToLower() == "ok" &&
+                HttpContext.Request.Query["Authority"] != "")
+            {
+
+                string authority = HttpContext.Request.Query["Authority"];
+
+                OnlinePaymentServiceModel payment = new OnlinePaymentServiceModel()
+                {
+                    walletId = Id,
+                    authority = authority
+                };
+
+                long result = _walletServices.OnlinePayment(payment);
+
+                ViewBag.code = result;
+                ViewBag.isSuccess = false;
+
+                if (result != 0)
+                {
+                    ViewBag.isSuccess = true;
+                }
+
+            } else
+            {
+                ViewBag.isSuccess = false;
+            }
+
+            return View();
         }
     }
 }

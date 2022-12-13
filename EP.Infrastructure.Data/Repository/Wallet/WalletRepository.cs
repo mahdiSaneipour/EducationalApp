@@ -38,13 +38,22 @@ namespace EP.Infrastructure.Data.Repository.Wallet
         public Domain.Entities.Wallet.Wallet AddWallet(Domain.Entities.Wallet.Wallet wallet)
         {
             _context.Wallets.Add(wallet);
-            Console.WriteLine("walletId : " + wallet.WalletId);
             return wallet;
         }
 
         public void SaveChanges()
         {
             _context.SaveChanges();
+        }
+
+        public Domain.Entities.Wallet.Wallet GetWalletByWalletId(int walletId)
+        {
+            return _context.Wallets.FirstOrDefault(w => w.WalletId == walletId);
+        }
+
+        public void UpdateWallet(Domain.Entities.Wallet.Wallet wallet)
+        {
+            _context.Wallets.Update(wallet);
         }
     }
 }

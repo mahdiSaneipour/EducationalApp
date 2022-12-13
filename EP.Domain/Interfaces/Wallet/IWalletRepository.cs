@@ -16,5 +16,9 @@ namespace EP.Domain.Interfaces.Wallet
         public List<Entities.Wallet.Wallet> GetWalletUser(int userId);
 
         public Domain.Entities.Wallet.Wallet AddWallet(Domain.Entities.Wallet.Wallet wallet);
+
+        public Domain.Entities.Wallet.Wallet GetWalletByWalletId(int walletId);
+
+        public void UpdateWallet(Domain.Entities.Wallet.Wallet wallet);
     }
 }

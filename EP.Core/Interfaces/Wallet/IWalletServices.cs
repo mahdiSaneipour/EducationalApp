@@ -1,5 +1,5 @@
 ﻿using EP.Core.DTOs.UserPanelViewModels;
-using EP.Core.ServiceModels.UserPanel;
+using EP.Core.ServiceModels.Wallet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +12,8 @@ namespace EP.Core.Interfaces.Wallet
     {
         public List<WalletViewModel> GetUserWalletViewModel(int userId);
 
-        public bool AddWallet(ChargeWalletServiceModel model);
+        public string AddWallet(ChargeWalletServiceModel model);
+
+        public long OnlinePayment(OnlinePaymentServiceModel model);
     }
 }
