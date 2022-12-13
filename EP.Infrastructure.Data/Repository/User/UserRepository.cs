@@ -65,6 +65,23 @@ namespace EP.Infrastructure.Data.Repository.User
             return user.UserId;
         }
 
+        public IQueryable<Domain.Entities.User.User> GetUsersForAdmin(string filterEmail, string filterUsername)
+        {
+            IQueryable<Domain.Entities.User.User> users = _context.Users;
+
+            if (!string.IsNullOrEmpty(filterEmail))
+            {
+                users = users.Where(u => u.Email.Contains(filterEmail));
+            }
+
+            if (!string.IsNullOrEmpty(filterUsername))
+            {
+                users = users.Where(u => u.UserName.Contains(filterUsername));
+            }
+
+            return users;
+        }
+
         public void SaveChanges()
         {
             _context.SaveChanges();

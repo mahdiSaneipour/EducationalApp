@@ -9,15 +9,15 @@
     <title>پنل ادمین</title>
 
     <!-- Core CSS - Include with every page -->
-    <link href="admin/css/bootstrap-rtl.css" rel="stylesheet">
-    <link href="admin/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="~/admin/css/bootstrap-rtl.css" rel="stylesheet">
+    <link href="~/admin/font-awesome/css/font-awesome.css" rel="stylesheet">
 
     <!-- Page-Level Plugin CSS - Dashboard -->
-    <link href="admin/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
-    <link href="admin/css/plugins/timeline/timeline.css" rel="stylesheet">
+    <link href="~/admin/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+    <link href="~/admin/css/plugins/timeline/timeline.css" rel="stylesheet">
 
     <!-- SB Admin CSS - Include with every page -->
-    <link href="admin/css/sb-admin.css" rel="stylesheet">
+    <link href="~/admin/css/sb-admin.css" rel="stylesheet">
 
 </head>
 
@@ -52,7 +52,7 @@
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a asp-page="Index"><i class="fa fa-dashboard fa-fw"></i> پنل ادمین</a>
+                            <a href="/Admin"><i class="fa fa-dashboard fa-fw"></i> پنل ادمین</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>مدیریت کاربران<span class="fa arrow"></span></a>
@@ -61,7 +61,7 @@
                                     <a href="flot.html">دسترسی</a>
                                 </li>
                                 <li>
-                                    <a href="morris.html">کاربران</a>
+                                    <a href="~/admin/Users">کاربران</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -83,19 +83,19 @@
     <!-- /#wrapper -->
 
     <!-- Core Scripts - Include with every page -->
-    <script src="admin/js/jquery-1.10.2.js"></script>
-    <script src="admin/js/bootstrap.min.js"></script>
-    <script src="admin/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="~/admin/js/jquery-1.10.2.js"></script>
+    <script src="~/admin/js/bootstrap.min.js"></script>
+    <script src="~/admin/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 
     <!-- Page-Level Plugin Scripts - Dashboard -->
-    <script src="admin/js/plugins/morris/raphael-2.1.0.min.js"></script>
-    <script src="admin/js/plugins/morris/morris.js"></script>
+    <script src="~/admin/js/plugins/morris/raphael-2.1.0.min.js"></script>
+    <script src="~/admin/js/plugins/morris/morris.js"></script>
 
     <!-- SB Admin Scripts - Include with every page -->
-    <script src="admin/js/sb-admin.js"></script>
+    <script src="~/admin/js/sb-admin.js"></script>
 
     <!-- Page-Level Demo Scripts - Dashboard - Use for reference -->
-    <script src="admin/js/demo/dashboard-demo.js"></script>
+    <script src="~/admin/js/demo/dashboard-demo.js"></script>
 
 </body>
 

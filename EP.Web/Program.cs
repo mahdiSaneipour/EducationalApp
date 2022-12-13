@@ -1,5 +1,7 @@
+using EP.Core.Interfaces.Admin;
 using EP.Core.Interfaces.User;
 using EP.Core.Interfaces.Wallet;
+using EP.Core.Services.Admin;
 using EP.Core.Services.User;
 using EP.Core.Services.Wallet;
 using EP.Core.Tools.RenderViewToString;
@@ -51,6 +53,7 @@ services.AddScoped<IUserAccountServices, UserAccountServices>();
 services.AddScoped<IViewRenderService, RenderViewToString>();
 services.AddScoped<IUserPanelServices, UserPanelServices>();
 services.AddScoped<IWalletServices, WalletServices>();
+services.AddScoped<IAdminServices, AdminServices>();
 
 #endregion
 
