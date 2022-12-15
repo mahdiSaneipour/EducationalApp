@@ -5,13 +5,19 @@ using EP.Core.Services.Admin;
 using EP.Core.Services.User;
 using EP.Core.Services.Wallet;
 using EP.Core.Tools.RenderViewToString;
+using EP.Domain.Interfaces.Roles;
 using EP.Domain.Interfaces.User;
 using EP.Domain.Interfaces.Wallet;
 using EP.Infrastructure.Data.Context;
+using EP.Infrastructure.Data.Repository.Roles;
 using EP.Infrastructure.Data.Repository.User;
 using EP.Infrastructure.Data.Repository.Wallet;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,6 +67,7 @@ services.AddScoped<IAdminServices, AdminServices>();
 
 services.AddScoped<IWalletRepository, WalletRepository>();
 services.AddScoped<IUserRepository, UserRepository>();
+services.AddScoped<IRoleRepository, RoleRepository>();
 
 #endregion
 

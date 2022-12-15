@@ -3,6 +3,8 @@ using EP.Core.Interfaces.Wallet;
 using EP.Core.ServiceModels.Wallet;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 
 namespace EP.Web.Areas.UserPanel.Controllers

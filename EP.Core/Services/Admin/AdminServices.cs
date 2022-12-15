@@ -1,5 +1,7 @@
 ﻿using EP.Core.DTOs.AdminPanelViewModels;
 using EP.Core.Interfaces.Admin;
+using EP.Domain.Entities.User;
+using EP.Domain.Interfaces.Roles;
 using EP.Domain.Interfaces.User;
 using System;
 using System.Collections.Generic;
@@ -12,10 +14,12 @@ namespace EP.Core.Services.Admin
     public class AdminServices : IAdminServices
     {
         private readonly IUserRepository _userRepository;
+        private readonly IRoleRepository _roleRepository;
 
-        public AdminServices(IUserRepository userRepository)
+        public AdminServices(IUserRepository userRepository, IRoleRepository roleRepository)
         {
             _userRepository = userRepository;
+            _roleRepository = roleRepository;
         }
 
         public UsersForAdminViewModel GetUsersForAdminServices(int currentPage = 1, string filterEmail = "", string filterUsername = "")
@@ -38,6 +42,51 @@ namespace EP.Core.Services.Admin
             };
 
             return result;
+        }
+
+        public int CreateUserFromAdmin(CreateUserViewModel model)
+        {
+
+            
+
+            Domain.Entities.User.User user = new Domain.Entities.User.User()
+            {
+                Password = Tools.Security.PasswordHelper.EncodePasswordMd5(model.Password),
+                UserCode = Tools.Generator.NameGenerator.GenerateUniqCode(),
+                UserAvatar = model.SelectedAvatar,
+                RegisterDate = DateTime.Now,
+                UserName = model.Username,
+                Email = model.Email,
+                IsActive = true
+            };
+
+            _userRepository.AddUser(user);
+
+            _userRepository.SaveChanges();
+
+            int userId = user.UserId;
+
+            return userId;
+        }
+
+        public void AddRolesToUser(List<int> userRoles, int userId)
+        {
+
+            foreach (var userRole in userRoles)
+            {
+                _roleRepository.AddUserRole(new UserRole()
+                {
+                    RoleId = userRole,
+                    UserId = userId
+                });
+            }
+
+            _roleRepository.SaveChanges();
+        }
+
+        public List<Role> GetAllRoles()
+        {
+            return _roleRepository.GetAllRoles();
         }
     }
 }

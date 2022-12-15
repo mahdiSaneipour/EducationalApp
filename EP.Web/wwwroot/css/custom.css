@@ -5,3 +5,7 @@
 .field-validation-valid {
     display: none;
 }
+
+.background-cover {
+    margin:10px;
+}
