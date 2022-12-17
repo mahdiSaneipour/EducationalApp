@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace EP.Domain.Interfaces.User
 {
@@ -27,8 +28,7 @@ namespace EP.Domain.Interfaces.User
 
         public bool CheckPassword(string password, int userId);
 
-        public IQueryable<Domain.Entities.User.User> GetUsersForAdmin(string filterEmail, string filterUsername);
-
+        public IQueryable<Domain.Entities.User.User> GetUsersForAdmin(string filterEmail, string filterUsername, bool isDelete);
         public void SaveChanges();
     }
 }

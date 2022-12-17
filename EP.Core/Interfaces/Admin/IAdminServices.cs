@@ -9,7 +9,9 @@ namespace EP.Core.Interfaces.Admin
 {
     public interface IAdminServices
     {
-        UsersForAdminViewModel GetUsersForAdminServices(int currentPage = 1, string filterEmail = "", string filterUsername = "");
+        UsersForAdminViewModel GetUsersForAdminServices(int currentPage = 1, string filterEmail = "", string filterUsername = "", bool isDelete = false);
+
+        void DeleteUserByUserId(int userId);
 
         void AddRolesToUser(List<int> userRoles, int userId);
 

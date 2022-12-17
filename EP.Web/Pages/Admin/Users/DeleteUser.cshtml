@@ -1,0 +1,33 @@
+﻿@page "{userId}"
+@model EP.Web.Pages.Admin.Users.DeleteUserModel
+@{
+}
+
+<div class="col-lg-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            مشخصات کاربر
+        </div>
+        <div class="panel-body">
+            <form method="post">
+                <input value="@ViewData["userId"]" name="userId" hidden/>
+                <dl class="dl-horizontal">
+                    <dt>نام کاربری :</dt>
+                    <dd>@Model.User.Username</dd>
+
+                    <dt>ایمیل :</dt>
+                    <dd>@Model.User.Email</dd>
+
+                    <dt>تاریخ ثبت نام :</dt>
+                    <dd>@Model.User.RegisterDate</dd>
+
+                    <dt>موجیدی کیف پول :</dt>
+                    <dd>@Model.User.Wallet</dd>
+                    <input type="submit" value="حذف" class="btn btn-danger" />
+                </dl>
+            </form>
+        </div>
+        <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+</div>

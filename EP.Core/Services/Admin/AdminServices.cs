@@ -3,6 +3,7 @@ using EP.Core.Interfaces.Admin;
 using EP.Domain.Entities.User;
 using EP.Domain.Interfaces.Roles;
 using EP.Domain.Interfaces.User;
+using Microsoft.AspNetCore.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,13 +23,13 @@ namespace EP.Core.Services.Admin
             _roleRepository = roleRepository;
         }
 
-        public UsersForAdminViewModel GetUsersForAdminServices(int currentPage = 1, string filterEmail = "", string filterUsername = "")
+        public UsersForAdminViewModel GetUsersForAdminServices(int currentPage = 1, string filterEmail = "", string filterUsername = "", bool isDelete = false)
         {
             int take = 10;
             int skip = (currentPage - 1) * take;
 
             List<Domain.Entities.User.User> users = new List<Domain.Entities.User.User>();
-            IQueryable<Domain.Entities.User.User> qUsers = _userRepository.GetUsersForAdmin(filterEmail,filterUsername);
+            IQueryable<Domain.Entities.User.User> qUsers = _userRepository.GetUsersForAdmin(filterEmail,filterUsername,isDelete);
 
             int countPage = (qUsers.Count() / take);
 
@@ -135,6 +136,15 @@ namespace EP.Core.Services.Admin
             _roleRepository.SaveChanges();
 
             return user.UserId;
+        }
+
+        public void DeleteUserByUserId(int userId)
+        {
+            Domain.Entities.User.User user = _userRepository.GetUserByUserId(userId);
+
+            user.IsDelete = true;
+
+            _userRepository.SaveChanges();
         }
     }
 }

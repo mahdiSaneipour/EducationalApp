@@ -1,6 +1,7 @@
 ﻿using EP.Domain.Entities.User;
 using EP.Domain.Interfaces.User;
 using EP.Infrastructure.Data.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,9 +66,19 @@ namespace EP.Infrastructure.Data.Repository.User
             return user.UserId;
         }
 
-        public IQueryable<Domain.Entities.User.User> GetUsersForAdmin(string filterEmail, string filterUsername)
+        public IQueryable<Domain.Entities.User.User> GetUsersForAdmin(string filterEmail, string filterUsername, bool isDelete)
         {
-            IQueryable<Domain.Entities.User.User> users = _context.Users;
+            IQueryable<Domain.Entities.User.User> users = null;
+            if (isDelete)
+            {
+                users = _context.Users.IgnoreQueryFilters().Where(u => u.IsDelete);
+            }
+            else
+            {
+                users = _context.Users;
+            }
+
+             
 
             if (!string.IsNullOrEmpty(filterEmail))
             {

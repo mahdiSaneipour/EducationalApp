@@ -1,5 +1,6 @@
 ﻿@page
-@model EP.Web.Pages.Admin.Users.IndexModel
+@model EP.Web.Pages.Admin.Users.DeletedUsersModel
+
 @{
     string filterUsername = HttpContext.Request.Query["filterUsername"] != "" ? HttpContext.Request.Query["filterUsername"] : "";
     string filterEmail = HttpContext.Request.Query["filterEmail"] != "" ? HttpContext.Request.Query["filterEmail"] : "";
@@ -28,8 +29,6 @@
                     </form>
                 </div>
                 <br />
-                <a asp-page="CreateUser" class="btn btn-outline btn-success">ایجاد کاربر جدید</a>
-                <br />
                 <table class="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" aria-describedby="dataTables-example_info">
                     <thead>
                         <tr>
@@ -37,7 +36,6 @@
                             <th>ایمیل</th>
                             <th>وضعیت</th>
                             <th>تاریخ ثبت نام</th>
-                            <th>دستورات</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -57,10 +55,6 @@
                                     }
                                 </td>
                                 <td>@user.RegisterDate.ToSolarCalendar()</td>
-                                <td>
-                                    <a asp-page="EditUser" asp-route-userId="@user.UserId" class="btn btn-warning btn-sm">ویرایش</a>
-                                    <a asp-page="DeleteUser" asp-route-userId="@user.UserId" class="btn btn-danger btn-sm">حذف</a>
-                                </td>
                             </tr>
                         }
                     </tbody>
