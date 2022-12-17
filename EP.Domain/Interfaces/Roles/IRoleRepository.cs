@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EP.Domain.Entities.User;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,13 @@ namespace EP.Domain.Interfaces.Roles
     {
         List<Domain.Entities.User.Role> GetAllRoles();
 
+        List<int> GetUserRolesId(int userId);
+
         int AddUserRole(Domain.Entities.User.UserRole userRole);
+
+        void UpdateUserRoles(int userId, List<UserRole> userRoles);
+
+        void DeleteAllUserRoles(int userId);
 
         void SaveChanges();
     }

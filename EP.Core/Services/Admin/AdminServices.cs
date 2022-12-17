@@ -88,5 +88,53 @@ namespace EP.Core.Services.Admin
         {
             return _roleRepository.GetAllRoles();
         }
+
+        public EditUserAdminViewModel GetEditUserViewModel(int userId)
+        {
+
+            Domain.Entities.User.User user = _userRepository.GetUserByUserId(userId);
+
+            EditUserAdminViewModel model = new EditUserAdminViewModel()
+            {
+                Email = user.Email,
+                userId = user.UserId,
+                Username = user.UserName,
+                SelectedAvatar = user.UserAvatar
+            };
+
+            model.UserRoles = _roleRepository.GetUserRolesId(userId);
+
+            return model;
+        }
+
+        public int EditUserFromAdmin(EditUserAdminViewModel model, List<int> userRoles)
+        {
+            Console.WriteLine("user avatar : " + model.SelectedAvatar);
+            Domain.Entities.User.User user = _userRepository.GetUserByUserId(model.userId);
+
+            user.UserName = model.Username;
+            user.UserAvatar = model.SelectedAvatar;
+
+            if (!string.IsNullOrEmpty(model.Password))
+            {
+                user.Password = Tools.Security.PasswordHelper.EncodePasswordMd5(model.Password);
+            }
+
+            List<UserRole> roles = new List<UserRole>();
+
+            foreach (var roleId in userRoles)
+            {
+                roles.Add(new UserRole()
+                {
+                    RoleId = roleId,
+                    UserId = user.UserId
+                });
+            }
+
+            _roleRepository.UpdateUserRoles(user.UserId,roles);
+            _roleRepository.SaveChanges();
+
+            return user.UserId;
+        }
     }
 }

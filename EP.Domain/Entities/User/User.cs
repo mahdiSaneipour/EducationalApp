@@ -41,6 +41,10 @@ namespace EP.Domain.Entities.User
         [Display(Name = "وضعیت کاربر")]
         public bool IsActive { get; set; }
 
+        [Required]
+        [Display(Name = "حذف کاربر")]
+        public bool IsDelete { get; set; }
+
         [Display(Name = "کد کاربر")]
         [MaxLength(200, ErrorMessage = "{0} نمیتواند بیشتر از {1} کاراکتر باشد")]
         public string UserCode { get; set; }

@@ -1,0 +1,82 @@
+﻿@page "{userId}"
+@model EP.Web.Pages.Admin.Users.EditUserModel
+
+@{
+    ViewData["Title"] = "ویرایش کاربر";
+    List<EP.Domain.Entities.User.Role> roles = ViewData["Roles"] as List<EP.Domain.Entities.User.Role>;
+}
+
+<link rel="stylesheet" href="/cropper/css/cropper.css">
+
+<main class="background-cover">
+    <div class="row">
+        <form method="post" enctype="multipart/form-data">
+            <div class="col-md-8">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        اطلاعات کاربر
+                    </div>
+                    <div class="panel-body">
+                        <input asp-for="EditUserAdminViewModel.userId" hidden/>
+                        <div class="form-group">
+                            <label>نام کاربری</label>
+                            <input asp-for="EditUserAdminViewModel.Username" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>ایمیل</label>
+                            <input asp-for="EditUserAdminViewModel.Email" class="form-control" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>رمز عبور</label>
+                            <input asp-for="EditUserAdminViewModel.Password" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label>نقش های کاربر</label>
+
+                            @foreach (var role in roles)
+                            {
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="userRoles" type="checkbox" value="@role.RoleId" @(Model.EditUserAdminViewModel.UserRoles.Any(r => r == role.RoleId) ? "checked" : "")>@role.RoleName
+                                    </label>
+                                </div>
+                            }
+
+                        </div>
+
+                        <button class="btn btn-success">ذخیره اطلاعات</button>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        تصویر کاربر
+                    </div>
+                    <div class="panel-body">
+                        <div style="text-align: center;">
+
+                            <div style="width:100%">
+                                <img style="width:100%; height:100%" id="image" src="/images/profile-images/@Model.EditUserAdminViewModel.SelectedAvatar" />
+                            </div>
+
+                            <input name="SelectedAvatarFile" id="file" type="file" class="cropper-hidden" />
+                            <input name="PreviousSelectedAvatar" type="text" id="previous-selected-avatar" value="NoPreviousAvatar" hidden />
+
+                            <input id="user-avatar" asp-for="EditUserAdminViewModel.SelectedAvatar" hidden/>
+
+                            <button form="" id="save-profile" style="padding:5px; border-radius:5px; background-color:green; color:white; border:none; margin-top:20px;">ثبت عکس</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+@section Scripts {
+    <script type="module" src="/cropper/js/cropper.js"></script>
+    <script type="module" src="/js/edit-profile/edit-profile.js"></script>
+}

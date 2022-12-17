@@ -16,5 +16,9 @@ namespace EP.Core.Interfaces.Admin
         List<Domain.Entities.User.Role> GetAllRoles();
 
         int CreateUserFromAdmin(CreateUserViewModel model);
+
+        int EditUserFromAdmin(EditUserAdminViewModel model,List<int> userRoles);
+
+        EditUserAdminViewModel GetEditUserViewModel(int userId);
     }
 }

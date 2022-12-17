@@ -29,6 +29,24 @@ namespace EP.Infrastructure.Data.Repository.Roles
             return _context.Roles.ToList();
         }
 
+        public List<int> GetUserRolesId(int userId)
+        {
+            return _context.UserRoles.Where(r => r.UserId == userId).Select(r => r.RoleId).ToList();
+        }
+
+        public void DeleteAllUserRoles(int userId)
+        {
+            _context.UserRoles.Where(r => r.UserId == userId).ToList()
+                .ForEach(r => _context.UserRoles.Remove(r));
+        }
+
+        public void UpdateUserRoles(int userId, List<UserRole> userRoles)
+        {
+            DeleteAllUserRoles(userId);
+
+            _context.UserRoles.AddRange(userRoles);
+        }
+
         public void SaveChanges()
         {
             _context.SaveChanges();

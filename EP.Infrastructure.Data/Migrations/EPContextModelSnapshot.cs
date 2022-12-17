@@ -56,6 +56,9 @@ namespace EP.Infrastructure.Data.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(200)
