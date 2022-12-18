@@ -1,4 +1,5 @@
 ﻿using EP.Core.DTOs.AdminPanelViewModels;
+using EP.Domain.Entities.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,12 @@ namespace EP.Core.Interfaces.Admin
 
         void AddRolesToUser(List<int> userRoles, int userId);
 
+        void AddRole(CreateRoleViewModel role,List<int> permissions);
+
+        EditRoleViewModel GetRoleByRoleId(int roleId);
+
+        int EditRole(EditRoleViewModel role, List<int> permissions);
+
         List<Domain.Entities.User.Role> GetAllRoles();
 
         int CreateUserFromAdmin(CreateUserViewModel model);
@@ -22,5 +29,7 @@ namespace EP.Core.Interfaces.Admin
         int EditUserFromAdmin(EditUserAdminViewModel model,List<int> userRoles);
 
         EditUserAdminViewModel GetEditUserViewModel(int userId);
+
+        void RemoveRole(EditRoleViewModel role);
     }
 }

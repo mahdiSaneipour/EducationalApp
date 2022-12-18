@@ -19,6 +19,17 @@ namespace EP.Domain.Interfaces.Roles
 
         void DeleteAllUserRoles(int userId);
 
+        #region Roles
+        int AddRole(Role role);
+
+        void RemoveRole(Role role);
+
+        void UpdateRole(Role role);
+
+        Role GetRole(int roleId);
+
+        #endregion
+
         void SaveChanges();
     }
 }

@@ -46,6 +46,27 @@ namespace EP.Infrastructure.Data.Repository.Roles
 
             _context.UserRoles.AddRange(userRoles);
         }
+        public int AddRole(Role role)
+        {
+            _context.Roles.Add(role);
+
+            return role.RoleId;
+        }
+
+        public void RemoveRole(Role role)
+        {
+            _context.Roles.Remove(role);
+        }
+
+        public void UpdateRole(Role role)
+        {
+            _context.Roles.Update(role);
+        }
+
+        public Role GetRole(int roleId)
+        {
+            return _context.Roles.First(r => r.RoleId == roleId);
+        }
 
         public void SaveChanges()
         {

@@ -146,5 +146,59 @@ namespace EP.Core.Services.Admin
 
             _userRepository.SaveChanges();
         }
+
+        public void AddRole(CreateRoleViewModel role, List<int> permissions)
+        {
+
+            Role newRole = new Role()
+            {
+                RoleName = role.roleName
+            };
+
+            _roleRepository.AddRole(newRole);
+            _roleRepository.SaveChanges();
+            
+            // Add Permission
+        }
+
+        public EditRoleViewModel GetRoleByRoleId(int roleId)
+        {
+            Role role = _roleRepository.GetRole(roleId);
+
+            EditRoleViewModel result = new EditRoleViewModel()
+            {
+                roleId = role.RoleId,
+                roleName = role.RoleName
+            };
+
+            return result;
+        }
+
+        public int EditRole(EditRoleViewModel role, List<int> permissions)
+        {
+
+            Role editRole = _roleRepository.GetRole(role.roleId);
+
+            editRole.RoleName = role.roleName;
+
+            _roleRepository.UpdateRole(editRole);
+
+            // Edit permissions
+
+            _roleRepository.SaveChanges();
+
+            return editRole.RoleId;
+        }
+
+        public void RemoveRole(EditRoleViewModel role)
+        {
+            Role deleteRole = new Role() {
+                RoleName = role.roleName,
+                RoleId = role.roleId
+            };
+
+            _roleRepository.RemoveRole(deleteRole);
+            _roleRepository.SaveChanges();
+        }
     }
 }

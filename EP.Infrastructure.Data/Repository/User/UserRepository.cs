@@ -78,8 +78,6 @@ namespace EP.Infrastructure.Data.Repository.User
                 users = _context.Users;
             }
 
-             
-
             if (!string.IsNullOrEmpty(filterEmail))
             {
                 users = users.Where(u => u.Email.Contains(filterEmail));
