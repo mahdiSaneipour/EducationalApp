@@ -1,6 +1,8 @@
 ﻿@page "{roleId}"
 @model EP.Web.Pages.Admin.Roles.EditRoleModel
 @{
+    List<Permission> permissions = ViewData["Permissions"] as List<Permission>;
+    List<int> rolePermissions = ViewData["RolePermissions"] as List<int>;
 }
 
 <main class="background-cover">
@@ -29,6 +31,52 @@
                         دسترسی نقش
                     </div>
                     <div class="panel-body">
+
+                        <ul>
+                            @foreach (var permission in permissions.Where(p => p.ParentId == null))
+                            {
+                                <li>
+
+                                    <input type="checkbox" name="selectedPermissions" value="@permission.PermissionId" @((rolePermissions.Any(r => r == permission.PermissionId) ? "checked" : "")) /> @permission.PermissionName
+
+                                    @if (permissions.Any(p => p.ParentId == permission.PermissionId))
+                                    {
+
+                                        <ul>
+
+                                            @foreach (var sub in permissions.Where(p => p.ParentId == permission.PermissionId))
+                                            {
+                                                <li>
+                                                    <input type="checkbox" name="selectedPermissions" value="@sub.PermissionId"  @((rolePermissions.Any(r => r == sub.PermissionId) ? "checked" : ""))/> @sub.PermissionName
+
+                                                    @if (permissions.Any(p => p.ParentId == sub.PermissionId))
+                                                    {
+
+                                                        <ul>
+
+                                                            @foreach (var sub2 in permissions.Where(p => p.ParentId == sub.PermissionId))
+                                                            {
+                                                                <li>
+                                                                    <input type="checkbox" name="selectedPermissions" value="@sub2.PermissionId" @((rolePermissions.Any(r => r == sub2.PermissionId) ? "checked" : "")) /> @sub2.PermissionName
+                                                                </li>
+                                                            }
+
+                                                        </ul>
+
+                                                    }
+
+                                                </li>
+
+                                            }
+
+                                        </ul>
+
+                                    }
+
+                                </li>
+                            }
+                        </ul>
+
                     </div>
                 </div>
             </div>

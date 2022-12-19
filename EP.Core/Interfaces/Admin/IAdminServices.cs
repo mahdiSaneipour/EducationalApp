@@ -1,4 +1,5 @@
 ﻿using EP.Core.DTOs.AdminPanelViewModels;
+using EP.Domain.Entities.Permission;
 using EP.Domain.Entities.User;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,10 @@ namespace EP.Core.Interfaces.Admin
         int EditUserFromAdmin(EditUserAdminViewModel model,List<int> userRoles);
 
         EditUserAdminViewModel GetEditUserViewModel(int userId);
+
+        List<Permission> GetAllPermissions();
+
+        List<int> GetRolePermissionsByRoleId(int roleId);
 
         void RemoveRole(EditRoleViewModel role);
     }

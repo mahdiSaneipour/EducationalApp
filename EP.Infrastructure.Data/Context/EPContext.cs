@@ -1,4 +1,5 @@
-﻿using EP.Domain.Entities.User;
+﻿using EP.Domain.Entities.Permission;
+using EP.Domain.Entities.User;
 using EP.Domain.Entities.Wallet;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -32,6 +33,14 @@ namespace EP.Infrastructure.Data.Context
         public DbSet<Wallet> Wallets { get; set; }
 
         public DbSet<WalletType> WalletTypes { get; set; }
+
+        #endregion
+
+        #region Permissions
+
+        public DbSet<Permission> Permissions { get; set; }
+
+        public DbSet<RolePermission> RolePermissions { get; set; }
 
         #endregion
 

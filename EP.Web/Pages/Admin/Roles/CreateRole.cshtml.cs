@@ -19,15 +19,13 @@ namespace EP.Web.Pages.Admin.Roles
 
         public void OnGet()
         {
-
+            Console.WriteLine(_adminServices.GetAllPermissions()[0].PermissionName);
+            ViewData["Permissions"] = _adminServices.GetAllPermissions();
         }
 
-        public IActionResult OnPost(List<int> permissions)
+        public IActionResult OnPost(List<int> selectedPermissions)
         {
-
-
-
-            _adminServices.AddRole(Role, permissions);
+            _adminServices.AddRole(Role, selectedPermissions);
 
             return RedirectToPage("Index");
 

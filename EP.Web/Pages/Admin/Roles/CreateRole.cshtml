@@ -1,6 +1,7 @@
 ﻿@page
 @model EP.Web.Pages.Admin.Roles.CreateRoleModel
 @{
+    List<Permission> permissions = ViewData["Permissions"] as List<Permission>;
 }
 
 <main class="background-cover">
@@ -28,6 +29,50 @@
                         دسترسی نقش
                     </div>
                     <div class="panel-body">
+
+                        <ul>
+                            @foreach (var permission in permissions.Where(p => p.ParentId == null))
+                            {
+                                <li>
+
+                                    <input type="checkbox" name="selectedPermissions" value="@permission.PermissionId"/> @permission.PermissionName
+
+                                    @if(permissions.Any(p => p.ParentId == permission.PermissionId)){
+
+                                        <ul>
+
+                                            @foreach (var sub in permissions.Where(p => p.ParentId == permission.PermissionId))
+                                            {
+                                                <li>
+                                                    <input type="checkbox" name="selectedPermissions" value="@sub.PermissionId"/> @sub.PermissionName
+
+                                                    @if (permissions.Any(p => p.ParentId == sub.PermissionId))
+                                                    {
+
+                                                        <ul>
+
+                                                            @foreach (var sub2 in permissions.Where(p => p.ParentId == sub.PermissionId))
+                                                            {
+                                                                <li>
+                                                                    <input type="checkbox" name="selectedPermissions" value="@sub2.PermissionId"/> @sub2.PermissionName
+                                                                </li>
+                                                            }
+
+                                                        </ul>
+
+                                                    }
+
+                                                </li>
+
+                                            }
+
+                                        </ul>
+
+                                    }
+
+                                </li>
+                            }
+                        </ul>
 
                     </div>
                 </div>

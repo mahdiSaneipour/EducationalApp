@@ -1,8 +1,10 @@
-﻿using EP.Domain.Entities.User;
+﻿using EP.Domain.Entities.Permission;
+using EP.Domain.Entities.User;
 using EP.Domain.Interfaces.Roles;
 using EP.Infrastructure.Data.Context;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -66,6 +68,37 @@ namespace EP.Infrastructure.Data.Repository.Roles
         public Role GetRole(int roleId)
         {
             return _context.Roles.First(r => r.RoleId == roleId);
+        }
+
+        public List<Permission> GetAllPermissions()
+        {
+            return _context.Permissions.ToList();
+        }
+
+        public void DeleteRolePermissionsByRoleId(int roleId)
+        {
+            _context.RolePermissions.Where(r => r.RoleId == roleId).ToList()
+                .ForEach(rolePermission =>
+                {
+                    _context.Remove(rolePermission);
+                });
+        }
+
+        public void AddRolePermissions(int roleId, List<int> rolePermissions)
+        {
+            foreach(int rolePermission in rolePermissions)
+            {
+                _context.RolePermissions.Add(new RolePermission()
+                {
+                    PermissionId = rolePermission,
+                    RoleId = roleId
+                });
+            }
+        }
+        public List<int> GetRolePermissionsIdByRoleId(int roleId)
+        {
+            return _context.RolePermissions.Where(r => r.RoleId == roleId)
+                .Select(r => r.PermissionId).ToList();
         }
 
         public void SaveChanges()

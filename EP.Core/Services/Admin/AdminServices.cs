@@ -1,5 +1,6 @@
 ﻿using EP.Core.DTOs.AdminPanelViewModels;
 using EP.Core.Interfaces.Admin;
+using EP.Domain.Entities.Permission;
 using EP.Domain.Entities.User;
 using EP.Domain.Interfaces.Roles;
 using EP.Domain.Interfaces.User;
@@ -157,8 +158,10 @@ namespace EP.Core.Services.Admin
 
             _roleRepository.AddRole(newRole);
             _roleRepository.SaveChanges();
-            
-            // Add Permission
+
+            _roleRepository.AddRolePermissions(newRole.RoleId, permissions);
+            _roleRepository.SaveChanges();
+
         }
 
         public EditRoleViewModel GetRoleByRoleId(int roleId)
@@ -176,15 +179,15 @@ namespace EP.Core.Services.Admin
 
         public int EditRole(EditRoleViewModel role, List<int> permissions)
         {
+            int roleId = role.roleId;
 
-            Role editRole = _roleRepository.GetRole(role.roleId);
+            Role editRole = _roleRepository.GetRole(roleId);
 
             editRole.RoleName = role.roleName;
 
             _roleRepository.UpdateRole(editRole);
-
-            // Edit permissions
-
+            _roleRepository.DeleteRolePermissionsByRoleId(roleId);
+            _roleRepository.AddRolePermissions(roleId, permissions);
             _roleRepository.SaveChanges();
 
             return editRole.RoleId;
@@ -199,6 +202,16 @@ namespace EP.Core.Services.Admin
 
             _roleRepository.RemoveRole(deleteRole);
             _roleRepository.SaveChanges();
+        }
+
+        public List<Permission> GetAllPermissions()
+        {
+            return _roleRepository.GetAllPermissions();
+        }
+
+        public List<int> GetRolePermissionsByRoleId(int roleId)
+        {
+            return _roleRepository.GetRolePermissionsIdByRoleId(roleId);
         }
     }
 }

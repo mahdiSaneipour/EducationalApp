@@ -1,4 +1,5 @@
-﻿using EP.Domain.Entities.User;
+﻿using EP.Domain.Entities.Permission;
+using EP.Domain.Entities.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,18 @@ namespace EP.Domain.Interfaces.Roles
         void UpdateRole(Role role);
 
         Role GetRole(int roleId);
+
+        #endregion
+
+        #region Permissions
+
+        List<Permission> GetAllPermissions();
+
+        void AddRolePermissions(int roleId, List<int> rolePermissions);
+
+        void DeleteRolePermissionsByRoleId(int roleId);
+
+        List<int> GetRolePermissionsIdByRoleId(int roleId);
 
         #endregion
 

@@ -21,11 +21,13 @@ namespace EP.Web.Pages.Admin.Roles
         public void OnGet(int roleId)
         {
             Role = _adminServices.GetRoleByRoleId(roleId);
+            ViewData["Permissions"] = _adminServices.GetAllPermissions();
+            ViewData["RolePermissions"] = _adminServices.GetRolePermissionsByRoleId(roleId);
         }
 
-        public IActionResult OnPost(List<int> permissions)
+        public IActionResult OnPost(List<int> selectedPermissions)
         {
-            _adminServices.EditRole(Role, permissions);
+            _adminServices.EditRole(Role, selectedPermissions);
 
             return RedirectToPage("Index");
         }

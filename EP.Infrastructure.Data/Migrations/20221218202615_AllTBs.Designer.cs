@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EP.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(EPContext))]
-    [Migration("20221215195344_UpdateUserRoles")]
-    partial class UpdateUserRoles
+    [Migration("20221218202615_AllTBs")]
+    partial class AllTBs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,52 @@ namespace EP.Infrastructure.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("EP.Domain.Entities.Permission.Permission", b =>
+                {
+                    b.Property<int>("PermissionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PermissionId"), 1L, 1);
+
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PermissionName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("PermissionId");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("Permissions");
+                });
+
+            modelBuilder.Entity("EP.Domain.Entities.Permission.RolePermission", b =>
+                {
+                    b.Property<int>("RP_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RP_Id"), 1L, 1);
+
+                    b.Property<int>("PermissionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RP_Id");
+
+                    b.HasIndex("PermissionId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("RolePermissions");
+                });
 
             modelBuilder.Entity("EP.Domain.Entities.User.Role", b =>
                 {
@@ -56,6 +102,9 @@ namespace EP.Infrastructure.Data.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
                     b.Property<string>("Password")
@@ -161,6 +210,32 @@ namespace EP.Infrastructure.Data.Migrations
                     b.ToTable("WalletTypes");
                 });
 
+            modelBuilder.Entity("EP.Domain.Entities.Permission.Permission", b =>
+                {
+                    b.HasOne("EP.Domain.Entities.Permission.Permission", null)
+                        .WithMany("Parent")
+                        .HasForeignKey("ParentId");
+                });
+
+            modelBuilder.Entity("EP.Domain.Entities.Permission.RolePermission", b =>
+                {
+                    b.HasOne("EP.Domain.Entities.Permission.Permission", "Permission")
+                        .WithMany("RolePermissions")
+                        .HasForeignKey("PermissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EP.Domain.Entities.User.Role", "Role")
+                        .WithMany("RolePermissions")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Permission");
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("EP.Domain.Entities.User.UserRole", b =>
                 {
                     b.HasOne("EP.Domain.Entities.User.Role", "Role")
@@ -199,8 +274,17 @@ namespace EP.Infrastructure.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("EP.Domain.Entities.Permission.Permission", b =>
+                {
+                    b.Navigation("Parent");
+
+                    b.Navigation("RolePermissions");
+                });
+
             modelBuilder.Entity("EP.Domain.Entities.User.Role", b =>
                 {
+                    b.Navigation("RolePermissions");
+
                     b.Navigation("UserRoles");
                 });
 
