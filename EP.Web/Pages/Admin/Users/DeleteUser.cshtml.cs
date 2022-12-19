@@ -1,11 +1,13 @@
 using EP.Core.DTOs.UserPanelViewModels;
 using EP.Core.Interfaces.Admin;
 using EP.Core.Interfaces.User;
+using EP.Core.Tools.Security;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EP.Web.Pages.Admin.Users
 {
+    [PermissionChecker(9)]
     public class DeleteUserModel : PageModel
     {
         private readonly IUserPanelServices _userPanelServices;

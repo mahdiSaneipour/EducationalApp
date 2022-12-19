@@ -36,5 +36,7 @@ namespace EP.Core.Interfaces.Admin
         List<int> GetRolePermissionsByRoleId(int roleId);
 
         void RemoveRole(EditRoleViewModel role);
+
+        bool CheckPermission(int permission, int userId);
     }
 }

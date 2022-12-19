@@ -14,12 +14,13 @@ namespace EP.Domain.Interfaces.Roles
 
         List<int> GetUserRolesId(int userId);
 
+        List<int> GetRolesIdByPermissionId(int permissionId);
+
         int AddUserRole(Domain.Entities.User.UserRole userRole);
 
         void UpdateUserRoles(int userId, List<UserRole> userRoles);
 
         void DeleteAllUserRoles(int userId);
-
         #region Roles
         int AddRole(Role role);
 

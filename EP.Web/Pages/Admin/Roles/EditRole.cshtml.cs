@@ -1,10 +1,12 @@
 using EP.Core.DTOs.AdminPanelViewModels;
 using EP.Core.Interfaces.Admin;
+using EP.Core.Tools.Security;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EP.Web.Pages.Admin.Roles
 {
+    [PermissionChecker(8)]
     public class EditRoleModel : PageModel
     {
 

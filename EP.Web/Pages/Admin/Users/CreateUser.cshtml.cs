@@ -1,5 +1,6 @@
 using EP.Core.DTOs.AdminPanelViewModels;
 using EP.Core.Interfaces.Admin;
+using EP.Core.Tools.Security;
 using EP.Domain.Interfaces.Roles;
 using EP.Domain.Interfaces.User;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 
 namespace EP.Web.Pages.Admin.Users
 {
+    [PermissionChecker(3)]
     public class CreateUserModel : PageModel
     {
         private readonly IUserRepository _userRepository;

@@ -101,6 +101,12 @@ namespace EP.Infrastructure.Data.Repository.Roles
                 .Select(r => r.PermissionId).ToList();
         }
 
+        public List<int> GetRolesIdByPermissionId(int permissionId)
+        {
+            return _context.RolePermissions.Where(r => r.PermissionId == permissionId)
+                .Select(r => r.RoleId).ToList();
+        }
+
         public void SaveChanges()
         {
             _context.SaveChanges();

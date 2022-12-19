@@ -209,6 +209,20 @@ namespace EP.Core.Services.Admin
             return _roleRepository.GetAllPermissions();
         }
 
+        public bool CheckPermission(int permission, int userId)
+        {
+            List<int> userRoles = _roleRepository.GetUserRolesId(userId);
+            List<int> rolePermissions = _roleRepository.GetRolesIdByPermissionId(permission);
+
+            if (rolePermissions.Any(r => userRoles.Contains(r)))
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
+
         public List<int> GetRolePermissionsByRoleId(int roleId)
         {
             return _roleRepository.GetRolePermissionsIdByRoleId(roleId);
