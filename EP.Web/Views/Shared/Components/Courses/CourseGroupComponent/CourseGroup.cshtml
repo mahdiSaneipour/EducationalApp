@@ -1,0 +1,23 @@
+﻿@model List<EP.Domain.Entities.Course.CourseGroupe>
+
+<div class="container">
+    <nav>
+        <span class="responsive-sign"><i class="zmdi zmdi-menu"></i></span>
+        <ul>
+            @foreach (var courseGroup in Model.Where(c => c.ParentId == null))
+            {
+                <li>
+                    <a href="">@courseGroup.GroupeName</a>
+                    @if(Model.Any(c => c.ParentId == courseGroup.CP_Id)){
+                        <ul>
+                            @foreach (var sub in Model.Where(c => c.ParentId == courseGroup.CP_Id))
+                            {
+                                <li><a href="">@sub.GroupeName</a></li>
+                            }
+                        </ul>
+                    }
+                </li>
+            }
+        </ul>
+    </nav>
+</div>

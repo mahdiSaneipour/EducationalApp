@@ -1,14 +1,18 @@
 using EP.Core.Interfaces.Admin;
+using EP.Core.Interfaces.Course;
 using EP.Core.Interfaces.User;
 using EP.Core.Interfaces.Wallet;
 using EP.Core.Services.Admin;
+using EP.Core.Services.Course;
 using EP.Core.Services.User;
 using EP.Core.Services.Wallet;
 using EP.Core.Tools.RenderViewToString;
+using EP.Domain.Interfaces.Course;
 using EP.Domain.Interfaces.Roles;
 using EP.Domain.Interfaces.User;
 using EP.Domain.Interfaces.Wallet;
 using EP.Infrastructure.Data.Context;
+using EP.Infrastructure.Data.Repository.Course;
 using EP.Infrastructure.Data.Repository.Roles;
 using EP.Infrastructure.Data.Repository.User;
 using EP.Infrastructure.Data.Repository.Wallet;
@@ -58,6 +62,7 @@ services.AddAuthentication(options => {
 services.AddScoped<IUserAccountServices, UserAccountServices>();
 services.AddScoped<IViewRenderService, RenderViewToString>();
 services.AddScoped<IUserPanelServices, UserPanelServices>();
+services.AddScoped<ICourseServices, CourseServices>();
 services.AddScoped<IWalletServices, WalletServices>();
 services.AddScoped<IAdminServices, AdminServices>();
 
@@ -66,6 +71,7 @@ services.AddScoped<IAdminServices, AdminServices>();
 #region Injection In EPDomain
 
 services.AddScoped<IWalletRepository, WalletRepository>();
+services.AddScoped<ICourseRepository, CourseRepository>();
 services.AddScoped<IUserRepository, UserRepository>();
 services.AddScoped<IRoleRepository, RoleRepository>();
 

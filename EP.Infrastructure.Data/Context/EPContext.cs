@@ -1,4 +1,5 @@
-﻿using EP.Domain.Entities.Permission;
+﻿using EP.Domain.Entities.Course;
+using EP.Domain.Entities.Permission;
 using EP.Domain.Entities.User;
 using EP.Domain.Entities.Wallet;
 using Microsoft.EntityFrameworkCore;
@@ -41,6 +42,12 @@ namespace EP.Infrastructure.Data.Context
         public DbSet<Permission> Permissions { get; set; }
 
         public DbSet<RolePermission> RolePermissions { get; set; }
+
+        #endregion
+
+        #region
+
+        public DbSet<CourseGroupe> CourseGroupes { get; set; }
 
         #endregion
 
