@@ -1,6 +1,7 @@
 ﻿@page
 @model EP.Web.Pages.Admin.Users.IndexModel
 @{
+    ViewData["Title"] = "کاربران";
     string filterUsername = HttpContext.Request.Query["filterUsername"] != "" ? HttpContext.Request.Query["filterUsername"] : "";
     string filterEmail = HttpContext.Request.Query["filterEmail"] != "" ? HttpContext.Request.Query["filterEmail"] : "";
 }

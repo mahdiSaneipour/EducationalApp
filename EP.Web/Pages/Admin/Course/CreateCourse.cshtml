@@ -1,0 +1,111 @@
+﻿@page
+@model EP.Web.Pages.Admin.Course.CreateCourseModel
+@{
+    ViewData["Title"] = "افزودن دوره";
+    SelectList groups = ViewData["Groups"] as SelectList;
+}
+
+<link rel="stylesheet" href="/cropper/css/cropper.css">
+
+<main class="background-cover">
+    <div class="row">
+        <form method="post" enctype="multipart/form-data">
+            <div class="col-md-8">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        اطلاعات کاربر
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>نام دوره</label>
+                            <input asp-for="Course.CourseName" class="form-control">
+                            <span asp-validation-for="Course.CourseName"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>قیمت دوره</label>
+                            <input type="number" asp-for="Course.CoursePrice" class="form-control">
+                            <span asp-validation-for="Course.CoursePrice"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>کلمات کلیدی</label>
+                            <input asp-for="Course.Tags" class="form-control">
+                            <p class="help-block">کلمات را با - جدا کنید</p>
+                            <span asp-validation-for="Course.Tags"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>شرح دوره</label>
+                            <textarea class="form-control" asp-for="Course.CourseDescription" rows="10">
+                            </textarea>
+                            <span asp-validation-for="Course.CourseDescription"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>گروه اصلی</label>
+                            <select class="form-control" asp-for="Course.GroupId" asp-items="groups"></select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>زیر گروه</label>
+                            <select class="form-control" asp-for="Course.SubGroupId" asp-items="groups"></select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>وضعیت دوره</label>
+                            <select class="form-control" asp-for="Course.StatusId" asp-items="groups"></select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>سطح دوره</label>
+                            <select class="form-control" asp-for="Course.LevelId" asp-items="groups"></select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>مدرس دوره</label>
+                            <select class="form-control" asp-for="Course.TeacherId" asp-items="groups"></select>
+                        </div>
+
+                        <button class="btn btn-success">ذخیره اطلاعات</button>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        فایل ها
+                    </div>
+                    <div class="panel-body">
+                        <div style="text-align: center;">
+
+                            <div style="width:100%">
+                                <img style="width:100%; height:100%" id="image" src="/images/profile-images/Default.jpg" />
+                            </div>
+
+                            <input name="SelectedAvatarFile" id="file" type="file" class="cropper-hidden" />
+                            <input name="PreviousSelectedAvatar" type="text" id="previous-selected-avatar" value="NoPreviousAvatar" hidden />
+
+                            <input id="user-avatar" asp-for="Course.CourseImage" hidden />
+
+                            <button form="" id="save-profile" style="padding:5px; border-radius:5px; background-color:green; color:white; border:none; margin-top:20px;">ثبت عکس</button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div style="text-align: center;">
+                            <label>فایل دمو</label>
+                            <input type="file" name="CourseDemo"/>
+                            <span asp-validation-for="Course.CourseDemo"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+@section Scripts {
+    <script type="module" src="/cropper/js/cropper.js"></script>
+    <script type="module" src="/js/edit-profile/edit-profile.js"></script>
+}
