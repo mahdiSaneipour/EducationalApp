@@ -17,7 +17,7 @@ namespace EP.Web.Components.Course
         public async Task<IViewComponentResult> InvokeAsync()
         {
 
-            List<CourseGroupe> courseGroupes = _courseServices.GetAllCourseGroups();
+            List<CourseGroup> courseGroupes = _courseServices.GetAllCourseGroups();
 
             return await Task.FromResult((IViewComponentResult) View("../Courses/CourseGroupComponent/CourseGroup",courseGroupes));
         }

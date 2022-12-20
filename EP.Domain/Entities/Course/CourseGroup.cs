@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace EP.Domain.Entities.Course
 {
-    public class CourseGroupe
+    public class CourseGroup
     {
         [Key]
-        public int CP_Id { get; set; }
+        public int GroupId { get; set; }
 
         [Display(Name = "نام گروه")]
         [Required(ErrorMessage = "فیلد {0} نمیتواند خالی باشد")]
@@ -27,7 +27,13 @@ namespace EP.Domain.Entities.Course
         #region Relations
 
         [ForeignKey("ParentId")]
-        public List<CourseGroupe> CourseGroupes { get; set; }
+        public List<CourseGroup> Parent { get; set; }
+
+        [InverseProperty("CourseGroup")]
+        public List<Course> CoursesGroupes { get; set; }
+
+        [InverseProperty("CourseSubGroup")]
+        public List<Course> CoursesSubGroupes { get; set; }
 
         #endregion
     }

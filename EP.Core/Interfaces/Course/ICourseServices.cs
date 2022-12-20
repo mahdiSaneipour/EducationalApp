@@ -9,6 +9,6 @@ namespace EP.Core.Interfaces.Course
 {
     public interface ICourseServices
     {
-        public List<CourseGroupe> GetAllCourseGroups();
+        public List<CourseGroup> GetAllCourseGroups();
     }
 }

@@ -47,14 +47,27 @@ namespace EP.Infrastructure.Data.Context
 
         #region
 
-        public DbSet<CourseGroupe> CourseGroupes { get; set; }
+        public DbSet<Course> Courses { get; set; }
+
+        public DbSet<CourseGroup> CourseGroupes { get; set; }
+
+        public DbSet<CourseEpisode> Episodes { get; set; }
+
+        public DbSet<CourseLevel> Levels { get; set; }
+
+        public DbSet<CourseStatus> Statuses { get; set; }
 
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             modelBuilder.Entity<User>().HasQueryFilter(u => !u.IsDelete);
+            modelBuilder.Entity<CourseGroup>().HasQueryFilter(u => !u.IsDelete);
+
+            modelBuilder.Entity<Course>()
+                .HasOne(x => x.CourseSubGroup)
+                .WithMany(x => x.CoursesSubGroupes)
+                .HasForeignKey(x => x.SubGroupId).OnDelete(DeleteBehavior.ClientSetNull);
 
             base.OnModelCreating(modelBuilder);
         }

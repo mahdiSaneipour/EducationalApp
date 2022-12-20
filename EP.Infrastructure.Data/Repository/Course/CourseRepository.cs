@@ -19,7 +19,7 @@ namespace EP.Infrastructure.Data.Repository.Course
             _context = context;
         }
 
-        public List<CourseGroupe> GetAllCourseGroups()
+        public List<CourseGroup> GetAllCourseGroups()
         {
             return _context.CourseGroupes.ToList();
         }

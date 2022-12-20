@@ -1,4 +1,5 @@
-﻿using EP.Domain.Entities.Wallet;
+﻿using EP.Domain.Entities.Course;
+using EP.Domain.Entities.Wallet;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -58,6 +59,8 @@ namespace EP.Domain.Entities.User
         public virtual List<UserRole> UserRoles { get; set; }
 
         public virtual ICollection<Wallet.Wallet> Wallets { get; set; }
+
+        public List<Course.Course> Courses { get; set; }
 
         #endregion
     }

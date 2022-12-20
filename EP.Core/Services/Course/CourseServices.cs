@@ -18,7 +18,7 @@ namespace EP.Core.Services.Course
             _courseRepository = courseRepository;
         }
 
-        public List<CourseGroupe> GetAllCourseGroups()
+        public List<CourseGroup> GetAllCourseGroups()
         {
             return _courseRepository.GetAllCourseGroups();
         }

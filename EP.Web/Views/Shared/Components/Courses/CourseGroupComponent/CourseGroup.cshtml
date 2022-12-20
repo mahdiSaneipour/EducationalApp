@@ -1,4 +1,4 @@
-﻿@model List<EP.Domain.Entities.Course.CourseGroupe>
+﻿@model List<EP.Domain.Entities.Course.CourseGroup>
 
 <div class="container">
     <nav>
@@ -8,9 +8,9 @@
             {
                 <li>
                     <a href="">@courseGroup.GroupeName</a>
-                    @if(Model.Any(c => c.ParentId == courseGroup.CP_Id)){
+                    @if(Model.Any(c => c.ParentId == courseGroup.GroupId)){
                         <ul>
-                            @foreach (var sub in Model.Where(c => c.ParentId == courseGroup.CP_Id))
+                            @foreach (var sub in Model.Where(c => c.ParentId == courseGroup.GroupId))
                             {
                                 <li><a href="">@sub.GroupeName</a></li>
                             }

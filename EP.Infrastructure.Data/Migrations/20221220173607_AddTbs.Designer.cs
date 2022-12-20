@@ -12,17 +12,182 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EP.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(EPContext))]
-    [Migration("20221218202615_AllTBs")]
-    partial class AllTBs
+    [Migration("20221220173607_AddTbs")]
+    partial class AddTbs
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.10")
+                .HasAnnotation("ProductVersion", "7.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("EP.Domain.Entities.Course.Course", b =>
+                {
+                    b.Property<int>("CourseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CourseId"));
+
+                    b.Property<string>("CourseDemo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CourseDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CourseImage")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("CourseName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("CoursePrice")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LevelId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Tags")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("CourseId");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("LevelId");
+
+                    b.HasIndex("StatusId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("EP.Domain.Entities.Course.CourseEpisode", b =>
+                {
+                    b.Property<int>("EpisodeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EpisodeId"));
+
+                    b.Property<int>("CoursId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("EpisodeDemoFile")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("EpisodeTitle")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("IsFree")
+                        .HasColumnType("bit");
+
+                    b.Property<TimeSpan>("MyProperty")
+                        .HasColumnType("time");
+
+                    b.HasKey("EpisodeId");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("Episodes");
+                });
+
+            modelBuilder.Entity("EP.Domain.Entities.Course.CourseGroup", b =>
+                {
+                    b.Property<int>("GroupId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GroupId"));
+
+                    b.Property<string>("GroupeName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GroupId");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("CourseGroupes");
+                });
+
+            modelBuilder.Entity("EP.Domain.Entities.Course.CourseLevel", b =>
+                {
+                    b.Property<int>("LevelId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LevelId"));
+
+                    b.Property<string>("LevelName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("LevelId");
+
+                    b.ToTable("Levels");
+                });
+
+            modelBuilder.Entity("EP.Domain.Entities.Course.CourseStatus", b =>
+                {
+                    b.Property<int>("StatusId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StatusId"));
+
+                    b.Property<string>("StatusName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("StatusId");
+
+                    b.ToTable("Statuses");
+                });
 
             modelBuilder.Entity("EP.Domain.Entities.Permission.Permission", b =>
                 {
@@ -30,7 +195,7 @@ namespace EP.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PermissionId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PermissionId"));
 
                     b.Property<int?>("ParentId")
                         .HasColumnType("int");
@@ -53,7 +218,7 @@ namespace EP.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RP_Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RP_Id"));
 
                     b.Property<int>("PermissionId")
                         .HasColumnType("int");
@@ -76,7 +241,7 @@ namespace EP.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"));
 
                     b.Property<string>("RoleName")
                         .IsRequired()
@@ -94,7 +259,7 @@ namespace EP.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -141,7 +306,7 @@ namespace EP.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UR_Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UR_Id"));
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
@@ -164,7 +329,7 @@ namespace EP.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WalletId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WalletId"));
 
                     b.Property<int>("Amount")
                         .HasColumnType("int");
@@ -208,6 +373,59 @@ namespace EP.Infrastructure.Data.Migrations
                     b.HasKey("TypeId");
 
                     b.ToTable("WalletTypes");
+                });
+
+            modelBuilder.Entity("EP.Domain.Entities.Course.Course", b =>
+                {
+                    b.HasOne("EP.Domain.Entities.Course.CourseGroup", "CourseGroup")
+                        .WithMany("CoursesGroupes")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EP.Domain.Entities.Course.CourseLevel", "CourseLevel")
+                        .WithMany("Courses")
+                        .HasForeignKey("LevelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EP.Domain.Entities.Course.CourseStatus", "CourseStatus")
+                        .WithMany("Courses")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EP.Domain.Entities.User.User", "User")
+                        .WithMany("Courses")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CourseGroup");
+
+                    b.Navigation("CourseLevel");
+
+                    b.Navigation("CourseStatus");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("EP.Domain.Entities.Course.CourseEpisode", b =>
+                {
+                    b.HasOne("EP.Domain.Entities.Course.Course", "Course")
+                        .WithMany("Episodes")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("EP.Domain.Entities.Course.CourseGroup", b =>
+                {
+                    b.HasOne("EP.Domain.Entities.Course.CourseGroup", null)
+                        .WithMany("Parent")
+                        .HasForeignKey("ParentId");
                 });
 
             modelBuilder.Entity("EP.Domain.Entities.Permission.Permission", b =>
@@ -274,6 +492,28 @@ namespace EP.Infrastructure.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("EP.Domain.Entities.Course.Course", b =>
+                {
+                    b.Navigation("Episodes");
+                });
+
+            modelBuilder.Entity("EP.Domain.Entities.Course.CourseGroup", b =>
+                {
+                    b.Navigation("CoursesGroupes");
+
+                    b.Navigation("Parent");
+                });
+
+            modelBuilder.Entity("EP.Domain.Entities.Course.CourseLevel", b =>
+                {
+                    b.Navigation("Courses");
+                });
+
+            modelBuilder.Entity("EP.Domain.Entities.Course.CourseStatus", b =>
+                {
+                    b.Navigation("Courses");
+                });
+
             modelBuilder.Entity("EP.Domain.Entities.Permission.Permission", b =>
                 {
                     b.Navigation("Parent");
@@ -290,6 +530,8 @@ namespace EP.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("EP.Domain.Entities.User.User", b =>
                 {
+                    b.Navigation("Courses");
+
                     b.Navigation("UserRoles");
 
                     b.Navigation("Wallets");
