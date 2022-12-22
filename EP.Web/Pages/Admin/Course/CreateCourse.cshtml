@@ -3,6 +3,12 @@
 @{
     ViewData["Title"] = "افزودن دوره";
     SelectList groups = ViewData["Groups"] as SelectList;
+    SelectList subGroups = ViewData["SubGroups"] as SelectList;
+    SelectList statuses = ViewData["Levels"] as SelectList;
+    SelectList levels = ViewData["Statuses"] as SelectList;
+    SelectList teachers = ViewData["Teachers"] as SelectList;
+
+
 }
 
 <link rel="stylesheet" href="/cropper/css/cropper.css">
@@ -49,22 +55,22 @@
 
                         <div class="form-group">
                             <label>زیر گروه</label>
-                            <select class="form-control" asp-for="Course.SubGroupId" asp-items="groups"></select>
+                            <select class="form-control" asp-for="Course.SubGroupId" asp-items="subGroups"></select>
                         </div>
 
                         <div class="form-group">
                             <label>وضعیت دوره</label>
-                            <select class="form-control" asp-for="Course.StatusId" asp-items="groups"></select>
+                            <select class="form-control" asp-for="Course.StatusId" asp-items="statuses"></select>
                         </div>
 
                         <div class="form-group">
                             <label>سطح دوره</label>
-                            <select class="form-control" asp-for="Course.LevelId" asp-items="groups"></select>
+                            <select class="form-control" asp-for="Course.LevelId" asp-items="levels"></select>
                         </div>
 
                         <div class="form-group">
                             <label>مدرس دوره</label>
-                            <select class="form-control" asp-for="Course.TeacherId" asp-items="groups"></select>
+                            <select class="form-control" asp-for="Course.TeacherId" asp-items="teachers"></select>
                         </div>
 
                         <button class="btn btn-success">ذخیره اطلاعات</button>
@@ -81,11 +87,11 @@
                         <div style="text-align: center;">
 
                             <div style="width:100%">
-                                <img style="width:100%; height:100%" id="image" src="/images/profile-images/Default.jpg" />
+                                <img style="width:100%; height:100%" id="image" src="/images/course-images/normal-size/Default.jpg" />
                             </div>
 
                             <input name="SelectedAvatarFile" id="file" type="file" class="cropper-hidden" />
-                            <input name="PreviousSelectedAvatar" type="text" id="previous-selected-avatar" value="NoPreviousAvatar" hidden />
+                            <input name="previousCourseImage" type="text" id="previous-selected-avatar" value="NoPreviousImage" hidden />
 
                             <input id="user-avatar" asp-for="Course.CourseImage" hidden />
 
@@ -95,7 +101,7 @@
                     <div class="panel-body">
                         <div style="text-align: center;">
                             <label>فایل دمو</label>
-                            <input type="file" name="CourseDemo"/>
+                            <input type="file" name="courseDemo"/>
                             <span asp-validation-for="Course.CourseDemo"></span>
                         </div>
                     </div>
@@ -107,5 +113,5 @@
 
 @section Scripts {
     <script type="module" src="/cropper/js/cropper.js"></script>
-    <script type="module" src="/js/edit-profile/edit-profile.js"></script>
+    <script type="module" src="~/admin/js/custom/create-course.js"></script>
 }

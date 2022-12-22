@@ -1,3 +1,24 @@
+﻿let courseGroup = ("#Course_GroupId")
+let courseSubGroup = ("#Course_SubGroupId")
+
+
+$("#Course_GroupId").change(function() {
+    $("#Course_SubGroupId").empty();
+
+    $.getJSON("/Api/Admin/GetCourseGroupsByParentId/" + $("#Course_GroupId :selected").val(), function(data) {
+        $.each(data, function() {
+            var option = document.createElement("option");
+
+            option.value = this.value;
+            option.text = this.text;
+
+            $("#Course_SubGroupId").append(option);
+        });
+    });
+});
+
+// upload image course
+
 var image = document.getElementById("image")
 var file = document.getElementById("file")
 var previousChosedImage = document.getElementById("previous-selected-avatar")
@@ -44,19 +65,19 @@ saveProfile.addEventListener("click", function () {
 
     }).toBlob(function (blob) {
 
-        var previousAvatar = previousChosedImage.value;
+        var previousCourseImage = previousChosedImage.value;
 
         let avatarModel = new FormData();
 
         console.log(previousChosedImage.value)
 
         avatarModel.set("avatar", blob);
-        avatarModel.set("previousAvatar", previousAvatar);
+        avatarModel.set("previousCourseImage", previousCourseImage);
 
         var xhr = new XMLHttpRequest();
 
         xhr.responseType = 'json';
-        xhr.open('POST', '/UserPanel/Home/UploadAvatarAndDeletePreviousOne', true);
+        xhr.open('POST', '/Api/Admin/UploadImageCourseAndDeletePreviousOne', true);
         xhr.send(avatarModel);
 
         xhr.onreadystatechange = async function () {
@@ -66,8 +87,8 @@ saveProfile.addEventListener("click", function () {
                 userAvatar.value = this.response.avatarAddress;
 
                 previousChosedImage.value = this.response.avatarAddress;
-
-                document.getElementById("image").src = "/images/profile-images/" + this.response.avatarAddress;
+                console.log("pic : " + this.response.avatarAddress);
+                document.getElementById("image").src = "/images/course-images/normal-size/" + this.response.avatarAddress;
 
                 cropper.destroy();
                 image = null;

@@ -91,9 +91,16 @@ namespace EP.Infrastructure.Data.Repository.User
             return users;
         }
 
+        public List<Domain.Entities.User.User> GetAllTeachers()
+        {
+            return _context.UserRoles.Where(ur => ur.RoleId == 2).Include(ur => ur.User)
+                .Select(ur => ur.User).ToList();
+        }
+
         public void SaveChanges()
         {
             _context.SaveChanges();
         }
+
     }
 }

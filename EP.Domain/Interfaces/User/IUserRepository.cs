@@ -24,6 +24,8 @@ namespace EP.Domain.Interfaces.User
 
         public Domain.Entities.User.User GetUserFromActiveCode(string userCode);
 
+        public List<Domain.Entities.User.User> GetAllTeachers();
+
         public int UpdateUser(Domain.Entities.User.User user);
 
         public bool CheckPassword(string password, int userId);
