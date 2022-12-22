@@ -166,6 +166,11 @@ namespace EP.Core.Services.Course
                         newCourseImage.CopyTo(stream);
                     }
 
+                    string thumbImageCoursePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/course-images/thumb-size/", courseImageName);
+
+                    var imageResizer = new Tools.ImageResizer.ImageConvertor();
+                    imageResizer.Image_resize(courseImagePath, thumbImageCoursePath, 100);
+
                     return SetChangeAvatarServiceModel(ChangeAvatarEnums.Successful, courseImageName); ;
 
                 }
@@ -192,10 +197,20 @@ namespace EP.Core.Services.Course
             return result;
         }
 
-        public int AddCourse(Domain.Entities.Course.Course course)
+        public int AddCourse(Domain.Entities.Course.Course course, IFormFile courseDemo)
         {
             course.CreateDate = DateTime.Now;
-            course.CourseDemo = "null";
+
+            string courseDemoName = Tools.Generator.NameGenerator.GenerateUniqCode() + Path.GetExtension(courseDemo.FileName);
+
+            string courseImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/videos/course", courseDemoName);
+
+            using (var stream = new FileStream(courseImagePath, FileMode.Create))
+            {
+                courseDemo.CopyTo(stream);
+            }
+
+            course.CourseDemo = courseDemoName;
 
             int courseId = _courseRepository.AddCourse(course);
             _courseRepository.SaveChanges();

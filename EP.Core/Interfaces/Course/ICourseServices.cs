@@ -27,7 +27,7 @@ namespace EP.Core.Interfaces.Course
 
         public List<CourseViewModel> GetAllCoursesForAdmin();
 
-        public int AddCourse(Domain.Entities.Course.Course course);
+        public int AddCourse(Domain.Entities.Course.Course course, IFormFile courseDemo);
 
         public ChangeAvatarServiceModel UploadImageCourseAndDeletePreviousOne(IFormFile newCourseImage, string courseImage);
 

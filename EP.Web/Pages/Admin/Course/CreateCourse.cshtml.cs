@@ -41,7 +41,7 @@ namespace EP.Web.Pages.Admin.Course
         public IActionResult OnPost(IFormFile courseDemo)
         {
 
-            _courseServices.AddCourse(Course);
+            _courseServices.AddCourse(Course, courseDemo);
 
             return RedirectToPage("Index");
         }
