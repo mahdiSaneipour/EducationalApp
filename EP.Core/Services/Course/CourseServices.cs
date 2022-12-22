@@ -1,4 +1,5 @@
-﻿using EP.Core.Enums.UserPanel;
+﻿using EP.Core.DTOs.AdminPanelViewModels;
+using EP.Core.Enums.UserPanel;
 using EP.Core.Interfaces.Course;
 using EP.Core.JsonModel.UserPanel;
 using EP.Core.ServiceModels.UserPanel;
@@ -199,6 +200,22 @@ namespace EP.Core.Services.Course
             int courseId = _courseRepository.AddCourse(course);
             _courseRepository.SaveChanges();
             return courseId;
+        }
+
+        public List<CourseViewModel> GetAllCoursesForAdmin()
+        {
+            List<CourseViewModel> result = new List<CourseViewModel>();
+
+            IQueryable<Domain.Entities.Course.Course> Courses = _courseRepository.GetAllCoursesIQ();
+
+            result.AddRange(Courses.Select(c => new CourseViewModel()
+            {
+                Count = 0,
+                CourseImage = c.CourseImage,
+                CourseName = c.CourseName
+            }).ToList());
+
+            return result;
         }
     }
 }

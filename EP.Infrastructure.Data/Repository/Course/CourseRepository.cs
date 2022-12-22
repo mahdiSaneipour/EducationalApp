@@ -51,6 +51,11 @@ namespace EP.Infrastructure.Data.Repository.Course
             return course.CourseId;
         }
 
+        public IQueryable<Domain.Entities.Course.Course> GetAllCoursesIQ()
+        {
+            return _context.Courses;
+        }
+
         public void SaveChanges()
         {
             _context.SaveChanges();

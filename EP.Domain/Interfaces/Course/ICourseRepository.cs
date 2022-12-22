@@ -23,7 +23,8 @@ namespace EP.Domain.Interfaces.Course
 
         public int AddCourse(Domain.Entities.Course.Course course);
 
-        public void SaveChanges();
+        public IQueryable<Domain.Entities.Course.Course> GetAllCoursesIQ();
 
+        public void SaveChanges();
     }
 }

@@ -1,4 +1,5 @@
-﻿using EP.Core.ServiceModels.UserPanel;
+﻿using EP.Core.DTOs.AdminPanelViewModels;
+using EP.Core.ServiceModels.UserPanel;
 using EP.Domain.Entities.Course;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -23,6 +24,8 @@ namespace EP.Core.Interfaces.Course
         public SelectList GetAllCourseStatusesAsSelectList();
 
         public SelectList GetAllTeachersAsSelectList();
+
+        public List<CourseViewModel> GetAllCoursesForAdmin();
 
         public int AddCourse(Domain.Entities.Course.Course course);
 

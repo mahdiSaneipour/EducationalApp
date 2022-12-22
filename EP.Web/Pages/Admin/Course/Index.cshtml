@@ -11,13 +11,34 @@
     <div class="panel-body">
         <div class="table-responsive">
             <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                <div class="row">
-                    <form>
-                    </form>
-                </div>
+                <a asp-page="CreateUser" class="btn btn-outline btn-success">ایجاد دوره جدید</a>
                 <br />
-                <a asp-page="CreateCourse" class="btn btn-outline btn-success">ایجاد دوره جدید</a>
-                <br />
+                <table class="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" aria-describedby="dataTables-example_info">
+                    <thead>
+                        <tr>
+                            <th>عکس دوره</th>
+                            <th>نام دوره</th>
+                            <th>تعداد جلسات</th>
+                            <th>دستورات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var course in Model.Courses)
+                        {
+                                <tr>
+                                    <td>
+                                        <img src="~/images/course-images/normal-size/@course.CourseImage" style="max-height:100px">
+                                    </td>
+                                    <td>@course.CourseName</td>
+                                    <td>@course.Count</td>
+                                    <td>
+                                        <a class="btn btn-warning btn-sm">ویرایش</a>
+                                        <a class="btn btn-danger btn-sm">حذف</a>
+                                    </td>
+                                </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
             <!-- /.panel-body -->
         </div>
