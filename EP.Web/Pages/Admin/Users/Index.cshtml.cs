@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EP.Web.Pages.Admin.Users
 {
-    [PermissionChecker(6)]
+    [PermissionChecker(5)]
     public class IndexModel : PageModel
     {
 

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EP.Web.Pages.Admin.Users
 {
-    [PermissionChecker(10)]
+    [PermissionChecker(4)]
     public class DeletedUsersModel : PageModel
     {
         private readonly IAdminServices _adminServices;

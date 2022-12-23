@@ -1,10 +1,12 @@
 using EP.Core.Interfaces.Course;
+using EP.Core.Tools.Security;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EP.Web.Pages.Admin.Course
 {
+    [PermissionChecker(13)]
     public class CreateCourseModel : PageModel
     {
 

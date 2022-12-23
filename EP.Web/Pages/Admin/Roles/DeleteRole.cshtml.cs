@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EP.Web.Pages.Admin.Roles
 {
-    [PermissionChecker(9)]
+    [PermissionChecker(12)]
     public class DeleteRoleModel : PageModel
     {
         private readonly IAdminServices _adminServices;

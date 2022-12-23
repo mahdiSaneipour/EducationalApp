@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EP.Web.Pages.Admin.Roles
 {
-    [PermissionChecker(6)]
+    [PermissionChecker(9)]
     public class IndexModel : PageModel
     {
         private readonly IAdminServices _adminServices;

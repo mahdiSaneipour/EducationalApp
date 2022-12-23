@@ -33,20 +33,29 @@ image.addEventListener("click", function () {
 
 file.addEventListener("change", function (event) {
 
-    image = document.getElementById("image")
+    var extFile = file.value.substr(file.value.lastIndexOf(".") + 1, file.value.length).toLowerCase();
 
-    let file = event.target.files[0];
-    let reader = new FileReader();
+    if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
 
-    reader.addEventListener("load", function () {
 
-        /*previousProfile = image.getAttribute("src");*/
+        image = document.getElementById("image")
 
-        image.src = reader.result;
-    }, false)
+        let file = event.target.files[0];
+        let reader = new FileReader();
 
-    if (file) {
-        reader.readAsDataURL(file);
+        reader.addEventListener("load", function () {
+
+            /*previousProfile = image.getAttribute("src");*/
+
+            image.src = reader.result;
+        }, false)
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+
+    } else {
+        alert("فقط میتوانید عکس انتخاب کنید");
     }
 })
 
@@ -95,8 +104,6 @@ saveProfile.addEventListener("click", function () {
                 file.value = null;
 
             }
-
-
         }
     })
 

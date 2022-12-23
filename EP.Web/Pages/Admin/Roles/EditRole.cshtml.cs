@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EP.Web.Pages.Admin.Roles
 {
-    [PermissionChecker(8)]
+    [PermissionChecker(11)]
     public class EditRoleModel : PageModel
     {
 

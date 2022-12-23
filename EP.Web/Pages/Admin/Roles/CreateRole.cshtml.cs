@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EP.Web.Pages.Admin.Roles
 {
-    [PermissionChecker(7)]
+    [PermissionChecker(10)]
     public class CreateRoleModel : PageModel
     {
         private readonly IAdminServices _adminServices;

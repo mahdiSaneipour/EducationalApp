@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EP.Web.Pages.Admin.Users
 {
-    [PermissionChecker(9)]
+    [PermissionChecker(7)]
     public class DeleteUserModel : PageModel
     {
         private readonly IUserPanelServices _userPanelServices;

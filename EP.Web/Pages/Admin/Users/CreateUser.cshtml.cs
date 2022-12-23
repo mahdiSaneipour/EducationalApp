@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace EP.Web.Pages.Admin.Users
 {
-    [PermissionChecker(3)]
+    [PermissionChecker(8)]
     public class CreateUserModel : PageModel
     {
         private readonly IUserRepository _userRepository;
