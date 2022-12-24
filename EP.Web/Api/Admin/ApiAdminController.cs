@@ -84,5 +84,18 @@ namespace EP.Web.Api.Admin
 
             return result;
         }
+
+        [Route("Api/Admin/UploadImageForCourseDescription")]
+        public IActionResult UploadImageForCourseDescription(List<IFormFile> files)
+        {
+
+            string url = "";
+            foreach (IFormFile file in Request.Form.Files)
+            {
+                url = "https://localhost:44320/images/course-images/description/" + _courseService.UploadImageCourseForDescription(file);
+            }
+
+            return Json(new {url = url});
+        }
     }
 }

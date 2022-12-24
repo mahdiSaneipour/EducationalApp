@@ -43,7 +43,7 @@
 
                         <div class="form-group">
                             <label>شرح دوره</label>
-                            <textarea class="form-control" asp-for="Course.CourseDescription" rows="10">
+                            <textarea class="form-control" id="editor" asp-for="Course.CourseDescription" rows="10">
                             </textarea>
                             <span asp-validation-for="Course.CourseDescription"></span>
                         </div>
@@ -114,4 +114,9 @@
 @section Scripts {
     <script type="module" src="/cropper/js/cropper.js"></script>
     <script type="module" src="~/admin/js/custom/create-course.js"></script>
+
+    @* ckEditor *@
+    <script src="~/ckeditor5/build/ckeditor.js"></script>
+    <script src="~/admin/js/custom/ckeditor-config.js"></script>
+
 }

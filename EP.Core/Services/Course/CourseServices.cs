@@ -232,5 +232,19 @@ namespace EP.Core.Services.Course
 
             return result;
         }
+
+        public string UploadImageCourseForDescription(IFormFile descriptionImage)
+        {
+            string descriptionImageName = Tools.Generator.NameGenerator.GenerateUniqCode() + Path.GetExtension(descriptionImage.FileName);
+
+            string descriptionImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/course-images/description/", descriptionImageName);
+
+            using (var stream = new FileStream(descriptionImagePath, FileMode.Create))
+            {
+                descriptionImage.CopyTo(stream);
+            }
+
+            return descriptionImageName;
+        }
     }
 }

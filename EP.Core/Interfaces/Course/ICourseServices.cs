@@ -31,6 +31,6 @@ namespace EP.Core.Interfaces.Course
 
         public ChangeAvatarServiceModel UploadImageCourseAndDeletePreviousOne(IFormFile newCourseImage, string courseImage);
 
-
+        public string UploadImageCourseForDescription(IFormFile descriptionImage);
     }
 }
