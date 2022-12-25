@@ -28,7 +28,8 @@
         // integration to choose the right communication channel. This example uses
         // a POST request with JSON as a data structure but your configuration
         // could be different.
-        xhr.open('POST', '../../Api/Admin/UploadImageForCourseDescription', true);
+        console.log("ttttttttttttttt")
+        xhr.open('POST', '../../../Api/Admin/UploadImageForCourseDescription', true);
         xhr.responseType = 'json';
     }
 

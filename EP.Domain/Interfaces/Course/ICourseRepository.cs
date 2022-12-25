@@ -25,6 +25,10 @@ namespace EP.Domain.Interfaces.Course
 
         public IQueryable<Domain.Entities.Course.Course> GetAllCoursesIQ();
 
+        public Domain.Entities.Course.Course GetCourseById(int courseId);
+
+        public void UpdateCourse(Domain.Entities.Course.Course course);
+
         public void SaveChanges();
     }
 }

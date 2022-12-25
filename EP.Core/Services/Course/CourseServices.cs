@@ -2,6 +2,7 @@
 using EP.Core.Enums.UserPanel;
 using EP.Core.Interfaces.Course;
 using EP.Core.JsonModel.UserPanel;
+using EP.Core.ServiceModels.Course;
 using EP.Core.ServiceModels.UserPanel;
 using EP.Domain.Entities.Course;
 using EP.Domain.Interfaces.Course;
@@ -33,7 +34,7 @@ namespace EP.Core.Services.Course
             return _courseRepository.GetAllCourseGroups();
         }
 
-        public SelectList GetAllCourseLevelsAsSelectList()
+        public SelectList GetAllCourseLevelsAsSelectList(int? selected = 0)
         {
             List<CourseLevel> courseLevels = _courseRepository.GetAllCourseLevels();
             SelectList result = null;
@@ -44,16 +45,16 @@ namespace EP.Core.Services.Course
                 levels.Add(new SelectListItem()
                 {
                     Text = level.LevelName,
-                    Value = level.LevelId.ToString()
+                    Value = level.LevelId.ToString(),
                 });
             }
 
-            result = new SelectList(levels, "Value", "Text");
+            result = new SelectList(levels, "Value", "Text", selected);
 
             return result;
         }
 
-        public SelectList GetAllCourseStatusesAsSelectList()
+        public SelectList GetAllCourseStatusesAsSelectList(int? selected = 0)
         {
             List<CourseStatus> courseStatuses = _courseRepository.GetAllCourseStatuses();
             SelectList result = null;
@@ -68,12 +69,12 @@ namespace EP.Core.Services.Course
                 });
             }
 
-            result = new SelectList(statuses, "Value", "Text");
+            result = new SelectList(statuses, "Value", "Text", selected);
 
             return result;
         }
 
-        public SelectList GetAllMainCourseGroupsAsSelectList()
+        public SelectList GetAllMainCourseGroupsAsSelectList(int? selected = 0)
         {
             List<CourseGroup> courseGroups = _courseRepository.GetAllMainCourseGroups();
             SelectList result = null;
@@ -88,12 +89,12 @@ namespace EP.Core.Services.Course
                 });
             }
 
-            result = new SelectList(groups, "Value", "Text");
+            result = new SelectList(groups, "Value", "Text", selected);
 
             return result;
         }
 
-        public SelectList GetCourseGroupsByParentIdAsSelectList(int parentId)
+        public SelectList GetCourseGroupsByParentIdAsSelectList(int parentId, int? selected = 0)
         {
             List<CourseGroup> courseSubGroups = _courseRepository.GetCourseGroupsByParentId(parentId);
             SelectList result = null;
@@ -108,12 +109,12 @@ namespace EP.Core.Services.Course
                 });
             }
 
-            result = new SelectList(subGroups, "Value", "Text");
+            result = new SelectList(subGroups, "Value", "Text", selected);
 
             return result;
         }
 
-        public SelectList GetAllTeachersAsSelectList()
+        public SelectList GetAllTeachersAsSelectList(int? selected = 0)
         {
             List<Domain.Entities.User.User> UTeachers = _userRepository.GetAllTeachers();
             SelectList result = null;
@@ -128,7 +129,7 @@ namespace EP.Core.Services.Course
                 });
             }
 
-            result = new SelectList(teachers, "Value", "Text");
+            result = new SelectList(teachers, "Value", "Text", selected);
 
             return result;
         }
@@ -140,14 +141,19 @@ namespace EP.Core.Services.Course
             {
                 if (newCourseImage != null)
                 {
-                    Console.WriteLine("perImage : " + courseImage);
-                    if (courseImage != "NoPreviousImage")
+                    if (courseImage != "Default.jpg")
                     {
-                        string previousAvatarPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/course-images/normal-size/", courseImage);
+                        string previousImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/course-images/normal-size/", courseImage);
+                        string previousThumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/course-images/thumb-size/", courseImage);
 
-                        if (File.Exists(previousAvatarPath))
+                        if (File.Exists(previousImagePath))
                         {
-                            File.Delete(previousAvatarPath);
+                            File.Delete(previousImagePath);
+
+                            if (File.Exists(previousThumbPath))
+                            {
+                                File.Delete(previousThumbPath);
+                            }
                         }
                         else
                         {
@@ -201,16 +207,18 @@ namespace EP.Core.Services.Course
         {
             course.CreateDate = DateTime.Now;
 
-            string courseDemoName = Tools.Generator.NameGenerator.GenerateUniqCode() + Path.GetExtension(courseDemo.FileName);
+            if (!string.IsNullOrEmpty(course.CourseDemo)) {
+                string courseDemoName = Tools.Generator.NameGenerator.GenerateUniqCode() + Path.GetExtension(courseDemo.FileName);
 
-            string courseImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/videos/course", courseDemoName);
+                string courseImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/videos/course", courseDemoName);
 
-            using (var stream = new FileStream(courseImagePath, FileMode.Create))
-            {
-                courseDemo.CopyTo(stream);
+                using (var stream = new FileStream(courseImagePath, FileMode.Create))
+                {
+                    courseDemo.CopyTo(stream);
+                }
+
+                course.CourseDemo = courseDemoName;
             }
-
-            course.CourseDemo = courseDemoName;
 
             int courseId = _courseRepository.AddCourse(course);
             _courseRepository.SaveChanges();
@@ -227,7 +235,8 @@ namespace EP.Core.Services.Course
             {
                 Count = 0,
                 CourseImage = c.CourseImage,
-                CourseName = c.CourseName
+                CourseName = c.CourseName,
+                CourseId = c.CourseId
             }).ToList());
 
             return result;
@@ -245,6 +254,69 @@ namespace EP.Core.Services.Course
             }
 
             return descriptionImageName;
+        }
+
+        public EditCourseServiceModel GetCourseInformationForEdit(int courseId)
+        {
+            Domain.Entities.Course.Course course = _courseRepository.GetCourseById(courseId);
+
+            SelectList group = GetAllMainCourseGroupsAsSelectList(course.GroupId);
+            SelectList subGroup = GetCourseGroupsByParentIdAsSelectList(int.Parse(group.First().Value),course.SubGroupId);
+            SelectList statuses = GetAllCourseStatusesAsSelectList(course.StatusId);
+            SelectList levels = GetAllCourseLevelsAsSelectList(course.LevelId);
+            SelectList teachers = GetAllTeachersAsSelectList(course.TeacherId);
+
+            EditCourseServiceModel result = new EditCourseServiceModel()
+            {
+                Course = course,
+                Groups = group,
+                SubGroups = subGroup,
+                Statuses = statuses,
+                Levels = levels,
+                Teachers = teachers
+            };
+
+            return result;
+        }
+
+        public bool EditCourse(Domain.Entities.Course.Course course, IFormFile courseDemo)
+        {
+            try {
+
+                if (!string.IsNullOrEmpty(course.CourseDemo))
+                {
+                    string coursePreviousDemoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/videos/course", course.CourseDemo);
+
+                    if (File.Exists(coursePreviousDemoPath))
+                    {
+                        File.Delete(coursePreviousDemoPath);
+                    }
+
+                }
+
+                if (string.IsNullOrEmpty(course.CourseDemo))
+                {
+                    string courseDemoName = Tools.Generator.NameGenerator.GenerateUniqCode() + Path.GetExtension(courseDemo.FileName);
+
+                    string courseImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/videos/course", courseDemoName);
+
+                    using (var stream = new FileStream(courseImagePath, FileMode.Create))
+                    {
+                        courseDemo.CopyTo(stream);
+                    }
+
+                    course.CourseDemo = courseDemoName;
+                }
+
+                course.UpdateDate = DateTime.Now;
+
+                _courseRepository.UpdateCourse(course);
+                _courseRepository.SaveChanges();
+
+                return true;
+            } catch {
+                return false;
+            }
         }
     }
 }

@@ -36,7 +36,7 @@ namespace EP.Domain.Entities.Course
         public string Tags { get; set; }
 
         [Display(Name = "دمو دوره")]
-        public string CourseDemo { get; set; }
+        public string? CourseDemo { get; set; }
 
         [Display(Name = "تاریخ ایجاد دوره")]
         public DateTime CreateDate { get; set; }
@@ -62,21 +62,21 @@ namespace EP.Domain.Entities.Course
         #region
 
         [ForeignKey("GroupId")]
-        public CourseGroup CourseGroup { get; set; }
+        public CourseGroup? CourseGroup { get; set; }
 
         [ForeignKey("SubGroupId")]
-        public CourseGroup CourseSubGroup { get; set; }
+        public CourseGroup? CourseSubGroup { get; set; }
 
         [ForeignKey("LevelId")]
-        public CourseLevel CourseLevel { get; set; }
+        public CourseLevel? CourseLevel { get; set; }
 
         [ForeignKey("StatusId")]
-        public CourseStatus CourseStatus { get; set; }
+        public CourseStatus? CourseStatus { get; set; }
 
         [ForeignKey("TeacherId")]
-        public User.User User { get; set; }
+        public User.User? User { get; set; }
 
-        public List<CourseEpisode> Episodes { get; set; }
+        public List<CourseEpisode>? Episodes { get; set; }
         #endregion
     }
 }

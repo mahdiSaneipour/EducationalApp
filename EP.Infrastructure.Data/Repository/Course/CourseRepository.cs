@@ -56,6 +56,17 @@ namespace EP.Infrastructure.Data.Repository.Course
             return _context.Courses;
         }
 
+
+        public Domain.Entities.Course.Course GetCourseById(int courseId)
+        {
+            return _context.Courses.First(c => c.CourseId == courseId);
+        }
+
+        public void UpdateCourse(Domain.Entities.Course.Course course)
+        {
+            _context.Courses.Update(course);
+        }
+
         public void SaveChanges()
         {
             _context.SaveChanges();

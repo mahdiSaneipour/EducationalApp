@@ -10,7 +10,7 @@ namespace EP.Core.DTOs.AdminPanelViewModels
     public class CourseViewModel
     {
         [Display(Name = "ایدی دوره")]
-        public int UserId { get; set; }
+        public int CourseId { get; set; }
 
         [Display(Name = "نام دوره")]
         public string CourseName { get; set; }

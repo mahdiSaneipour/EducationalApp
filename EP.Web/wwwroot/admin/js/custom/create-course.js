@@ -96,7 +96,6 @@ saveProfile.addEventListener("click", function () {
                 userAvatar.value = this.response.avatarAddress;
 
                 previousChosedImage.value = this.response.avatarAddress;
-                console.log("pic : " + this.response.avatarAddress);
                 document.getElementById("image").src = "/images/course-images/normal-size/" + this.response.avatarAddress;
 
                 cropper.destroy();

@@ -32,7 +32,7 @@
                                     <td>@course.CourseName</td>
                                     <td>@course.Count</td>
                                     <td>
-                                        <a class="btn btn-warning btn-sm">ویرایش</a>
+                                    <a asp-page="EditCourse" asp-route-courseId="@course.CourseId" class="btn btn-warning btn-sm">ویرایش</a>
                                         <a class="btn btn-danger btn-sm">حذف</a>
                                     </td>
                                 </tr>

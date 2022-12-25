@@ -1,4 +1,5 @@
 ﻿using EP.Core.DTOs.AdminPanelViewModels;
+using EP.Core.ServiceModels.Course;
 using EP.Core.ServiceModels.UserPanel;
 using EP.Domain.Entities.Course;
 using Microsoft.AspNetCore.Http;
@@ -15,15 +16,15 @@ namespace EP.Core.Interfaces.Course
     {
         public List<CourseGroup> GetAllCourseGroups();
 
-        public SelectList GetAllMainCourseGroupsAsSelectList();
+        public SelectList GetAllMainCourseGroupsAsSelectList(int? selected = 0);
 
-        public SelectList GetCourseGroupsByParentIdAsSelectList(int parentId);
+        public SelectList GetCourseGroupsByParentIdAsSelectList(int parentId, int? selected = 0);
 
-        public SelectList GetAllCourseLevelsAsSelectList();
+        public SelectList GetAllCourseLevelsAsSelectList(int? selected = 0);
 
-        public SelectList GetAllCourseStatusesAsSelectList();
+        public SelectList GetAllCourseStatusesAsSelectList(int? selected = 0);
 
-        public SelectList GetAllTeachersAsSelectList();
+        public SelectList GetAllTeachersAsSelectList(int? selected = 0);
 
         public List<CourseViewModel> GetAllCoursesForAdmin();
 
@@ -31,6 +32,10 @@ namespace EP.Core.Interfaces.Course
 
         public ChangeAvatarServiceModel UploadImageCourseAndDeletePreviousOne(IFormFile newCourseImage, string courseImage);
 
+        public EditCourseServiceModel GetCourseInformationForEdit(int courseId);
+
         public string UploadImageCourseForDescription(IFormFile descriptionImage);
+
+        public bool EditCourse(Domain.Entities.Course.Course course, IFormFile courseDemo);
     }
 }
