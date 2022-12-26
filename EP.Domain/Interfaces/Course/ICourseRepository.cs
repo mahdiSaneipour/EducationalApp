@@ -29,6 +29,8 @@ namespace EP.Domain.Interfaces.Course
 
         public void UpdateCourse(Domain.Entities.Course.Course course);
 
+        public void DeleteCourse(Domain.Entities.Course.Course course);
+        
         public void SaveChanges();
     }
 }

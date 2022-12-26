@@ -318,5 +318,24 @@ namespace EP.Core.Services.Course
                 return false;
             }
         }
+
+        public Domain.Entities.Course.Course GetCourseByCourseId(int courseId)
+        {
+            return _courseRepository.GetCourseById(courseId);
+        }
+
+        public bool DeleteCourse(Domain.Entities.Course.Course course)
+        {
+            try
+            {
+                _courseRepository.DeleteCourse(course);
+                _courseRepository.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

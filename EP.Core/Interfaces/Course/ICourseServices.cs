@@ -28,6 +28,8 @@ namespace EP.Core.Interfaces.Course
 
         public List<CourseViewModel> GetAllCoursesForAdmin();
 
+        public Domain.Entities.Course.Course GetCourseByCourseId(int courseId);
+
         public int AddCourse(Domain.Entities.Course.Course course, IFormFile courseDemo);
 
         public ChangeAvatarServiceModel UploadImageCourseAndDeletePreviousOne(IFormFile newCourseImage, string courseImage);
@@ -37,5 +39,7 @@ namespace EP.Core.Interfaces.Course
         public string UploadImageCourseForDescription(IFormFile descriptionImage);
 
         public bool EditCourse(Domain.Entities.Course.Course course, IFormFile courseDemo);
+
+        public bool DeleteCourse(Domain.Entities.Course.Course course);
     }
 }

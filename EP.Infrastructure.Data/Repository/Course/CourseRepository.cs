@@ -59,7 +59,7 @@ namespace EP.Infrastructure.Data.Repository.Course
 
         public Domain.Entities.Course.Course GetCourseById(int courseId)
         {
-            return _context.Courses.First(c => c.CourseId == courseId);
+            return _context.Courses.Include(c => c.User).First(c => c.CourseId == courseId);
         }
 
         public void UpdateCourse(Domain.Entities.Course.Course course)
@@ -70,6 +70,11 @@ namespace EP.Infrastructure.Data.Repository.Course
         public void SaveChanges()
         {
             _context.SaveChanges();
+        }
+
+        public void DeleteCourse(Domain.Entities.Course.Course course)
+        {
+            _context.Courses.Remove(course);
         }
     }
 }
