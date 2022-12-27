@@ -41,5 +41,7 @@ namespace EP.Core.Interfaces.Course
         public bool EditCourse(Domain.Entities.Course.Course course, IFormFile courseDemo);
 
         public bool DeleteCourse(Domain.Entities.Course.Course course);
+
+        public bool IsCourseExist(int courseId);
     }
 }

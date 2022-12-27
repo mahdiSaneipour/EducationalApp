@@ -1,10 +1,12 @@
 using EP.Core.DTOs.AdminPanelViewModels;
 using EP.Core.Interfaces.Episode;
+using EP.Core.Tools.Security;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EP.Web.Pages.Admin.Episode
 {
+    [PermissionChecker(16)]
     public class IndexModel : PageModel
     {
         private readonly IEpisodeServices _episodeServices;

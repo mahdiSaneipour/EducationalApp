@@ -15,6 +15,8 @@ namespace EP.Domain.Interfaces.Episode
 
         public EpisodeDetailsCustomModel GetEpisodeDetailsByCourseId(int courseId);
 
+        public Domain.Entities.Course.CourseEpisode GetEpisodeByEpisodeId(int episodeId);
+
         #endregion
 
         #region ADD
@@ -34,5 +36,7 @@ namespace EP.Domain.Interfaces.Episode
         public void RemoveEpisode(Domain.Entities.Course.CourseEpisode episode);
 
         #endregion
+
+        public void SaveChanges();
     }
 }

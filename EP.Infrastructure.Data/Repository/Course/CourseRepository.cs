@@ -77,5 +77,10 @@ namespace EP.Infrastructure.Data.Repository.Course
         {
             _context.Courses.Remove(course);
         }
+
+        public bool IsCourseExist(int courseId)
+        {
+            return _context.Courses.Any(c => c.CourseId == courseId);
+        }
     }
 }

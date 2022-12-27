@@ -1,0 +1,46 @@
+﻿@page
+@model EP.Web.Pages.Admin.Episode.DeleteEpisodeModel
+@{
+}
+
+<div class="col-lg-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            مشخصات قسمت
+        </div>
+        <div class="panel-body">
+            <form method="post">
+
+                <input asp-for="Episode.EpisodeId" hidden />
+
+                <dl class="dl-horizontal">
+                    <dt>نام قسمت</dt>
+                    <dd>@Model.Episode.EpisodeTitle</dd>
+
+                    <dt>زمان دوره</dt>
+                    <dd>@Model.Episode.EpisodeTime</dd>
+
+                    <dt>رایگان</dt>
+                    <dd>
+                        @if (Model.Episode.IsFree)
+                        {
+                            <span class="text-success">
+                                <i class="glyphicon glyphicon-ok"></i>
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="text-danger">
+                                <i class="glyphicon glyphicon-remove"></i>
+                            </span>
+                        }
+                    </dd>
+
+                    <input type="submit" value="حذف" class="btn btn-danger" />
+                </dl>
+            </form>
+        </div>
+        <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+</div>

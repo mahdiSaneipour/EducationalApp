@@ -3,13 +3,13 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        قسمت های دوره + @Model.courseEpisodes.CourseName توسط مدرس @Model.courseEpisodes.TeacherName
+        قسمت های دوره @Model.courseEpisodes.CourseName توسط مدرس @Model.courseEpisodes.TeacherName
     </div>
     <!-- /.panel-heading -->
     <div class="panel-body">
         <div class="table-responsive">
             <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                <a asp-page="CreateCourse" class="btn btn-outline btn-success">ایجاد دوره جدید</a>
+                <a asp-page="CreateEpisode" asp-route-courseId="@Model.courseEpisodes.CourseId" class="btn btn-outline btn-success">ایجاد قسمت جدید</a>
                 <br />
                 <table class="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" aria-describedby="dataTables-example_info">
                     <thead>
@@ -40,8 +40,8 @@
                                     }
                                 </td>
                                 <td>
-                                    <a asp-page="EditEpisode" asp-route-courseId="@episode.EpisodeId" class="btn btn-warning btn-sm">ویرایش</a>
-                                    <a asp-page="DeleteEpisode" asp-route-courseId="episode.EpisodeId" class="btn btn-danger btn-sm">حذف</a>
+                                    <a asp-page="EditEpisode" asp-route-episodeId="@episode.EpisodeId" class="btn btn-warning btn-sm">ویرایش</a>
+                                    <a asp-page="DeleteEpisode" asp-route-episodeId="@episode.EpisodeId" class="btn btn-danger btn-sm">حذف</a>
                                 </td>
                             </tr>
                         }

@@ -36,14 +36,20 @@ namespace EP.Infrastructure.Data.Repository.Episode
             return _context.Episodes.Where(e => e.CourseId == courseId).ToList();
         }
 
-
         public EpisodeDetailsCustomModel GetEpisodeDetailsByCourseId(int courseId)
         {
             return _context.Courses.Where(c => c.CourseId == courseId).Include(c => c.User).Select(c => new EpisodeDetailsCustomModel()
             {
+                TeacherName = c.User.UserName,
                 CourseName = c.CourseName,
-                TeacherName = c.User.UserName
+                CourseId = c.CourseId
             }).FirstOrDefault();
+        }
+
+
+        public CourseEpisode GetEpisodeByEpisodeId(int episodeId)
+        {
+            return _context.Episodes.FirstOrDefault(e => e.EpisodeId == episodeId);
         }
 
         #endregion
@@ -65,5 +71,11 @@ namespace EP.Infrastructure.Data.Repository.Episode
         }
 
         #endregion
+
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
+        }
     }
 }

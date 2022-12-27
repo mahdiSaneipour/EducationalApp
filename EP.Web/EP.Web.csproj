@@ -40,6 +40,7 @@
     <Folder Include="Areas\UserPanel\Models\" />
     <Folder Include="wwwroot\images\course-images\thumb-size\" />
     <Folder Include="wwwroot\videos\course\" />
+    <Folder Include="wwwroot\videos\episode\" />
   </ItemGroup>
 
   <ItemGroup>

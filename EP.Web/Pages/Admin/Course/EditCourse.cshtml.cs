@@ -1,5 +1,6 @@
 using EP.Core.Interfaces.Course;
 using EP.Core.ServiceModels.Course;
+using EP.Core.Tools.Security;
 using EP.Domain.Entities.Course;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EP.Web.Pages.Admin.Course
 {
+    [PermissionChecker(14)]
     public class EditCourseModel : PageModel
     {
         private readonly ICourseServices _courseServices;

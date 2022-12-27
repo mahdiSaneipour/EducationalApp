@@ -1,0 +1,65 @@
+﻿@page "{courseId}"
+@model EP.Web.Pages.Admin.Episode.CreateEpisodeModel
+@{
+    var isFileExist = ViewData["IsFileExist"];
+    var courseId = ViewData["CourseId"];
+}
+<main class="background-cover">
+    <div class="row">
+        <form method="post" enctype="multipart/form-data">
+            <input name="courseid" value="@courseId" hidden/>
+            <div class="col-md-8">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        اطلاعات قسمت
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>نام دوره</label>
+                            <input asp-for="Episode.EpisodeTitle" class="form-control">
+                            <span asp-validation-for="Episode.EpisodeTitle"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>مدت دوره</label>
+                            <input type="text" asp-for="Episode.EpisodeTime" class="form-control">
+                            <span asp-validation-for="Episode.EpisodeTime"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>رایگان</label>
+                            <input type="checkbox" asp-for="Episode.IsFree">
+                        </div>
+
+                        <button class="btn btn-success">ذخیره اطلاعات</button>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        فایل
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="form-group">
+                            <label>فایل دوره</label>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="file" name="episodeFile" />
+                                    @if (isFileExist != null)
+                                    {
+                                        <div class="alert alerd-danger">
+                                            نام فایل معتبر نیست لطفا تغییر دهید
+                                        </div>
+                                    }
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>

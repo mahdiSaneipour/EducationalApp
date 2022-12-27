@@ -31,7 +31,9 @@ namespace EP.Domain.Interfaces.Course
         public void UpdateCourse(Domain.Entities.Course.Course course);
 
         public void DeleteCourse(Domain.Entities.Course.Course course);
-        
+
+        public bool IsCourseExist(int courseId);
+
         public void SaveChanges();
     }
 }

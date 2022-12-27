@@ -1,9 +1,11 @@
 using EP.Core.Interfaces.Course;
+using EP.Core.Tools.Security;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EP.Web.Pages.Admin.Course
 {
+    [PermissionChecker(15)]
     public class DeleteCourseModel : PageModel
     {
 

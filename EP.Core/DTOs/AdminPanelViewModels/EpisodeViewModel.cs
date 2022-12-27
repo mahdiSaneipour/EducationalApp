@@ -9,6 +9,8 @@ namespace EP.Core.DTOs.AdminPanelViewModels
 {
     public class EpisodeViewModel
     {
+        public int CourseId { get; set; }
+
         public string TeacherName { get; set; }
 
         public string CourseName { get; set; }

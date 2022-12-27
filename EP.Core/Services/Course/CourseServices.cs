@@ -294,7 +294,7 @@ namespace EP.Core.Services.Course
 
                 }
 
-                if (string.IsNullOrEmpty(course.CourseDemo))
+                if (courseDemo != null)
                 {
                     string courseDemoName = Tools.Generator.NameGenerator.GenerateUniqCode() + Path.GetExtension(courseDemo.FileName);
 
@@ -336,6 +336,11 @@ namespace EP.Core.Services.Course
             {
                 return false;
             }
+        }
+
+        public bool IsCourseExist(int courseId)
+        {
+            return _courseRepository.IsCourseExist(courseId);
         }
     }
 }
