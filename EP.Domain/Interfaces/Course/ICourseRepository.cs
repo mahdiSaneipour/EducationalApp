@@ -1,4 +1,5 @@
-﻿using EP.Domain.Entities.Course;
+﻿using EP.Domain.CustomModel.Episode;
+using EP.Domain.Entities.Course;
 using System;
 using System.Collections.Generic;
 using System.Linq;

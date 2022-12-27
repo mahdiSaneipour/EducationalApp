@@ -1,4 +1,5 @@
-﻿using EP.Domain.Entities.Course;
+﻿using EP.Domain.CustomModel.Episode;
+using EP.Domain.Entities.Course;
 using EP.Domain.Interfaces.Course;
 using EP.Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;

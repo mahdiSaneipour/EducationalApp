@@ -19,7 +19,7 @@ namespace EP.Domain.Entities.Course
 
         [Display(Name = "زمان دوره")]
         [Required(ErrorMessage = "فیلد {0} نمیتواند خالی باشد")]
-        public TimeSpan MyProperty { get; set; }
+        public TimeSpan EpisodeTime { get; set; }
 
         [Display(Name = "فایل دمو")]
         [MaxLength(200,ErrorMessage = "{0} نمیتواند بیشتر از {1} کاراکتر باشد")]
@@ -29,7 +29,7 @@ namespace EP.Domain.Entities.Course
         public bool IsFree { get; set; }
 
         [Required(ErrorMessage = "فیلد {0} نمیتواند خالی باشد")]
-        public int CoursId { get; set; }
+        public int CourseId { get; set; }
 
         #region
 
