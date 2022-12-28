@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -346,7 +347,7 @@ namespace EP.Core.Services.Course
             return _courseRepository.IsCourseExist(courseId);
         }
 
-        public List<BoxCourseViewModel> GetAllCourseByFilter(int pageId = 1,
+        public Tuple<List<BoxCourseViewModel>,int> GetAllCourseByFilter(int pageId = 1,
             BoxCourseOrderByEnum orderBy = BoxCourseOrderByEnum.CreateDate,
             BoxCourseGetTypeEnum getType = BoxCourseGetTypeEnum.All, int minimumPrice = 0, 
             int maximumPrce = 0, string filter = "", List<int> courseGroups = null,
@@ -381,24 +382,24 @@ namespace EP.Core.Services.Course
             switch (orderBy)
             {
                 case BoxCourseOrderByEnum.CreateDate:
-                    courses = courses.OrderBy(c => c.CreateDate);
+                    courses = courses.OrderByDescending(c => c.CreateDate);
                     break;
 
                 case BoxCourseOrderByEnum.UpdateDate:
                     {
-                        courses = courses.OrderBy(c => c.UpdateDate);
+                        courses = courses.OrderByDescending(c => c.UpdateDate);
                         break;
                     }
 
                 case BoxCourseOrderByEnum.Cheaper:
                     {
-                        courses = courses.OrderByDescending(c => c.CoursePrice);
+                        courses = courses.OrderBy(c => c.CoursePrice);
                         break;
                     }
 
                 case BoxCourseOrderByEnum.MostExpensive:
                     {
-                        courses = courses.OrderBy(c => c.CoursePrice);
+                        courses = courses.OrderByDescending(c => c.CoursePrice);
                         break;
                     }
             }
@@ -420,14 +421,39 @@ namespace EP.Core.Services.Course
 
             if(courseGroups != null)
             {
-                // filter buy course
+                if (courseGroups.Count() != 0)
+                {
+                    List<Domain.Entities.Course.Course> coursesForGroup = new
+                    List<Domain.Entities.Course.Course>();
+                    foreach (var group in courseGroups)
+                    {
+
+                        coursesForGroup.AddRange(courses.Where(c => c.GroupId == group
+                        || c.SubGroupId == group && !coursesForGroup.Any(cg => cg.CourseId == c.CourseId)).ToList());
+
+                    }
+                    courses = coursesForGroup.AsQueryable();
+                }
             }
-            Console.WriteLine("courseId : " + courses.First().CourseId);
+
             int skip = (pageId - 1) * take;
 
-            return courses.Select(c =>
-            
-                new BoxCourseViewModel() {
+            int pageCount = courses.Select(c =>
+
+                new BoxCourseViewModel()
+                {
+                    CourseId = c.CourseId,
+                    CourseImage = c.CourseImage,
+                    CoursePrice = c.CoursePrice,
+                    CourseTime = new TimeSpan((long)c.Episodes.Sum(e => e.EpisodeTime.Ticks)),
+                    CourseTitle = c.CourseName
+                }
+            ).Count() / take;
+
+            var query = courses.Select(c =>
+
+                new BoxCourseViewModel()
+                {
                     CourseId = c.CourseId,
                     CourseImage = c.CourseImage,
                     CoursePrice = c.CoursePrice,
@@ -435,6 +461,8 @@ namespace EP.Core.Services.Course
                     CourseTitle = c.CourseName
                 }
             ).Skip(skip).Take(take).ToList();
+
+            return Tuple.Create(query,pageCount);
         }
     }
 }

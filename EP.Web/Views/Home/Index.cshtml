@@ -1,5 +1,5 @@
 ﻿@using EP.Core.DTOs.MainPageViewModel;
-@model IEnumerable<BoxCourseViewModel>
+@model Tuple<List<BoxCourseViewModel>, int>
 @{
     ViewData["Title"] = "صفحه اصلی";
 }
@@ -12,7 +12,7 @@
         </header>
         <div class="row">
             <!-- col -->
-            @foreach (var item in Model)
+            @foreach (var item in Model.Item1)
             {
                 <partial name="Partial Views/_BoxCoursePartialView" model="item"/>
             }
@@ -120,8 +120,8 @@
         <h3> با کمترین هزینه خودت یاد بگیر </h3>
     </header>
     <div class="search-form">
-        <form>
-            <input type="text" name="" placeholder="چی دوست داری یاد بگیری ؟">
+        <form asp-controller="Course">
+            <input type="text" name="filter" placeholder="چی دوست داری یاد بگیری ؟">
             <button><i class="zmdi zmdi-search"></i></button>
         </form>
     </div>

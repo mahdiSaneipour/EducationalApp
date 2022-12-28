@@ -32,7 +32,7 @@ namespace EP.Core.Interfaces.Course
 
         public Domain.Entities.Course.Course GetCourseByCourseId(int courseId);
 
-        public List<BoxCourseViewModel> GetAllCourseByFilter(int pageId = 1,
+        public Tuple<List<BoxCourseViewModel>, int> GetAllCourseByFilter(int pageId = 1,
             BoxCourseOrderByEnum orderBy = BoxCourseOrderByEnum.CreateDate,
             BoxCourseGetTypeEnum getType = BoxCourseGetTypeEnum.All, int minimumPrice = 0,
             int maximumPrce = 0, string filter = "", List<int> courseGroups = null,

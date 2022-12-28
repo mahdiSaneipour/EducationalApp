@@ -18,8 +18,8 @@ namespace EP.Web.Controllers
         }        
         public IActionResult Index()
         {
-            IEnumerable<BoxCourseViewModel> courses = _courseServices.GetAllCourseByFilter();
-            return View(courses);
+            Tuple<List<BoxCourseViewModel>, int> result = _courseServices.GetAllCourseByFilter();
+            return View(result);
         }
     }
 }
