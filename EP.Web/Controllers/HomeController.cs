@@ -1,4 +1,6 @@
-﻿using EP.Web.Models;
+﻿using EP.Core.DTOs.MainPageViewModel;
+using EP.Core.Interfaces.Course;
+using EP.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -7,28 +9,17 @@ namespace EP.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ICourseServices _courseServices;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ICourseServices courseServices)
         {
-            _logger = logger;
-        }
+            _courseServices = courseServices;
 
-        [Authorize]
+        }        
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            IEnumerable<BoxCourseViewModel> courses = _courseServices.GetAllCourseByFilter();
+            return View(courses);
         }
     }
 }

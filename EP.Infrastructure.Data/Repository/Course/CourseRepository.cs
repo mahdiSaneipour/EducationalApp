@@ -82,5 +82,10 @@ namespace EP.Infrastructure.Data.Repository.Course
         {
             return _context.Courses.Any(c => c.CourseId == courseId);
         }
+
+        public IEnumerable<Domain.Entities.Course.Course> GetAllCourses()
+        {
+            return _context.Courses.Include(c => c.Episodes);
+        }
     }
 }

@@ -12,6 +12,7 @@ namespace EP.Domain.Interfaces.Course
 {
     public interface ICourseRepository
     {
+        public IEnumerable<Entities.Course.Course> GetAllCourses();
         public List<CourseGroup> GetAllCourseGroups();
 
         public List<CourseGroup> GetAllMainCourseGroups();

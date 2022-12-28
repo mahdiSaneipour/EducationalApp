@@ -1,0 +1,11 @@
+﻿@using EP.Core.DTOs.MainPageViewModel;
+@model BoxCourseViewModel
+
+<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 term-col">
+    <article>
+        <a href="" class="img-layer"><img src="/images/course-images/normal-size/@Model.CourseImage"></a>
+        <h2><a href="">@Model.CourseTitle</a></h2>
+        <span class="text-success">@((Model.CoursePrice == 0)?"رایگان":@Model.CoursePrice.ToString("#,0"))</span>
+        <i>@Model.CourseTime</i>
+    </article>
+</div>

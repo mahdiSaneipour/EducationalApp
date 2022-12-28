@@ -1,4 +1,6 @@
 ﻿using EP.Core.DTOs.AdminPanelViewModels;
+using EP.Core.DTOs.MainPageViewModel;
+using EP.Core.Enums.Course;
 using EP.Core.ServiceModels.Course;
 using EP.Core.ServiceModels.UserPanel;
 using EP.Domain.Entities.Course;
@@ -29,6 +31,12 @@ namespace EP.Core.Interfaces.Course
         public List<CourseViewModel> GetAllCoursesForAdmin();
 
         public Domain.Entities.Course.Course GetCourseByCourseId(int courseId);
+
+        public List<BoxCourseViewModel> GetAllCourseByFilter(int pageId = 1,
+            BoxCourseOrderByEnum orderBy = BoxCourseOrderByEnum.CreateDate,
+            BoxCourseGetTypeEnum getType = BoxCourseGetTypeEnum.All, int minimumPrice = 0,
+            int maximumPrce = 0, string filter = "", List<int> courseGroups = null,
+            int take = 0);
 
         public int AddCourse(Domain.Entities.Course.Course course, IFormFile courseDemo);
 

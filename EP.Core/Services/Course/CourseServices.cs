@@ -1,4 +1,6 @@
 ﻿using EP.Core.DTOs.AdminPanelViewModels;
+using EP.Core.DTOs.MainPageViewModel;
+using EP.Core.Enums.Course;
 using EP.Core.Enums.UserPanel;
 using EP.Core.Interfaces.Course;
 using EP.Core.JsonModel.UserPanel;
@@ -9,6 +11,7 @@ using EP.Domain.Interfaces.Course;
 using EP.Domain.Interfaces.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -341,6 +344,97 @@ namespace EP.Core.Services.Course
         public bool IsCourseExist(int courseId)
         {
             return _courseRepository.IsCourseExist(courseId);
+        }
+
+        public List<BoxCourseViewModel> GetAllCourseByFilter(int pageId = 1,
+            BoxCourseOrderByEnum orderBy = BoxCourseOrderByEnum.CreateDate,
+            BoxCourseGetTypeEnum getType = BoxCourseGetTypeEnum.All, int minimumPrice = 0, 
+            int maximumPrce = 0, string filter = "", List<int> courseGroups = null,
+            int take = 0)
+        {
+
+            if (take == 0)
+            {
+                take = 8;
+            }
+
+            IEnumerable<Domain.Entities.Course.Course> courses = _courseRepository.GetAllCourses();
+            
+            switch (getType)
+            {
+                case BoxCourseGetTypeEnum.All:
+                    break;
+
+                case BoxCourseGetTypeEnum.Buyable:
+                    {
+                        courses = courses.Where(c => c.CoursePrice != 0);
+                        break;
+                    }
+
+                case BoxCourseGetTypeEnum.Free:
+                    {
+                        courses = courses.Where(c => c.CoursePrice == 0);
+                        break;
+                    }
+            }
+
+            switch (orderBy)
+            {
+                case BoxCourseOrderByEnum.CreateDate:
+                    courses = courses.OrderBy(c => c.CreateDate);
+                    break;
+
+                case BoxCourseOrderByEnum.UpdateDate:
+                    {
+                        courses = courses.OrderBy(c => c.UpdateDate);
+                        break;
+                    }
+
+                case BoxCourseOrderByEnum.Cheaper:
+                    {
+                        courses = courses.OrderByDescending(c => c.CoursePrice);
+                        break;
+                    }
+
+                case BoxCourseOrderByEnum.MostExpensive:
+                    {
+                        courses = courses.OrderBy(c => c.CoursePrice);
+                        break;
+                    }
+            }
+
+            if (!String.IsNullOrEmpty(filter)) {
+                courses = courses.Where(c => c.CourseName.Contains(filter));
+            }
+
+            if (minimumPrice != 0)
+            {
+                courses = courses.Where(c => c.CoursePrice > minimumPrice);
+            }
+
+
+            if (maximumPrce != 0)
+            {
+                courses = courses.Where(c => c.CoursePrice < maximumPrce);
+            }
+
+            if(courseGroups != null)
+            {
+                // filter buy course
+            }
+            Console.WriteLine("courseId : " + courses.First().CourseId);
+            int skip = (pageId - 1) * take;
+
+            return courses.Select(c =>
+            
+                new BoxCourseViewModel() {
+                    CourseId = c.CourseId,
+                    CourseImage = c.CourseImage,
+                    CoursePrice = c.CoursePrice,
+                    CourseTime = new TimeSpan((long)c.Episodes.Sum(e => e.EpisodeTime.Ticks)),
+                    CourseTitle = c.CourseName
+                }
+            ).Skip(skip).Take(take).ToList();
         }
     }
 }
