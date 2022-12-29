@@ -10,6 +10,7 @@ using EP.Domain.Entities.Course;
 using EP.Domain.Interfaces.Course;
 using EP.Domain.Interfaces.User;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -312,8 +313,6 @@ namespace EP.Core.Services.Course
                     course.CourseDemo = courseDemoName;
                 }
 
-                course.UpdateDate = DateTime.Now;
-
                 _courseRepository.UpdateCourse(course);
                 _courseRepository.SaveChanges();
 
@@ -405,7 +404,7 @@ namespace EP.Core.Services.Course
             }
 
             if (!String.IsNullOrEmpty(filter)) {
-                courses = courses.Where(c => c.CourseName.Contains(filter));
+                courses = courses.Where(c => c.CourseName.Contains(filter)|| c.Tags.Contains(filter));
             }
 
             if (minimumPrice != 0)
@@ -463,6 +462,11 @@ namespace EP.Core.Services.Course
             ).Skip(skip).Take(take).ToList();
 
             return Tuple.Create(query,pageCount);
+        }
+
+        public Domain.Entities.Course.Course GetCourseByCourseIdForShowCourse(int courseId)
+        {
+            return _courseRepository.GetCourseByCourseIdForShowCourse(courseId);
         }
     }
 }

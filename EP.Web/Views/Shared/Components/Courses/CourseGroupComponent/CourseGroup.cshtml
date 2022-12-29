@@ -7,12 +7,12 @@
             @foreach (var courseGroup in Model.Where(c => c.ParentId == null))
             {
                 <li>
-                    <a href="">@courseGroup.GroupeName</a>
+                    <a asp-controller="Course" asp-route-courseGroups="@courseGroup.GroupId">@courseGroup.GroupeName</a>
                     @if(Model.Any(c => c.ParentId == courseGroup.GroupId)){
                         <ul>
                             @foreach (var sub in Model.Where(c => c.ParentId == courseGroup.GroupId))
                             {
-                                <li><a href="">@sub.GroupeName</a></li>
+                                <li><a asp-controller="Course" asp-route-courseGroups="@sub.GroupId">@sub.GroupeName</a></li>
                             }
                         </ul>
                     }

@@ -2,6 +2,7 @@
 using EP.Core.Interfaces.Episode;
 using EP.Domain.CustomModel.Episode;
 using EP.Domain.Entities.Course;
+using EP.Domain.Interfaces.Course;
 using EP.Domain.Interfaces.Episode;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -15,11 +16,12 @@ namespace EP.Core.Services.Episode
     public class EpisodeServices : IEpisodeServices
     {
         private readonly IEpisodeRepository _episodeRepository;
+        private readonly ICourseRepository _courseRepository;
 
-
-        public EpisodeServices(IEpisodeRepository episodeRepository)
+        public EpisodeServices(IEpisodeRepository episodeRepository, ICourseRepository courseRepository)
         {
             _episodeRepository = episodeRepository;
+            _courseRepository = courseRepository;
         }
 
         #region GET
@@ -56,6 +58,10 @@ namespace EP.Core.Services.Episode
             episode.EpisodeDemoFile = episodeAddress;
             episode.CourseId = courseId;
 
+            Domain.Entities.Course.Course course = _courseRepository.GetCourseById(courseId);
+            course.UpdateDate = DateTime.Now;
+
+            _courseRepository.UpdateCourse(course);
             _episodeRepository.AddEpisode(episode);
             _episodeRepository.SaveChanges();
 

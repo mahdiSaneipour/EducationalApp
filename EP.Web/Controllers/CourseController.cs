@@ -32,5 +32,14 @@ namespace EP.Web.Controllers
             ViewData["PageId"] = pageId;
             return View(result);
         }
+
+        [Route("ShowCourse/{courseId}")]
+        public IActionResult ShowCourse(int courseId)
+        {
+
+            Domain.Entities.Course.Course course = _courseServices.GetCourseByCourseIdForShowCourse(courseId);
+
+            return View(course);
+        }
     }
 }

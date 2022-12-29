@@ -18,6 +18,8 @@ namespace EP.Core.Interfaces.Course
     {
         public List<CourseGroup> GetAllCourseGroups();
 
+        public Domain.Entities.Course.Course GetCourseByCourseIdForShowCourse(int courseId);
+
         public SelectList GetAllMainCourseGroupsAsSelectList(int? selected = 0);
 
         public SelectList GetCourseGroupsByParentIdAsSelectList(int parentId, int? selected = 0);

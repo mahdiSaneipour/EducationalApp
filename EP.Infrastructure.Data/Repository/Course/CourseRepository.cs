@@ -87,5 +87,12 @@ namespace EP.Infrastructure.Data.Repository.Course
         {
             return _context.Courses.Include(c => c.Episodes);
         }
+
+        public Domain.Entities.Course.Course GetCourseByCourseIdForShowCourse(int courseId)
+        {
+            return _context.Courses.Include(c => c.Episodes).Include(c => c.CourseStatus)
+                .Include(c => c.CourseLevel).Include(c => c.User)
+                .FirstOrDefault(c => c.CourseId == courseId);
+        }
     }
 }

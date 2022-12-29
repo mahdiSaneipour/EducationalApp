@@ -74,7 +74,7 @@ namespace EP.Web.Pages.Admin.Course
 
             _courseServices.EditCourse(Course, courseDemo);
 
-            return RedirectToAction("Index");
+            return RedirectToPage("Index");
         }
     }
 }
