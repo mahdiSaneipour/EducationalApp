@@ -4,6 +4,7 @@ using EP.Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EP.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(EPContext))]
-    partial class EPContextModelSnapshot : ModelSnapshot
+    [Migration("20221229170541_AddOrderAndOrderDetailsTBs")]
+    partial class AddOrderAndOrderDetailsTBs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -231,14 +234,17 @@ namespace EP.Infrastructure.Data.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
+                    b.Property<int>("OrderId1")
+                        .HasColumnType("int");
+
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
                     b.HasKey("DetailsId");
 
-                    b.HasIndex("CourseId");
-
                     b.HasIndex("OrderId");
+
+                    b.HasIndex("OrderId1");
 
                     b.ToTable("OrderDetails");
                 });
@@ -504,13 +510,13 @@ namespace EP.Infrastructure.Data.Migrations
                 {
                     b.HasOne("EP.Domain.Entities.Course.Course", "Course")
                         .WithMany("OrderDetails")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("OrderId")
                         .IsRequired();
 
                     b.HasOne("EP.Domain.Entities.Order.Order", "Order")
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("OrderId")
+                        .WithMany("Details")
+                        .HasForeignKey("OrderId1")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Course");
@@ -610,7 +616,7 @@ namespace EP.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("EP.Domain.Entities.Order.Order", b =>
                 {
-                    b.Navigation("OrderDetails");
+                    b.Navigation("Details");
                 });
 
             modelBuilder.Entity("EP.Domain.Entities.Permission.Permission", b =>

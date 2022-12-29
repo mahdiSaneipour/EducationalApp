@@ -94,5 +94,10 @@ namespace EP.Infrastructure.Data.Repository.Course
                 .Include(c => c.CourseLevel).Include(c => c.User)
                 .FirstOrDefault(c => c.CourseId == courseId);
         }
+
+        public int GetCoursePriceByCourseId(int courseId)
+        {
+            return _context.Courses.FirstOrDefault(c => c.CourseId == courseId).CoursePrice;
+        }
     }
 }

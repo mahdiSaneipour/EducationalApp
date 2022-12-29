@@ -1,4 +1,5 @@
 ﻿using EP.Domain.Entities.Course;
+using EP.Domain.Entities.Order;
 using EP.Domain.Entities.Permission;
 using EP.Domain.Entities.User;
 using EP.Domain.Entities.Wallet;
@@ -45,7 +46,7 @@ namespace EP.Infrastructure.Data.Context
 
         #endregion
 
-        #region
+        #region Courses
 
         public DbSet<Course> Courses { get; set; }
 
@@ -59,6 +60,14 @@ namespace EP.Infrastructure.Data.Context
 
         #endregion
 
+        #region Orders
+
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<OrderDetails> OrderDetails { get; set; }
+
+        #endregion
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasQueryFilter(u => !u.IsDelete);
@@ -68,6 +77,11 @@ namespace EP.Infrastructure.Data.Context
                 .HasOne(x => x.CourseSubGroup)
                 .WithMany(x => x.CoursesSubGroupes)
                 .HasForeignKey(x => x.SubGroupId).OnDelete(DeleteBehavior.ClientSetNull);
+
+            modelBuilder.Entity<OrderDetails>()
+                .HasOne(x => x.Order)
+                .WithMany(x => x.OrderDetails)
+                .HasForeignKey(x => x.OrderId).OnDelete(DeleteBehavior.ClientSetNull);
 
             base.OnModelCreating(modelBuilder);
         }

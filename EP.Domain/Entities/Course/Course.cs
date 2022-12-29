@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EP.Domain.Entities.Order;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -77,6 +78,9 @@ namespace EP.Domain.Entities.Course
         public User.User? User { get; set; }
 
         public List<CourseEpisode>? Episodes { get; set; }
+
+        public List<OrderDetails> OrderDetails { get; set; }
+
         #endregion
     }
 }

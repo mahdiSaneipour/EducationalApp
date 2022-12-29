@@ -26,6 +26,8 @@ namespace EP.Domain.Interfaces.Course
 
         public List<CourseStatus> GetAllCourseStatuses();
 
+        public int GetCoursePriceByCourseId(int courseId);
+
         public int AddCourse(Domain.Entities.Course.Course course);
 
         public IQueryable<Domain.Entities.Course.Course> GetAllCoursesIQ();

@@ -1,17 +1,21 @@
 ﻿using EP.Core.DTOs.MainPageViewModel;
 using EP.Core.Enums.Course;
 using EP.Core.Interfaces.Course;
+using EP.Core.Interfaces.Order;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace EP.Web.Controllers
 {
     public class CourseController : Controller
     {
         private readonly ICourseServices _courseServices;
+        private readonly IOrderServices _orderServices;
 
-        public CourseController(ICourseServices courseServices)
+        public CourseController(ICourseServices courseServices, IOrderServices orderServices)
         {
             _courseServices = courseServices;
+            _orderServices = orderServices;
         }
 
         public IActionResult Index(int pageId = 1,
@@ -40,6 +44,15 @@ namespace EP.Web.Controllers
             Domain.Entities.Course.Course course = _courseServices.GetCourseByCourseIdForShowCourse(courseId);
 
             return View(course);
+        }
+
+        public IActionResult BuyCourse(int courseId)
+        {
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            _orderServices.AddOrder(userId,courseId);
+
+            return Redirect("/");
         }
     }
 }
