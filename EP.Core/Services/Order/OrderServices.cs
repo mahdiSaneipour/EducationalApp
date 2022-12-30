@@ -16,13 +16,16 @@ namespace EP.Core.Services.Order
         private readonly IOrderRepository _orderRepository;
         private readonly ICourseRepository _courseRepository;
         private readonly IWalletRepository _walletRepository;
+        private readonly IUserRepository _userRepository;
 
         public OrderServices(IOrderRepository orderRepository,
-            ICourseRepository courseRepository, IWalletRepository walletRepository)
+            ICourseRepository courseRepository, IWalletRepository walletRepository,
+            IUserRepository userRepository)
         {
             _orderRepository = orderRepository;
             _courseRepository = courseRepository;
             _walletRepository = walletRepository;
+            _userRepository = userRepository;
         }
 
         public int AddOrder(int userId, int courseId)
@@ -118,6 +121,16 @@ namespace EP.Core.Services.Order
 
                 order.IsFinaly = true;
                 _orderRepository.UpdateOrder(order);
+
+                foreach (var courseId in order.OrderDetails.Select(od => od.CourseId))
+                {
+                    Domain.Entities.User.UserCourses userCourses = new Domain.Entities.User.UserCourses()
+                    {
+                        UserId = userId,
+                        CourseId = courseId
+                    };
+                    _userRepository.AddUserCourse(userCourses);
+                }
 
                 _walletRepository.SaveChanges();
 

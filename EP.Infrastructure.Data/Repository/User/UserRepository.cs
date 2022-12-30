@@ -97,10 +97,15 @@ namespace EP.Infrastructure.Data.Repository.User
                 .Select(ur => ur.User).ToList();
         }
 
+        public int AddUserCourse(UserCourses userCourses)
+        {
+            _context.UserCourses.Add(userCourses);
+            return userCourses.UC_Id;
+        }
+
         public void SaveChanges()
         {
             _context.SaveChanges();
         }
-
     }
 }

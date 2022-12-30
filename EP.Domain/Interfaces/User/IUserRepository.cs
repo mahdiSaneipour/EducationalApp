@@ -16,6 +16,8 @@ namespace EP.Domain.Interfaces.User
 
         public int AddUser(Domain.Entities.User.User user);
 
+        public int AddUserCourse(Domain.Entities.User.UserCourses userCourses);
+
         public Domain.Entities.User.User GetUserByEmail(string email);
 
         public Domain.Entities.User.User GetUserByUserId(int userId);

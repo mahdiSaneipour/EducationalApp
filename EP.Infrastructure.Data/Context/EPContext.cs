@@ -28,6 +28,8 @@ namespace EP.Infrastructure.Data.Context
 
         public DbSet<UserRole> UserRoles { get; set; }
 
+        public DbSet<UserCourses> UserCourses { get; set; }
+
         #endregion
 
         #region Wallet
@@ -82,6 +84,11 @@ namespace EP.Infrastructure.Data.Context
                 .HasOne(x => x.Order)
                 .WithMany(x => x.OrderDetails)
                 .HasForeignKey(x => x.OrderId).OnDelete(DeleteBehavior.ClientSetNull);
+
+            modelBuilder.Entity<UserCourses>()
+                .HasOne(us => us.User)
+                .WithMany(us => us.UserCourses)
+                .HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.ClientSetNull);
 
             base.OnModelCreating(modelBuilder);
         }
