@@ -1,6 +1,8 @@
 ﻿using EP.Core.Interfaces.Order;
 using EP.Domain.Interfaces.Course;
 using EP.Domain.Interfaces.Order;
+using EP.Domain.Interfaces.User;
+using EP.Domain.Interfaces.Wallet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +15,14 @@ namespace EP.Core.Services.Order
     {
         private readonly IOrderRepository _orderRepository;
         private readonly ICourseRepository _courseRepository;
+        private readonly IWalletRepository _walletRepository;
 
-        public OrderServices(IOrderRepository orderRepository, ICourseRepository courseRepository)
+        public OrderServices(IOrderRepository orderRepository,
+            ICourseRepository courseRepository, IWalletRepository walletRepository)
         {
             _orderRepository = orderRepository;
             _courseRepository = courseRepository;
+            _walletRepository = walletRepository;
         }
 
         public int AddOrder(int userId, int courseId)
@@ -77,5 +82,50 @@ namespace EP.Core.Services.Order
 
             return order.OrderId;
         }
+
+        public Domain.Entities.Order.Order GetOrderByUserIdAndOrderId(int userId, int orderId)
+        {
+            Domain.Entities.Order.Order order = _orderRepository.GetOrderByOrderIdAndUserId(userId, orderId);
+            return order;
+        }
+
+        public bool FinalOrder(int userId, int orderId)
+        {
+            Domain.Entities.Order.Order order = _orderRepository.GetOrderByOrderIdAndUserId(userId, orderId);
+
+            if (order == null)
+            {
+                return false;
+            }
+
+            int userBalance = _walletRepository.BalanceUserWallet(userId);
+            int sumOrder = order.OrderDetails.Sum(od => od.Price * od.Count);
+
+            if (userBalance >= sumOrder)
+            {
+
+                Domain.Entities.Wallet.Wallet wallet = new Domain.Entities.Wallet.Wallet()
+                {
+                    Description = "پرداخت فاکتور #" + orderId,
+                    CreateDate = DateTime.Now,
+                    Amount = sumOrder,
+                    UserId = userId,
+                    IsPay = true,
+                    TypeId = 2,
+                };
+
+                _walletRepository.AddWallet(wallet);
+
+                order.IsFinaly = true;
+                _orderRepository.UpdateOrder(order);
+
+                _walletRepository.SaveChanges();
+
+                return true;
+            }
+
+            return false;
+        }
+
     }
 }

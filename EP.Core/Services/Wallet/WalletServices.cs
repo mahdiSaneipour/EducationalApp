@@ -106,5 +106,10 @@ namespace EP.Core.Services.Wallet
 
             return 0;
         }
+
+        public int GetUserBalanceByUserId(int userId)
+        {
+            return _walletRepository.BalanceUserWallet(userId);
+        }
     }
 }

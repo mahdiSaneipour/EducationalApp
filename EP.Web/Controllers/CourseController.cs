@@ -50,9 +50,9 @@ namespace EP.Web.Controllers
         {
             int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            _orderServices.AddOrder(userId,courseId);
+            int orderId = _orderServices.AddOrder(userId,courseId);
 
-            return Redirect("/");
+            return Redirect("~/UserPanel/Order/ShowOrder/" + orderId);
         }
     }
 }

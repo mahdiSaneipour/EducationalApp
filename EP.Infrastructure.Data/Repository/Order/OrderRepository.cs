@@ -57,6 +57,12 @@ namespace EP.Infrastructure.Data.Repository.Order
             return _context.OrderDetails.Where(o => o.OrderId == orderId).Sum(o => o.Price * o.Count);
         }
 
+        public Domain.Entities.Order.Order GetOrderByOrderIdAndUserId(int userId, int orderId)
+        {
+            return _context.Orders.Include(o => o.OrderDetails).ThenInclude(od => od.Course)
+                .FirstOrDefault(o => o.UserId == userId && o.OrderId == orderId);
+        }
+
         public void saveChanges()
         {
             _context.SaveChanges();

@@ -12,6 +12,8 @@ namespace EP.Domain.Interfaces.Order
 
         public Domain.Entities.Order.OrderDetails GetOrderDetailByOrderIdAndCourseId(int orderId, int courseId);
 
+        public Domain.Entities.Order.Order GetOrderByOrderIdAndUserId(int userId, int orderId);
+
         public int GetOrderSum(int orderId);
 
         public void AddOrder(Domain.Entities.Order.Order order);

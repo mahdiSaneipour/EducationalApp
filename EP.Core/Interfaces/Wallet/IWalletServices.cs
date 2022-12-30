@@ -15,5 +15,7 @@ namespace EP.Core.Interfaces.Wallet
         public string AddWallet(ChargeWalletServiceModel model);
 
         public long OnlinePayment(OnlinePaymentServiceModel model);
+
+        public int GetUserBalanceByUserId(int userId);
     }
 }

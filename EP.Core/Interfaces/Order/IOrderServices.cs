@@ -9,5 +9,9 @@ namespace EP.Core.Interfaces.Order
     public interface IOrderServices
     {
         public int AddOrder(int userId, int courseId);
+
+        public Domain.Entities.Order.Order GetOrderByUserIdAndOrderId(int userId, int orderId);
+
+        public bool FinalOrder(int userId, int orderId);
     }
 }
