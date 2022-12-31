@@ -10,6 +10,8 @@ namespace EP.Domain.Interfaces.Discount
     {
         public Domain.Entities.Order.Discount GetDiscountByDiscountCode(string discountCode);
 
+        public List<Domain.Entities.Order.Discount> GetAllDiscounts();
+
         public void UpdateDiscount(Domain.Entities.Order.Discount discount);
 
         public int AddDiscount(Domain.Entities.Order.Discount discount);

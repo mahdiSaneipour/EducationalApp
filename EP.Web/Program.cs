@@ -1,11 +1,13 @@
 using EP.Core.Interfaces.Admin;
 using EP.Core.Interfaces.Course;
+using EP.Core.Interfaces.Discount;
 using EP.Core.Interfaces.Episode;
 using EP.Core.Interfaces.Order;
 using EP.Core.Interfaces.User;
 using EP.Core.Interfaces.Wallet;
 using EP.Core.Services.Admin;
 using EP.Core.Services.Course;
+using EP.Core.Services.Discount;
 using EP.Core.Services.Episode;
 using EP.Core.Services.Order;
 using EP.Core.Services.User;
@@ -72,6 +74,7 @@ services.AddAuthentication(options => {
 services.AddScoped<IUserAccountServices, UserAccountServices>();
 services.AddScoped<IViewRenderService, RenderViewToString>();
 services.AddScoped<IUserPanelServices, UserPanelServices>();
+services.AddScoped<IDiscountServices, DiscountServices>();
 services.AddScoped<IEpisodeServices, EpisodeServices>();
 services.AddScoped<ICourseServices, CourseServices>();
 services.AddScoped<IWalletServices, WalletServices>();

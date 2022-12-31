@@ -51,6 +51,11 @@ namespace EP.Infrastructure.Data.Repository.Discount
             return userDiscounts.DiscountId;
         }
 
+        public List<Domain.Entities.Order.Discount> GetAllDiscounts()
+        {
+            return _context.Discounts.ToList();
+        }
+
         public void SaveChanges()
         {
             _context.SaveChanges();
