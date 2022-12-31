@@ -64,8 +64,15 @@
                                             }
 
                                         </td>
-                                        <td>@wallet.Description</td>
+                                        <td>
+                                            @{
+                                                string id = wallet.Description.Replace("پرداخت فاکتور #", "");
+                                                string a = "<a href='Order/ShowOrder/" + id + "'># " + id + " </a>";
+                                            }
+                                            @Html.Raw(@wallet.Description.Replace("#" + id ,a))
+                                        </td>
                                     </tr>
+                                    
                                 }
                             </table>
                         </div>

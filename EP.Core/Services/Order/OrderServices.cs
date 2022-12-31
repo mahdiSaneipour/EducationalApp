@@ -140,5 +140,9 @@ namespace EP.Core.Services.Order
             return false;
         }
 
+        public List<Domain.Entities.Order.Order> GetOrdersByUserId(int userId)
+        {
+            return _orderRepository.GetOrdersByUserId(userId);
+        }
     }
 }

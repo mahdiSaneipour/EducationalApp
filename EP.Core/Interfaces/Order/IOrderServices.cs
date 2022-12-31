@@ -12,6 +12,8 @@ namespace EP.Core.Interfaces.Order
 
         public Domain.Entities.Order.Order GetOrderByUserIdAndOrderId(int userId, int orderId);
 
+        public List<Domain.Entities.Order.Order> GetOrdersByUserId(int userId);
+
         public bool FinalOrder(int userId, int orderId);
     }
 }

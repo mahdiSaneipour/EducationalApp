@@ -1,1 +1,63 @@
-﻿
+﻿@model List<EP.Domain.Entities.Order.Order>
+@{
+    ViewData["Title"] = "نمایش فاکتور ها";
+}
+
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">آموزش</a></li>
+            <li class="breadcrumb-item active" aria-current="page"> نمایش فاکتور ها</li>
+        </ul>
+    </nav>
+</div>
+
+<main>
+    <div class="container">
+        <div class="user-account">
+            <div class="row">
+                <partial name="_SideBar" />
+                <div class="col-md-9 col-sm-8 col-xs-12">
+                    <section class="user-account-content">
+                        <header><h1> فاکتور ها </h1></header>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>شماره فاکتور</th>
+                                    <th>تاریخ فاکتور</th>
+                                    <th>قیمت</th>
+                                    <th>پرداخت شده</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <a asp-area="UserPanel" asp-controller="Order" asp-action="ShowOrder" asp-route-Id="@item.OrderId" target="_blank">@item.OrderId</a>
+                                        </td>
+                                        <td>
+                                            @item.CreateDate.ToSolarCalendar()
+                                        </td>
+                                        <td>@item.OrderSum.ToString("#,0")</td>
+                                        <td>
+                                            @if(item.IsFinaly){
+                                                <span class="text-success">
+                                                    <i class="glyphicon glyphicon-ok"></i>
+                                                </span>
+                                            } else {
+                                                <span class="text-danger">
+                                                    <i class="glyphicon glyphicon-remove"></i>
+                                                </span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

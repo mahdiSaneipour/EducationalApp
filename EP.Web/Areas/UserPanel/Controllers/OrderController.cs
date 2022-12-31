@@ -18,7 +18,11 @@ namespace EP.Web.Areas.UserPanel.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            int userId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            List<Domain.Entities.Order.Order> orders = _orderServices.GetOrdersByUserId(userId);
+
+            return View(orders);
         }
 
         public IActionResult ShowOrder(int Id)

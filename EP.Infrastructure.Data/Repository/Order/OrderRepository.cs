@@ -63,9 +63,15 @@ namespace EP.Infrastructure.Data.Repository.Order
                 .FirstOrDefault(o => o.UserId == userId && o.OrderId == orderId);
         }
 
+        public List<Domain.Entities.Order.Order> GetOrdersByUserId(int userId)
+        {
+            return _context.Orders.Where(o => o.UserId == userId).ToList();
+        }
+
         public void saveChanges()
         {
             _context.SaveChanges();
+
         }
     }
 }

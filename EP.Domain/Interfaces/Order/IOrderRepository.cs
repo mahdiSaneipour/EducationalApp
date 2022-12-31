@@ -8,6 +8,8 @@ namespace EP.Domain.Interfaces.Order
 {
     public interface IOrderRepository
     {
+        public List<Domain.Entities.Order.Order> GetOrdersByUserId(int userId);
+
         public Domain.Entities.Order.Order GetOpenOrderByUserId(int userID);
 
         public Domain.Entities.Order.OrderDetails GetOrderDetailByOrderIdAndCourseId(int orderId, int courseId);
