@@ -1,4 +1,5 @@
 ﻿using EP.Core.Interfaces.Order;
+using EP.Domain.Entities.Order;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Web.Mvc;
@@ -30,7 +31,6 @@ namespace EP.Web.Areas.UserPanel.Controllers
             int userId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             Domain.Entities.Order.Order order = _orderServices.GetOrderByUserIdAndOrderId(userId, Id);
-            ViewBag.IsFinaly = false;
 
             return View(order);
         }
@@ -48,6 +48,17 @@ namespace EP.Web.Areas.UserPanel.Controllers
             }
 
             return BadRequest();
+        }
+
+        [System.Web.Mvc.HttpPost]
+        public IActionResult UseDiscount(int orderId, string discountCose)
+        {
+            int userId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            bool result = _orderServices.UseDiscount(orderId, userId, discountCose);
+            Console.WriteLine("result : " + result );
+            ViewBag.IsDiscount = result;
+            return RedirectToAction("ShowOrder", new { Id = orderId });
         }
 
     }

@@ -14,6 +14,8 @@ namespace EP.Core.Interfaces.Order
 
         public List<Domain.Entities.Order.Order> GetOrdersByUserId(int userId);
 
+        public bool UseDiscount(int orderId, int userId, string discountCode);
+
         public bool FinalOrder(int userId, int orderId);
     }
 }

@@ -12,6 +12,7 @@ using EP.Core.Services.User;
 using EP.Core.Services.Wallet;
 using EP.Core.Tools.RenderViewToString;
 using EP.Domain.Interfaces.Course;
+using EP.Domain.Interfaces.Discount;
 using EP.Domain.Interfaces.Episode;
 using EP.Domain.Interfaces.Order;
 using EP.Domain.Interfaces.Roles;
@@ -19,6 +20,7 @@ using EP.Domain.Interfaces.User;
 using EP.Domain.Interfaces.Wallet;
 using EP.Infrastructure.Data.Context;
 using EP.Infrastructure.Data.Repository.Course;
+using EP.Infrastructure.Data.Repository.Discount;
 using EP.Infrastructure.Data.Repository.Episode;
 using EP.Infrastructure.Data.Repository.Order;
 using EP.Infrastructure.Data.Repository.Roles;
@@ -80,6 +82,7 @@ services.AddScoped<IOrderServices, OrderServices>();
 
 #region Injection In EPDomain
 
+services.AddScoped<IDiscountRepository, DiscountRepository>();
 services.AddScoped<IEpisodeRepository, EpisodeRepository>();
 services.AddScoped<IWalletRepository, WalletRepository>();
 services.AddScoped<ICourseRepository, CourseRepository>();

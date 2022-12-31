@@ -1,5 +1,6 @@
 ﻿using EP.Core.Interfaces.Order;
 using EP.Domain.Interfaces.Course;
+using EP.Domain.Interfaces.Discount;
 using EP.Domain.Interfaces.Order;
 using EP.Domain.Interfaces.User;
 using EP.Domain.Interfaces.Wallet;
@@ -17,15 +18,17 @@ namespace EP.Core.Services.Order
         private readonly ICourseRepository _courseRepository;
         private readonly IWalletRepository _walletRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IDiscountRepository _discountRepository;
 
         public OrderServices(IOrderRepository orderRepository,
             ICourseRepository courseRepository, IWalletRepository walletRepository,
-            IUserRepository userRepository)
+            IUserRepository userRepository, IDiscountRepository discountRepository)
         {
             _orderRepository = orderRepository;
             _courseRepository = courseRepository;
             _walletRepository = walletRepository;
             _userRepository = userRepository;
+            _discountRepository = discountRepository;
         }
 
         public int AddOrder(int userId, int courseId)
@@ -138,6 +141,54 @@ namespace EP.Core.Services.Order
             }
 
             return false;
+        }
+
+        public bool UseDiscount(int orderId, int userId, string discountCode)
+        {
+            Domain.Entities.Order.Order order = _orderRepository.GetOrderByOrderIdAndUserId(userId, orderId);
+
+            if (order == null)
+            {
+                return false;
+            }
+
+            Domain.Entities.Order.Discount discount = _discountRepository.GetDiscountByDiscountCode(discountCode);
+
+            if (discount == null)
+            {
+                return false;
+            }
+
+            if (discount.UsableCount != null && discount.UsableCount < 1)
+            {
+                return false;
+            }
+
+            if (discount.StartDate != null && discount.StartDate > DateTime.Now)
+            {
+                return false;
+            }
+
+            if (discount.EndDate != null && discount.EndDate < DateTime.Now)
+            {
+                return false;
+            }
+
+            int discountetAmount = (order.OrderSum * discount.DicountPercent) / 100;
+
+            order.OrderSum = order.OrderSum - discountetAmount;
+
+            if (discount.UsableCount != null)
+            {
+                discount.UsableCount--;
+            }
+
+            _orderRepository.UpdateOrder(order);
+            _discountRepository.UpdateDiscount(discount);
+
+            _discountRepository.SaveChanges();
+
+            return true;
         }
 
         public List<Domain.Entities.Order.Order> GetOrdersByUserId(int userId)

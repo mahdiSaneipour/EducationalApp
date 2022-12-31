@@ -68,6 +68,8 @@ namespace EP.Infrastructure.Data.Context
 
         public DbSet<OrderDetails> OrderDetails { get; set; }
 
+        public DbSet<Discount> Discounts { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

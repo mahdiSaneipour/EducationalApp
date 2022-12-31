@@ -4,7 +4,8 @@
 
 @{
     ViewData["Title"] = "نمایش فاکتور";
-    bool isFinaly = ViewBag.IsFinaly;
+    bool isFinaly = ((ViewBag.IsFinaly != null) ? ViewBag.IsFinaly : false);
+    bool isDiscount = ((ViewBag.IsDiscount != null) ? ViewBag.IsDiscount : false);
     int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 }
 
@@ -29,6 +30,12 @@
                         {
                             <div class="alert alert-success">
                                 فاکتور با موفقیت پرداخت گردید
+                            </div>
+                        }
+                        @if (isDiscount == true)
+                        {
+                            <div class="alert alert-success">
+                                تخفیف با موفقیت اعمال شد
                             </div>
                         }
                         <table class="table table-bordered">
@@ -59,11 +66,14 @@
                                 @if (!Model.IsFinaly)
                                 {
                                     <tr>
-                                        <td colspan="3" class="text-left">کد تخفیف</td>
-                                        <td>
-                                            <input type="text" class="form-control" />
-                                            <input type="submit" class="btn btn-primary btn-block" style="margin-top: 5px" value="اعمال" />
-                                        </td>
+                                        <form asp-action="UseDiscount" method="post">
+                                            <td colspan="3" class="text-left">کد تخفیف</td>
+                                            <td>
+                                            <input name="orderId" value="@Model.OrderId" hidden />
+                                                <input type="text" name="discountCose" class="form-control" />
+                                                <input type="submit" class="btn btn-primary btn-block" style="margin-top: 5px" value="اعمال" />
+                                            </td>
+                                        </form>
                                     </tr>
                                 }
                                 <tr>
