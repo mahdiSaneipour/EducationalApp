@@ -33,6 +33,7 @@ namespace EP.Domain.Interfaces.User
         public bool CheckPassword(string password, int userId);
 
         public IQueryable<Domain.Entities.User.User> GetUsersForAdmin(string filterEmail, string filterUsername, bool isDelete);
+
         public void SaveChanges();
     }
 }

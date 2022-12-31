@@ -16,6 +16,10 @@ namespace EP.Domain.Interfaces.Discount
 
         public Domain.Entities.Order.Discount GetDiscountByDiscountId(int discountId);
 
+        public bool DoesUserUsedDiscount(int userId, int discountId);
+
+        public int AddUserDiscount(Domain.Entities.User.UserDiscounts userDiscounts);
+
         public void SaveChanges();
 
     }

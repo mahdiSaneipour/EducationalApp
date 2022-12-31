@@ -66,6 +66,8 @@ namespace EP.Domain.Entities.User
 
         public List<UserCourses> UserCourses { get; set; }
 
+        public List<UserDiscounts> UserDiscounts { get; set; }
+
         #endregion
     }
 }

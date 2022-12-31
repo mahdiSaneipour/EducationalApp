@@ -1,4 +1,5 @@
-﻿using EP.Domain.Interfaces.Discount;
+﻿using EP.Domain.Entities.User;
+using EP.Domain.Interfaces.Discount;
 using EP.Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -37,6 +38,17 @@ namespace EP.Infrastructure.Data.Repository.Discount
         public void UpdateDiscount(Domain.Entities.Order.Discount discount)
         {
             _context.Discounts.Update(discount);
+        }
+
+        public bool DoesUserUsedDiscount(int userId, int discountId)
+        {
+            return _context.UserDiscounts.Any(us => us.UserId == userId && us.DiscountId == discountId);
+        }
+
+        public int AddUserDiscount(UserDiscounts userDiscounts)
+        {
+            _context.UserDiscounts.Add(userDiscounts);
+            return userDiscounts.DiscountId;
         }
 
         public void SaveChanges()

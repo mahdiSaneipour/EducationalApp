@@ -176,6 +176,11 @@ namespace EP.Core.Services.Order
 
             int discountetAmount = (order.OrderSum * discount.DicountPercent) / 100;
 
+            if (_discountRepository.DoesUserUsedDiscount(userId, discount.DiscountId))
+            {
+                return false;
+            }
+
             order.OrderSum = order.OrderSum - discountetAmount;
 
             if (discount.UsableCount != null)
@@ -183,8 +188,15 @@ namespace EP.Core.Services.Order
                 discount.UsableCount--;
             }
 
+            Domain.Entities.User.UserDiscounts userDiscounts = new Domain.Entities.User.UserDiscounts()
+            {
+                UserId = userId,
+                DiscountId = discount.DiscountId
+            };
+
             _orderRepository.UpdateOrder(order);
             _discountRepository.UpdateDiscount(discount);
+            _discountRepository.AddUserDiscount(userDiscounts);
 
             _discountRepository.SaveChanges();
 

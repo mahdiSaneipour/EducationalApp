@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EP.Domain.Entities.User;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -23,5 +24,12 @@ namespace EP.Domain.Entities.Order
         public DateTime? StartDate { get; set; }
 
         public DateTime? EndDate { get; set; }
+
+        #region Relations
+
+        public List<UserDiscounts> UserDiscounts { get; set; }
+
+        #endregion
+
     }
 }

@@ -34,6 +34,7 @@ namespace EP.Web.Controllers
             ViewData["OrderBy"] = orderBy;
             ViewData["GetType"] = getType;
             ViewData["PageId"] = pageId;
+
             return View(result);
         }
 

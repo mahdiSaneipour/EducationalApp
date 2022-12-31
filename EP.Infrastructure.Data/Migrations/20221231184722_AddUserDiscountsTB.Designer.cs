@@ -4,6 +4,7 @@ using EP.Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EP.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(EPContext))]
-    partial class EPContextModelSnapshot : ModelSnapshot
+    [Migration("20221231184722_AddUserDiscountsTB")]
+    partial class AddUserDiscountsTB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,7 +91,7 @@ namespace EP.Infrastructure.Data.Migrations
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("Courses", (string)null);
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("EP.Domain.Entities.Course.CourseEpisode", b =>
@@ -122,7 +125,7 @@ namespace EP.Infrastructure.Data.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Episodes", (string)null);
+                    b.ToTable("Episodes");
                 });
 
             modelBuilder.Entity("EP.Domain.Entities.Course.CourseGroup", b =>
@@ -148,7 +151,7 @@ namespace EP.Infrastructure.Data.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("CourseGroupes", (string)null);
+                    b.ToTable("CourseGroupes");
                 });
 
             modelBuilder.Entity("EP.Domain.Entities.Course.CourseLevel", b =>
@@ -166,7 +169,7 @@ namespace EP.Infrastructure.Data.Migrations
 
                     b.HasKey("LevelId");
 
-                    b.ToTable("Levels", (string)null);
+                    b.ToTable("Levels");
                 });
 
             modelBuilder.Entity("EP.Domain.Entities.Course.CourseStatus", b =>
@@ -184,7 +187,7 @@ namespace EP.Infrastructure.Data.Migrations
 
                     b.HasKey("StatusId");
 
-                    b.ToTable("Statuses", (string)null);
+                    b.ToTable("Statuses");
                 });
 
             modelBuilder.Entity("EP.Domain.Entities.Order.Discount", b =>
@@ -213,7 +216,7 @@ namespace EP.Infrastructure.Data.Migrations
 
                     b.HasKey("DiscountId");
 
-                    b.ToTable("Discounts", (string)null);
+                    b.ToTable("Discounts");
                 });
 
             modelBuilder.Entity("EP.Domain.Entities.Order.Order", b =>
@@ -240,7 +243,7 @@ namespace EP.Infrastructure.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("EP.Domain.Entities.Order.OrderDetails", b =>
@@ -269,7 +272,7 @@ namespace EP.Infrastructure.Data.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderDetails", (string)null);
+                    b.ToTable("OrderDetails");
                 });
 
             modelBuilder.Entity("EP.Domain.Entities.Permission.Permission", b =>
@@ -292,7 +295,7 @@ namespace EP.Infrastructure.Data.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Permissions", (string)null);
+                    b.ToTable("Permissions");
                 });
 
             modelBuilder.Entity("EP.Domain.Entities.Permission.RolePermission", b =>
@@ -315,7 +318,7 @@ namespace EP.Infrastructure.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("RolePermissions", (string)null);
+                    b.ToTable("RolePermissions");
                 });
 
             modelBuilder.Entity("EP.Domain.Entities.User.Role", b =>
@@ -333,7 +336,7 @@ namespace EP.Infrastructure.Data.Migrations
 
                     b.HasKey("RoleId");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("EP.Domain.Entities.User.User", b =>
@@ -380,7 +383,7 @@ namespace EP.Infrastructure.Data.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("EP.Domain.Entities.User.UserCourses", b =>
@@ -403,7 +406,7 @@ namespace EP.Infrastructure.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserCourses", (string)null);
+                    b.ToTable("UserCourses");
                 });
 
             modelBuilder.Entity("EP.Domain.Entities.User.UserDiscounts", b =>
@@ -417,6 +420,9 @@ namespace EP.Infrastructure.Data.Migrations
                     b.Property<int>("DiscountId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -424,9 +430,11 @@ namespace EP.Infrastructure.Data.Migrations
 
                     b.HasIndex("DiscountId");
 
+                    b.HasIndex("OrderId");
+
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserDiscounts", (string)null);
+                    b.ToTable("UserDiscounts");
                 });
 
             modelBuilder.Entity("EP.Domain.Entities.User.UserRole", b =>
@@ -449,7 +457,7 @@ namespace EP.Infrastructure.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserRoles", (string)null);
+                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("EP.Domain.Entities.Wallet.Wallet", b =>
@@ -486,7 +494,7 @@ namespace EP.Infrastructure.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Wallets", (string)null);
+                    b.ToTable("Wallets");
                 });
 
             modelBuilder.Entity("EP.Domain.Entities.Wallet.WalletType", b =>
@@ -501,7 +509,7 @@ namespace EP.Infrastructure.Data.Migrations
 
                     b.HasKey("TypeId");
 
-                    b.ToTable("WalletTypes", (string)null);
+                    b.ToTable("WalletTypes");
                 });
 
             modelBuilder.Entity("EP.Domain.Entities.Course.Course", b =>
@@ -640,10 +648,14 @@ namespace EP.Infrastructure.Data.Migrations
             modelBuilder.Entity("EP.Domain.Entities.User.UserDiscounts", b =>
                 {
                     b.HasOne("EP.Domain.Entities.Order.Discount", "Discount")
-                        .WithMany("UserDiscounts")
+                        .WithMany()
                         .HasForeignKey("DiscountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("EP.Domain.Entities.Order.Order", null)
+                        .WithMany("UserDiscounts")
+                        .HasForeignKey("OrderId");
 
                     b.HasOne("EP.Domain.Entities.User.User", "User")
                         .WithMany("UserDiscounts")
@@ -722,14 +734,11 @@ namespace EP.Infrastructure.Data.Migrations
                     b.Navigation("Courses");
                 });
 
-            modelBuilder.Entity("EP.Domain.Entities.Order.Discount", b =>
-                {
-                    b.Navigation("UserDiscounts");
-                });
-
             modelBuilder.Entity("EP.Domain.Entities.Order.Order", b =>
                 {
                     b.Navigation("OrderDetails");
+
+                    b.Navigation("UserDiscounts");
                 });
 
             modelBuilder.Entity("EP.Domain.Entities.Permission.Permission", b =>

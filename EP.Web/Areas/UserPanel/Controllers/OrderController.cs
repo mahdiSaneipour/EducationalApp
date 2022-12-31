@@ -26,11 +26,13 @@ namespace EP.Web.Areas.UserPanel.Controllers
             return View(orders);
         }
 
-        public IActionResult ShowOrder(int Id)
+        public IActionResult ShowOrder(int Id, bool? IsDiscount = false)
         {
             int userId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             Domain.Entities.Order.Order order = _orderServices.GetOrderByUserIdAndOrderId(userId, Id);
+
+            ViewBag.IsDiscount = IsDiscount;
 
             return View(order);
         }
@@ -56,9 +58,8 @@ namespace EP.Web.Areas.UserPanel.Controllers
             int userId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             bool result = _orderServices.UseDiscount(orderId, userId, discountCose);
-            Console.WriteLine("result : " + result );
-            ViewBag.IsDiscount = result;
-            return RedirectToAction("ShowOrder", new { Id = orderId });
+
+            return RedirectToAction("ShowOrder", new { Id = orderId , IsDiscount = result});
         }
 
     }

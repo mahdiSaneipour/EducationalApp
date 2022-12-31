@@ -30,6 +30,8 @@ namespace EP.Infrastructure.Data.Context
 
         public DbSet<UserCourses> UserCourses { get; set; }
 
+        public DbSet<UserDiscounts> UserDiscounts { get; set; }
+
         #endregion
 
         #region Wallet
