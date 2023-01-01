@@ -56,6 +56,11 @@ namespace EP.Infrastructure.Data.Repository.Discount
             return _context.Discounts.ToList();
         }
 
+        public void RemoveDiscount(Domain.Entities.Order.Discount discount)
+        {
+            _context.Discounts.Remove(discount);
+        }
+
         public void SaveChanges()
         {
             _context.SaveChanges();

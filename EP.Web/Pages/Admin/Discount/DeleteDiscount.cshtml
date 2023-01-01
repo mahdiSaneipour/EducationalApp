@@ -1,0 +1,37 @@
+﻿@page "{discountId}"
+@model EP.Web.Pages.Admin.Discount.DeleteDiscountModel
+@{
+}
+
+<div class="col-lg-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            مشخصات قسمت
+        </div>
+        <div class="panel-body">
+            <form method="post">
+
+                <input asp-for="Discount.DiscountId" hidden />
+
+                <dl class="dl-horizontal">
+                    <dt>کد تخفیف</dt>
+                    <dd>@Model.Discount.DiscountCode</dd>
+
+                    <dt>تعداد کد</dt>
+                    <dd>@((Model.Discount.UsableCount != null) ? Model.Discount.UsableCount : "بدون محدودیت")</dd>
+
+                    <dt>تاریخ شروع</dt>
+                    <dd>@((Model.Discount.StartDate != null) ? Model.Discount.StartDate?.ToSolarCalendar() : "تاریخی ثبت نشده است")</dd>
+
+                    <dt>تاریخ پایان</dt>
+                    <dd>@((Model.Discount.EndDate != null) ? Model.Discount.EndDate?.ToSolarCalendar() : "تاریخی ثبت نشده است")</dd>
+
+
+                    <input type="submit" value="حذف" class="btn btn-danger" />
+                </dl>
+            </form>
+        </div>
+        <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+</div>

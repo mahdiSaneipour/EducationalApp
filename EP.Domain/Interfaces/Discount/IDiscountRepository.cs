@@ -22,6 +22,8 @@ namespace EP.Domain.Interfaces.Discount
 
         public int AddUserDiscount(Domain.Entities.User.UserDiscounts userDiscounts);
 
+        public void RemoveDiscount(Domain.Entities.Order.Discount discount);
+
         public void SaveChanges();
 
     }

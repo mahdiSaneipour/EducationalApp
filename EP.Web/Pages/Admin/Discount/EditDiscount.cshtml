@@ -1,0 +1,62 @@
+﻿@page "{discountId}"
+@model EP.Web.Pages.Admin.Discount.EditDiscountModel
+@{
+}
+
+
+<link rel="stylesheet" href="https://unpkg.com/persian-datepicker@1.2.0/dist/css/persian-datepicker.min.css" />
+
+<main class="background-cover">
+    <div class="row">
+        <form method="post" enctype="multipart/form-data">
+            <input asp-for="Discount.DiscountId" hidden/>
+            <div class="col-md-8">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        اطلاعات قسمت
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>کد تخفیف</label>
+                            <input asp-for="Discount.DiscountCode" class="form-control">
+                            <span asp-validation-for="Discount.DiscountCode"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>درصد تخفیف</label>
+                            <input type="number" asp-for="Discount.DicountPercent" class="form-control">
+                            <span asp-validation-for="Discount.DicountPercent"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>تعداد کد</label>
+                            <input type="text" asp-for="Discount.UsableCount" class="form-control">
+                            <span asp-validation-for="Discount.UsableCount"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>تاریخ شروع</label>
+                            <input id="start-date" value="@Model.Discount.StartDate" type="text" name="startDate" class="date-picker">
+                            <span asp-validation-for="Discount.StartDate"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>تاریخ پایان</label>
+                            <input id="end-date" value="@Model.Discount.EndDate" type="text" name="endDate" class="date-picker">
+                            <span asp-validation-for="Discount.EndDate"></span>
+                        </div>
+
+                        <input id="submit" type="submit" class="btn btn-success" value="ثبت کد تخفیف" />
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+@section Scripts {
+    <script src="https://unpkg.com/persian-date@1.1.0/dist/persian-date.min.js"></script>
+    <script src="https://unpkg.com/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
+    <script src="~/admin/js/custom/create-discount.js"></script>
+}
