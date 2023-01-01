@@ -30,9 +30,9 @@
                             <tr>
                                 <td>@discount.DiscountCode</td>
                                 <td>@discount.DicountPercent%</td>
-                                <td>@discount.UsableCount</td>
-                                <td>@discount.StartDate</td>
-                                <td>@discount.EndDate</td>
+                                <td>@((discount.UsableCount != null) ? discount.UsableCount : "بدون محدودیت")</td>
+                                <td>@((discount.StartDate != null) ? discount.StartDate?.ToSolarCalendar() : "تاریخی ثبت نشده است")</td>
+                                <td>@((discount.EndDate != null) ? discount.EndDate?.ToSolarCalendar() : "تاریخی ثبت نشده است")</td>
                                 <td>
                                     <a asp-page="EditDiscount" asp-route-discountId="@discount.DiscountId" class="btn btn-warning btn-sm">ویرایش</a>
                                     <a asp-page="DeleteDiscount" asp-route-discountId="@discount.DiscountId" class="btn btn-danger btn-sm">حذف</a>
