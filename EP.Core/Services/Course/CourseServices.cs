@@ -497,5 +497,34 @@ namespace EP.Core.Services.Course
 
             return Tuple.Create(fullPath, episodeName);
         }
+
+        public Tuple<List<Domain.Entities.Course.CourseComment>, int> GetCourseCommentsByCourseId(int courseId, int pageId)
+        {
+            int take = 6;
+            int skip = (pageId - 1) * take;
+
+            IEnumerable<CourseComment> comments = _courseRepository.GetCourseCommentsByCourseId(courseId);
+
+            int totalPage = comments.Count() / take;
+
+            if (comments.Count() % take != 0)
+            {
+                totalPage++;
+            }
+
+            comments = comments.Skip(skip).Take(take);
+
+            return Tuple.Create(comments.ToList(), totalPage);
+        }
+
+        public int AddCourseComment(CourseComment courseComment)
+        {
+            courseComment.CreateDate = DateTime.Now;
+
+            _courseRepository.AddCourseComment(courseComment);
+            _courseRepository.SaveChanges();
+
+            return courseComment.CM_Id;
+        }
     }
 }

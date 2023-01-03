@@ -2,6 +2,7 @@
 using EP.Core.Enums.Course;
 using EP.Core.Interfaces.Course;
 using EP.Core.Interfaces.Order;
+using EP.Domain.Entities.Course;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -69,6 +70,24 @@ namespace EP.Web.Controllers
             }
 
             return Forbid();
+        }
+
+        [HttpPost]
+        public IActionResult AddCourseComment(CourseComment comment)
+        {
+            int userId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            comment.UserId = userId;
+
+            _courseServices.AddCourseComment(comment);
+
+            return RedirectToAction("ShowComments", new{ courseId = comment.CourseId });
+        }
+
+        [Route("Course/ShowComments/{courseId}/{pageId?}")]
+        public IActionResult ShowComments(int courseId, int? pageId = 1)
+        {
+            return View(_courseServices.GetCourseCommentsByCourseId(courseId, (int)pageId));
         }
     }
 }

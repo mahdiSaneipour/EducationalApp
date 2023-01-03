@@ -68,11 +68,6 @@ namespace EP.Infrastructure.Data.Repository.Course
             _context.Courses.Update(course);
         }
 
-        public void SaveChanges()
-        {
-            _context.SaveChanges();
-        }
-
         public void DeleteCourse(Domain.Entities.Course.Course course)
         {
             _context.Courses.Remove(course);
@@ -99,6 +94,22 @@ namespace EP.Infrastructure.Data.Repository.Course
         public int GetCoursePriceByCourseId(int courseId)
         {
             return _context.Courses.FirstOrDefault(c => c.CourseId == courseId).CoursePrice;
+        }
+
+        public IEnumerable<CourseComment> GetCourseCommentsByCourseId(int courseId)
+        {
+            return _context.CourseComments.Include(cc => cc.User).Where(c => c.CourseId == courseId)
+                .OrderByDescending(cc => cc.CreateDate);
+        }
+
+        public void AddCourseComment(CourseComment courseComment)
+        {
+            _context.CourseComments.Add(courseComment);
+        }
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
         }
     }
 }

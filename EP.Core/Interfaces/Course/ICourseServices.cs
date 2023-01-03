@@ -57,5 +57,10 @@ namespace EP.Core.Interfaces.Course
         public Tuple<string, string> DownloadCourseFile(int courseId);
 
         public bool IsCourseExist(int courseId);
+
+        public Tuple<List<CourseComment>, int> GetCourseCommentsByCourseId(int courseId, int pageId);
+
+        public int AddCourseComment(CourseComment courseComment);
+
     }
 }

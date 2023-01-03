@@ -40,6 +40,10 @@ namespace EP.Domain.Interfaces.Course
 
         public bool IsCourseExist(int courseId);
 
+        public IEnumerable<CourseComment> GetCourseCommentsByCourseId(int courseId);
+
+        public void AddCourseComment(CourseComment courseComment);
+
         public void SaveChanges();
     }
 }
