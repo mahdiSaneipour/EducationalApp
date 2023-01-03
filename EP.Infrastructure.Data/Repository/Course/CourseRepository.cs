@@ -92,6 +92,7 @@ namespace EP.Infrastructure.Data.Repository.Course
         {
             return _context.Courses.Include(c => c.Episodes).Include(c => c.CourseStatus)
                 .Include(c => c.CourseLevel).Include(c => c.User)
+                .Include(c => c.OrderDetails)
                 .FirstOrDefault(c => c.CourseId == courseId);
         }
 

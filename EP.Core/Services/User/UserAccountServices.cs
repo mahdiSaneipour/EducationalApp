@@ -193,5 +193,10 @@ namespace EP.Core.Services.User
 
             
         }
+
+        public bool IsUserInCourse(int userId, int courseId)
+        {
+            return _userRepository.IsUserInCourse(userId, courseId);
+        }
     }
 }

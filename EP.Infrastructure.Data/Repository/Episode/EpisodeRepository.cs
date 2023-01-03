@@ -52,6 +52,12 @@ namespace EP.Infrastructure.Data.Repository.Episode
             return _context.Episodes.FirstOrDefault(e => e.EpisodeId == episodeId);
         }
 
+
+        public bool IsEpisodeFree(int episodeId)
+        {
+            return _context.Episodes.Any(e => e.EpisodeId == episodeId && e.IsFree == true);
+        }
+
         #endregion
 
         #region Remove

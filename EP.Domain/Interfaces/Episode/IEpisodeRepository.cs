@@ -17,6 +17,8 @@ namespace EP.Domain.Interfaces.Episode
 
         public Domain.Entities.Course.CourseEpisode GetEpisodeByEpisodeId(int episodeId);
 
+        public bool IsEpisodeFree(int episodeId);
+
         #endregion
 
         #region ADD

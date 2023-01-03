@@ -52,6 +52,10 @@ namespace EP.Core.Interfaces.Course
 
         public bool DeleteCourse(Domain.Entities.Course.Course course);
 
+        public bool IsUserAccessToEpisode(int userId, int episodeId, int courseId);
+
+        public Tuple<string, string> DownloadCourseFile(int courseId);
+
         public bool IsCourseExist(int courseId);
     }
 }

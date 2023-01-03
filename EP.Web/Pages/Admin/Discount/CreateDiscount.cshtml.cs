@@ -24,7 +24,12 @@ namespace EP.Web.Pages.Admin.Discount
         public IActionResult OnPost(string startDate, string endDate)
         {
 
-            _discountServices.AddDiscount(Discount, startDate, endDate);
+            int result = _discountServices.AddDiscount(Discount, startDate, endDate);
+
+            if (result == 0)
+            {
+                return Page();
+            }
 
             return RedirectToPage("Index");
         }

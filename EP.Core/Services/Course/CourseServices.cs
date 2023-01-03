@@ -8,6 +8,7 @@ using EP.Core.ServiceModels.Course;
 using EP.Core.ServiceModels.UserPanel;
 using EP.Domain.Entities.Course;
 using EP.Domain.Interfaces.Course;
+using EP.Domain.Interfaces.Episode;
 using EP.Domain.Interfaces.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,11 +28,14 @@ namespace EP.Core.Services.Course
     {
         private readonly ICourseRepository _courseRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IEpisodeRepository _episodeRepository;
 
-        public CourseServices(ICourseRepository courseRepository, IUserRepository userRepository)
+        public CourseServices(ICourseRepository courseRepository, IUserRepository userRepository,
+            IEpisodeRepository episodeRepository)
         {
             _courseRepository = courseRepository;
             _userRepository = userRepository;
+            _episodeRepository = episodeRepository;
         }
 
         public List<CourseGroup> GetAllCourseGroups()
@@ -467,6 +471,31 @@ namespace EP.Core.Services.Course
         public Domain.Entities.Course.Course GetCourseByCourseIdForShowCourse(int courseId)
         {
             return _courseRepository.GetCourseByCourseIdForShowCourse(courseId);
+        }
+
+        public bool IsUserAccessToEpisode(int userId, int episodeId, int courseId)
+        {
+            if (_userRepository.IsUserInCourse(userId, courseId) || _episodeRepository.IsEpisodeFree(episodeId)) {
+                return true;
+            }
+
+            return false;
+        }
+
+        public Tuple<string, string> DownloadCourseFile(int courseId)
+        {
+            Domain.Entities.Course.CourseEpisode episode = _episodeRepository.GetEpisodeByEpisodeId(courseId);
+
+            if (episode == null)
+            {
+                return null;
+            }
+
+            string episodeName = episode.EpisodeTitle;
+            string fullPath = Path.Combine(Directory.GetCurrentDirectory(),
+                "wwwroot/videos/episode/" + episode.EpisodeDemoFile);
+
+            return Tuple.Create(fullPath, episodeName);
         }
     }
 }

@@ -18,6 +18,11 @@ namespace EP.Core.Services.Discount
         public int AddDiscount(Domain.Entities.Order.Discount discount, string startDate, string endDate)
         {
 
+            if (_discountRepository.IsDiscountCodeExist(discount.DiscountCode))
+            {
+                return 0;
+            }
+
             if (!String.IsNullOrEmpty(startDate))
             {
                 string[] std = startDate.Split("/");
@@ -56,6 +61,11 @@ namespace EP.Core.Services.Discount
 
         public void UpdateDiscount(Domain.Entities.Order.Discount discount, string startDate, string endDate)
         {
+
+            if (_discountRepository.IsDiscountCodeExist(discount.DiscountCode))
+            {
+                return;
+            }
 
             if (!String.IsNullOrEmpty(startDate))
             {

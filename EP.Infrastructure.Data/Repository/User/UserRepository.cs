@@ -103,6 +103,11 @@ namespace EP.Infrastructure.Data.Repository.User
             return userCourses.UC_Id;
         }
 
+        public bool IsUserInCourse(int userId, int courseId)
+        {
+            return _context.UserCourses.Any(uc => uc.UserId == userId && uc.CourseId == courseId);
+        }
+
         public void SaveChanges()
         {
             _context.SaveChanges();

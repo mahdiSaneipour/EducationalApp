@@ -2,6 +2,7 @@
 using EP.Core.Enums.Course;
 using EP.Core.Interfaces.Course;
 using EP.Core.Interfaces.Order;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -41,7 +42,6 @@ namespace EP.Web.Controllers
         [Route("ShowCourse/{courseId}")]
         public IActionResult ShowCourse(int courseId)
         {
-
             Domain.Entities.Course.Course course = _courseServices.GetCourseByCourseIdForShowCourse(courseId);
 
             return View(course);
@@ -54,6 +54,21 @@ namespace EP.Web.Controllers
             int orderId = _orderServices.AddOrder(userId,courseId);
 
             return Redirect("~/UserPanel/Order/ShowOrder/" + orderId);
+        }
+
+        public IActionResult DownloadEpisode(int episodeId, int courseId)
+        {
+            int userId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            if (_courseServices.IsUserAccessToEpisode(userId, episodeId, courseId))
+            {
+                Tuple<string, string> result = _courseServices.DownloadCourseFile(episodeId);
+
+                byte[] file = System.IO.File.ReadAllBytes(result.Item1);
+                return File(file, "application/force-download", result.Item2);
+            }
+
+            return Forbid();
         }
     }
 }

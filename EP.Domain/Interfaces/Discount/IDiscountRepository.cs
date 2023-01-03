@@ -8,6 +8,8 @@ namespace EP.Domain.Interfaces.Discount
 {
     public interface IDiscountRepository
     {
+        public bool IsDiscountCodeExist(string discountCode);
+
         public Domain.Entities.Order.Discount GetDiscountByDiscountCode(string discountCode);
 
         public List<Domain.Entities.Order.Discount> GetAllDiscounts();

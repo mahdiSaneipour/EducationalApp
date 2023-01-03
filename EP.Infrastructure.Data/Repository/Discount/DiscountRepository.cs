@@ -61,6 +61,11 @@ namespace EP.Infrastructure.Data.Repository.Discount
             _context.Discounts.Remove(discount);
         }
 
+        public bool IsDiscountCodeExist(string discountCode)
+        {
+            return _context.Discounts.Any(d => d.DiscountCode == discountCode);
+        }
+
         public void SaveChanges()
         {
             _context.SaveChanges();

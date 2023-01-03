@@ -34,6 +34,8 @@ namespace EP.Domain.Interfaces.User
 
         public IQueryable<Domain.Entities.User.User> GetUsersForAdmin(string filterEmail, string filterUsername, bool isDelete);
 
+        public bool IsUserInCourse(int userId, int courseId);
+
         public void SaveChanges();
     }
 }

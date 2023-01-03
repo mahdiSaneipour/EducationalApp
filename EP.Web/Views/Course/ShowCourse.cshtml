@@ -1,7 +1,12 @@
-﻿@using EP.Core.Tools.Date_Converter;
+﻿@using EP.Core.Interfaces.User;
+@using EP.Core.Tools.Date_Converter;
+@using System.Security.Claims;
+@inject IUserAccountServices _userAccountServices
 @model EP.Domain.Entities.Course.Course
 @{
     ViewData["Title"] = Model.CourseName;
+    int userId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+    bool isInCourse = _userAccountServices.IsUserInCourse(userId, Model.CourseId);
 }
 
 <div class="container">
@@ -26,11 +31,31 @@
                     @Html.Raw(Model.CourseDescription)
 
                     <h2> سرفصل های این دوره : </h2>
+
+                    @if(Model.CoursePrice != 0 && !isInCourse){
+                        <div class="alert alert-info">
+                            <p>لطفا ابتدا دوره را خریداری کنید</p>
+                        </div>
+                    }
+
                     <ul>
                         @foreach (var item in Model.Episodes)
                         {
                             <li>
-                                <h3> @item.EpisodeTitle </h3>
+                                @if(item.IsFree || isInCourse)
+                                {
+                                    <h3>
+                                        <a asp-action="DownloadEpisode"
+                                        asp-route-episodeId="@item.EpisodeId"
+                                        asp-route-courseId="@item.CourseId"
+                                        >@item.EpisodeTitle</a>    
+                                    </h3>
+
+                                } else
+                                {
+                                    <h3> @item.EpisodeTitle </h3>
+                                }
+
                                 @if (item.IsFree)
                                 {
                                     <i> رایگان </i>
@@ -185,11 +210,11 @@
                         </li>
                         <li>
                             <span> تعداد دانشجوها </span>
-                            <i> 0 نفر </i>
+                            <i> @Model.OrderDetails.Count() نفر </i>
                         </li>
                     </ul>
 
-                    @if (Model.CoursePrice != 0)
+                    @if (Model.CoursePrice != 0 && !isInCourse)
                     {
                         <a asp-action="BuyCourse" asp-route-courseId="@Model.CourseId"> شرکت در دوره : @Model.CoursePrice.ToString("#,0") تومان </a>
                     }

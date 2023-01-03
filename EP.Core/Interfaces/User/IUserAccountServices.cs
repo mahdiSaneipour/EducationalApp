@@ -24,5 +24,7 @@ namespace EP.Core.Interfaces.User
         public ForgotPasswordEnum ForgotPassword(ForgotPasswordViewModel forgotPassword);
 
         public ResetPasswordEnums ResetPassword(ResetPasswordViewModel resetPassword);
+
+        public bool IsUserInCourse(int userId, int courseId);
     }
 }
