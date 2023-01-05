@@ -18,11 +18,6 @@
         <form method="post" enctype="multipart/form-data">
 
             <input asp-for="Course.CourseId" hidden/>
-            <input asp-for="Course.GroupId" hidden/>
-            <input asp-for="Course.SubGroupId" hidden/>
-            <input asp-for="Course.LevelId" hidden/>
-            <input asp-for="Course.StatusId" hidden/>
-            <input asp-for="Course.TeacherId" hidden/>
             <input asp-for="Course.CreateDate" hidden/>
             <input asp-for="Course.UpdateDate" hidden/>
 
@@ -60,12 +55,14 @@
 
                         <div class="form-group">
                             <label>گروه اصلی</label>
-                            <select class="form-control" asp-for="Course.GroupId" asp-items="groups"></select>
+                            <select class="form-control" id="group" asp-for="Course.GroupId" asp-items="groups"></select>
+                            <span asp-validation-for="Course.GroupId"></span>
                         </div>
 
                         <div class="form-group">
                             <label>زیر گروه</label>
-                            <select class="form-control" asp-for="Course.SubGroupId" asp-items="subGroups"></select>
+                            <select class="form-control "id="sub-group" asp-for="Course.SubGroupId" asp-items="subGroups"></select>
+                            <span asp-validation-for="Course.SubGroupId"></span>
                         </div>
 
                         <div class="form-group">

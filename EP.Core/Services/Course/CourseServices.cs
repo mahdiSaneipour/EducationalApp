@@ -526,5 +526,45 @@ namespace EP.Core.Services.Course
 
             return courseComment.CM_Id;
         }
+
+        public List<BoxCourseViewModel> GetPopularCourses()
+        {
+            return _courseRepository.GetPopularCourses().Select(c => new BoxCourseViewModel
+            {
+                CourseId = c.CourseId,
+                CourseImage = c.CourseImage,
+                CoursePrice = c.CoursePrice,
+                CourseTitle = c.CourseName,
+                CourseTime = new TimeSpan(c.Episodes.Sum(od => od.EpisodeTime.Ticks))
+            }).ToList();
+        }
+
+        public CourseGroup GetCourseGroupByGroupId(int groupId)
+        {
+            return _courseRepository.GetCourseGroupByGroupId(groupId);
+        }
+
+        public bool DeleteCourseGroup(CourseGroup courseGroup)
+        {
+            try
+            {
+                _courseRepository.DeleteCourseGroup(courseGroup);
+                _courseRepository.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public int AddCourseGroup(CourseGroup courseGroup)
+        {
+            _courseRepository.AddCourseGroup(courseGroup);
+            _courseRepository.SaveChanges();
+
+            return courseGroup.GroupId;
+        }
     }
 }

@@ -18,6 +18,8 @@ namespace EP.Core.Interfaces.Course
     {
         public List<CourseGroup> GetAllCourseGroups();
 
+        public Domain.Entities.Course.CourseGroup GetCourseGroupByGroupId(int groupId);
+
         public Domain.Entities.Course.Course GetCourseByCourseIdForShowCourse(int courseId);
 
         public SelectList GetAllMainCourseGroupsAsSelectList(int? selected = 0);
@@ -40,6 +42,8 @@ namespace EP.Core.Interfaces.Course
             int maximumPrce = 0, string filter = "", List<int> courseGroups = null,
             int take = 0);
 
+        public List<BoxCourseViewModel> GetPopularCourses();
+
         public int AddCourse(Domain.Entities.Course.Course course, IFormFile courseDemo);
 
         public ChangeAvatarServiceModel UploadImageCourseAndDeletePreviousOne(IFormFile newCourseImage, string courseImage);
@@ -52,6 +56,8 @@ namespace EP.Core.Interfaces.Course
 
         public bool DeleteCourse(Domain.Entities.Course.Course course);
 
+        public bool DeleteCourseGroup(Domain.Entities.Course.CourseGroup courseGroup);
+
         public bool IsUserAccessToEpisode(int userId, int episodeId, int courseId);
 
         public Tuple<string, string> DownloadCourseFile(int courseId);
@@ -61,6 +67,8 @@ namespace EP.Core.Interfaces.Course
         public Tuple<List<CourseComment>, int> GetCourseCommentsByCourseId(int courseId, int pageId);
 
         public int AddCourseComment(CourseComment courseComment);
+
+        public int AddCourseGroup(CourseGroup courseGroup);
 
     }
 }

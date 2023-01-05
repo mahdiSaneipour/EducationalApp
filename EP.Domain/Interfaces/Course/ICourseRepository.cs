@@ -14,6 +14,8 @@ namespace EP.Domain.Interfaces.Course
     {
         public Domain.Entities.Course.Course GetCourseByCourseIdForShowCourse(int courseId);
 
+        public Domain.Entities.Course.CourseGroup GetCourseGroupByGroupId(int groupId);
+
         public IEnumerable<Entities.Course.Course> GetAllCourses();
 
         public List<CourseGroup> GetAllCourseGroups();
@@ -23,6 +25,8 @@ namespace EP.Domain.Interfaces.Course
         public List<CourseGroup> GetCourseGroupsByParentId(int parentId);
 
         public List<CourseLevel> GetAllCourseLevels();
+
+        public IEnumerable<Domain.Entities.Course.Course> GetPopularCourses();
 
         public List<CourseStatus> GetAllCourseStatuses();
 
@@ -38,11 +42,15 @@ namespace EP.Domain.Interfaces.Course
 
         public void DeleteCourse(Domain.Entities.Course.Course course);
 
+        public void DeleteCourseGroup(Domain.Entities.Course.CourseGroup courseGroup);
+
         public bool IsCourseExist(int courseId);
 
         public IEnumerable<CourseComment> GetCourseCommentsByCourseId(int courseId);
 
         public void AddCourseComment(CourseComment courseComment);
+
+        public void AddCourseGroup(CourseGroup courseGroup);
 
         public void SaveChanges();
     }

@@ -29,9 +29,8 @@ namespace EP.Core.Tools.Security
 
                 if (!_adminServices.CheckPermission(_permissionId,userId))
                 {
-                    context.Result = new RedirectResult("/Login");
+                    context.Result = new RedirectResult("/Login?" + context.HttpContext.Request.Path);
                 }
-
             }
             else
             {

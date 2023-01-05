@@ -1,18 +1,15 @@
-﻿let courseGroup = ("#Course_GroupId")
-let courseSubGroup = ("#Course_SubGroupId")
+﻿$("#group").change(function () {
 
+    $("#sub-group").empty();
 
-$("#Course_GroupId").change(function() {
-    $("#Course_SubGroupId").empty();
-
-    $.getJSON("/Api/Admin/GetCourseGroupsByParentId/" + $("#Course_GroupId :selected").val(), function(data) {
+    $.getJSON("/Api/Admin/GetCourseGroupsByParentId/" + $("#group :selected").val(), function(data) {
         $.each(data, function() {
             var option = document.createElement("option");
 
             option.value = this.value;
             option.text = this.text;
 
-            $("#Course_SubGroupId").append(option);
+            $("#sub-group").append(option);
         });
     });
 });

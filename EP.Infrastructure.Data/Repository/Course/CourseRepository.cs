@@ -107,6 +107,27 @@ namespace EP.Infrastructure.Data.Repository.Course
             _context.CourseComments.Add(courseComment);
         }
 
+        public IEnumerable<Domain.Entities.Course.Course> GetPopularCourses()
+        {
+            return _context.Courses.Include(c => c.Episodes).Where(c => c.OrderDetails.Any())
+                .OrderByDescending(c => c.OrderDetails.Count).Take(8);
+        }
+
+        public CourseGroup GetCourseGroupByGroupId(int groupId)
+        {
+            return _context.CourseGroupes.FirstOrDefault(cg => cg.GroupId == groupId);
+        }
+
+        public void DeleteCourseGroup(CourseGroup courseGroup)
+        {
+            _context.Remove(courseGroup);
+        }
+
+        public void AddCourseGroup(CourseGroup courseGroup)
+        {
+            _context.Add(courseGroup);
+        }
+
         public void SaveChanges()
         {
             _context.SaveChanges();

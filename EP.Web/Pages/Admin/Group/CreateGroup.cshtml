@@ -1,0 +1,27 @@
+﻿@page "{groupId?}"
+@model EP.Web.Pages.Admin.Group.CreateGroupModel
+@{
+}
+
+<main class="background-cover">
+    <div class="row">
+        <form method="post">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        اطلاعات نقش
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>نام گروه</label>
+                            <input asp-for="Group.GroupeName" class="form-control">
+                        </div>
+
+                        <button class="btn btn-success">ذخیره اطلاعات</button>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>

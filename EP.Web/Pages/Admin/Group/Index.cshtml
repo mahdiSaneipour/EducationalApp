@@ -1,0 +1,50 @@
+﻿@page
+@model EP.Web.Pages.Admin.Group.IndexModel
+@{
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        گروه ها
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+        <div class="table-responsive">
+            <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                <a asp-page="CreateGroup" class="btn btn-outline btn-success">ایجاد گروه جدید</a>
+                <br />
+                <table class="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" aria-describedby="dataTables-example_info">
+                    <thead>
+                        <tr>
+                            <th>نام گروه</th>
+                            <th>دستورات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var group in Model.Groups.Where(g => g.ParentId == null))
+                        {
+                            <tr>
+                                <td>@group.GroupeName</td>
+                                <td>
+                                    <a asp-page="EditGroup" asp-route-roleId="@group.GroupId" class="btn btn-warning btn-sm">ویرایش</a>
+                                    <a asp-page="DeleteGroup" asp-route-roleId="@group.GroupId" class="btn btn-danger btn-sm">حذف</a>
+                                </td>
+                            </tr>
+                            @foreach (var subGroup in Model.Groups.Where(g => g.ParentId == group.GroupId))
+                            {
+                                <tr>
+                                    <td style="padding-right: 30px;">@subGroup.GroupeName</td>
+                                <td>
+                                        <a asp-page="EditGroup" asp-route-roleId="@subGroup.GroupId" class="btn btn-warning btn-sm">ویرایش</a>
+                                        <a asp-page="DeleteGroup" asp-route-roleId="@subGroup.GroupId" class="btn btn-danger btn-sm">حذف</a>
+                                </td>
+                            </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+    </div>
+</div>
