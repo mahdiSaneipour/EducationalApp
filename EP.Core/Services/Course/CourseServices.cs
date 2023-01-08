@@ -566,5 +566,11 @@ namespace EP.Core.Services.Course
 
             return courseGroup.GroupId;
         }
+
+        public void EditCourseGroup(CourseGroup courseGroup)
+        {
+            _courseRepository.UpdateCourseGroup(courseGroup);
+            _courseRepository.SaveChanges();
+        }
     }
 }

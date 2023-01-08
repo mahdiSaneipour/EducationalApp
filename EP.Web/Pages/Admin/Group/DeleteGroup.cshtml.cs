@@ -1,15 +1,14 @@
 using EP.Core.Interfaces.Course;
-using EP.Domain.Entities.Course;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EP.Web.Pages.Admin.Group
 {
-    public class CreateGroupModel : PageModel
+    public class DeleteGroupModel : PageModel
     {
         private readonly ICourseServices _courseServices;
 
-        public CreateGroupModel(ICourseServices courseServices)
+        public DeleteGroupModel(ICourseServices courseServices)
         {
             _courseServices = courseServices;
         }
@@ -17,14 +16,15 @@ namespace EP.Web.Pages.Admin.Group
         [BindProperty]
         public Domain.Entities.Course.CourseGroup Group { get; set; }
 
-        public void OnGet(int? parentId)
+        public void OnGet(int groupId)
         {
-            Group = new CourseGroup() { ParentId = parentId };
+            Group = _courseServices.GetCourseGroupByGroupId(groupId);
         }
 
         public IActionResult OnPost()
         {
-            _courseServices.AddCourseGroup(Group);
+            _courseServices.DeleteCourseGroup(Group);
+
             return RedirectToPage("Index");
         }
     }

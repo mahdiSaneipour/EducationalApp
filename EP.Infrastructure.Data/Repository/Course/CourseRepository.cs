@@ -120,12 +120,17 @@ namespace EP.Infrastructure.Data.Repository.Course
 
         public void DeleteCourseGroup(CourseGroup courseGroup)
         {
-            _context.Remove(courseGroup);
+            _context.CourseGroupes.Remove(courseGroup);
         }
 
         public void AddCourseGroup(CourseGroup courseGroup)
         {
-            _context.Add(courseGroup);
+            _context.CourseGroupes.Add(courseGroup);
+        }
+
+        public void UpdateCourseGroup(CourseGroup courseGroup)
+        {
+            _context.CourseGroupes.Update(courseGroup);
         }
 
         public void SaveChanges()

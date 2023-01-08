@@ -70,5 +70,7 @@ namespace EP.Core.Interfaces.Course
 
         public int AddCourseGroup(CourseGroup courseGroup);
 
+        public void EditCourseGroup(CourseGroup courseGroup);
+
     }
 }

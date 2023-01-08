@@ -26,8 +26,9 @@
                             <tr>
                                 <td>@group.GroupeName</td>
                                 <td>
-                                    <a asp-page="EditGroup" asp-route-roleId="@group.GroupId" class="btn btn-warning btn-sm">ویرایش</a>
-                                    <a asp-page="DeleteGroup" asp-route-roleId="@group.GroupId" class="btn btn-danger btn-sm">حذف</a>
+                                    <a asp-page="EditGroup" asp-route-groupId="@group.GroupId" class="btn btn-warning btn-sm">ویرایش</a>
+                                    <a asp-page="CreateGroup" asp-route-parentId="@group.GroupId" class="btn btn-warning btn-sm">افزودن گروه</a>
+                                    <a asp-page="DeleteGroup" asp-route-groupId="@group.GroupId" class="btn btn-danger btn-sm">حذف</a>
                                 </td>
                             </tr>
                             @foreach (var subGroup in Model.Groups.Where(g => g.ParentId == group.GroupId))
@@ -35,8 +36,8 @@
                                 <tr>
                                     <td style="padding-right: 30px;">@subGroup.GroupeName</td>
                                 <td>
-                                        <a asp-page="EditGroup" asp-route-roleId="@subGroup.GroupId" class="btn btn-warning btn-sm">ویرایش</a>
-                                        <a asp-page="DeleteGroup" asp-route-roleId="@subGroup.GroupId" class="btn btn-danger btn-sm">حذف</a>
+                                        <a asp-page="EditGroup" asp-route-groupId="@subGroup.GroupId" class="btn btn-warning btn-sm">ویرایش</a>
+                                        <a asp-page="DeleteGroup" asp-route-groupId="@subGroup.GroupId" class="btn btn-danger btn-sm">حذف</a>
                                 </td>
                             </tr>
                             }

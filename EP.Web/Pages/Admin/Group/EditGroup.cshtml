@@ -1,12 +1,14 @@
-﻿@page "{parentId?}"
-@model EP.Web.Pages.Admin.Group.CreateGroupModel
+﻿@page "{groupId}"
+@model EP.Web.Pages.Admin.Group.EditGroupModel
 @{
 }
 
 <main class="background-cover">
     <div class="row">
         <form method="post">
-            <input asp-for="Group.ParentId" hidden/>
+            <input asp-for="Group.GroupId" hidden/>
+            <input asp-for="Group.ParentId" hidden />
+
             <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">

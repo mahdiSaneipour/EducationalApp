@@ -40,6 +40,8 @@ namespace EP.Domain.Interfaces.Course
 
         public void UpdateCourse(Domain.Entities.Course.Course course);
 
+        public void UpdateCourseGroup(CourseGroup courseGroup);
+
         public void DeleteCourse(Domain.Entities.Course.Course course);
 
         public void DeleteCourseGroup(Domain.Entities.Course.CourseGroup courseGroup);
@@ -51,6 +53,7 @@ namespace EP.Domain.Interfaces.Course
         public void AddCourseComment(CourseComment courseComment);
 
         public void AddCourseGroup(CourseGroup courseGroup);
+
 
         public void SaveChanges();
     }
