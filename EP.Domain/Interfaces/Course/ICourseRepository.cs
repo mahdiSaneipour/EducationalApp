@@ -32,6 +32,10 @@ namespace EP.Domain.Interfaces.Course
 
         public int GetCoursePriceByCourseId(int courseId);
 
+        public Domain.Entities.Course.CourseVote GetCourseVoteByUserIdAndCourseId(int userId, int courseId);
+
+        public Tuple<int, int> GetNumberOfVotes(int courseId);
+
         public int AddCourse(Domain.Entities.Course.Course course);
 
         public IQueryable<Domain.Entities.Course.Course> GetAllCoursesIQ();
@@ -42,11 +46,15 @@ namespace EP.Domain.Interfaces.Course
 
         public void UpdateCourseGroup(CourseGroup courseGroup);
 
+        public void UpdateCourseVote(CourseVote courseVote);
+
         public void DeleteCourse(Domain.Entities.Course.Course course);
 
         public void DeleteCourseGroup(Domain.Entities.Course.CourseGroup courseGroup);
 
         public bool IsCourseExist(int courseId);
+
+        public bool IsCourseFree(int courseId);
 
         public IEnumerable<CourseComment> GetCourseCommentsByCourseId(int courseId);
 
@@ -54,6 +62,7 @@ namespace EP.Domain.Interfaces.Course
 
         public void AddCourseGroup(CourseGroup courseGroup);
 
+        public void AddCourseVote(CourseVote courseVote);
 
         public void SaveChanges();
     }

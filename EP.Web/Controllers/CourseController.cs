@@ -89,5 +89,29 @@ namespace EP.Web.Controllers
         {
             return View(_courseServices.GetCourseCommentsByCourseId(courseId, (int)pageId));
         }
+
+        [Route("Course/VoteCourse/{courseId}")]
+        public IActionResult VoteCourse(int courseId)
+        {
+            int userId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            if (_courseServices.IsAccessToVote(userId, courseId))
+            {
+                return PartialView("Partial Views/_VoteCoursePartialView", _courseServices.GetNumberOfVotes(courseId));
+            } else
+            {
+                return null;
+            }
+        }
+
+        [Route("Course/AddVote/{courseId}/{vote}")]
+        public IActionResult AddVote(int courseId, bool vote)
+        {
+            int userId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            _courseServices.AddCourseVote(userId, courseId, vote);
+
+            return PartialView("Partial Views/_VoteCoursePartialView", _courseServices.GetNumberOfVotes(courseId));
+        }
     }
 }

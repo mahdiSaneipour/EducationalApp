@@ -572,5 +572,46 @@ namespace EP.Core.Services.Course
             _courseRepository.UpdateCourseGroup(courseGroup);
             _courseRepository.SaveChanges();
         }
+
+        public int AddCourseVote(int userId, int courseId, bool vote)
+        {
+            Domain.Entities.Course.CourseVote courseVote = _courseRepository.GetCourseVoteByUserIdAndCourseId(userId, courseId);
+
+            if (courseVote == null)
+            {
+                courseVote = new Domain.Entities.Course.CourseVote()
+                {
+                    UserId = userId,
+                    CourseId = courseId,
+                    VoteValue = vote
+                };
+
+                _courseRepository.AddCourseVote(courseVote);
+            } else
+            {
+                courseVote.VoteValue = vote;
+                _courseRepository.UpdateCourseVote(courseVote);
+            }
+
+            _courseRepository.SaveChanges();
+
+            return courseVote.VoteId;
+        }
+
+        public Tuple<int, int> GetNumberOfVotes(int courseId)
+        {
+            return _courseRepository.GetNumberOfVotes(courseId);
+        }
+
+        public bool IsAccessToVote(int userId, int courseId)
+        {
+            if (_userRepository.IsUserInCourse(userId, courseId) || _courseRepository.IsCourseFree(courseId))
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
     }
 }

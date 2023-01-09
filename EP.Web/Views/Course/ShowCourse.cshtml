@@ -32,6 +32,16 @@
 
                     <h2> سرفصل های این دوره : </h2>
 
+                    @if(!String.IsNullOrEmpty(Model.CourseDemo)){
+                        <video style="width:100%" poster="~/Images/course-images/normal-size/@Model.CourseImage" controls>
+                            <source src="~/videos/course/@Model.CourseDemo"/>
+                        </video>
+                    }
+
+                    <div class="vote row">
+
+                    </div>
+
                     @if(Model.CoursePrice != 0 && !isInCourse){
                         <div class="alert alert-info">
                             <p>لطفا ابتدا دوره را خریداری کنید</p>
@@ -161,10 +171,10 @@
 
                 <div class="share-layer">
                     <span> به اشتراک گذاری </span>
-                    <a href=""><i class="zmdi zmdi-facebook"></i></a>
-                    <a href=""><i class="zmdi zmdi-google-old"></i></a>
-                    <a href=""><i class="zmdi zmdi-twitter"></i></a>
-                    <a href=""><i class="zmdi zmdi-linkedin"></i></a>
+                    <a href="https://t.me/share/url?url=https://localhost:44320/ShowCourse/@Model.CourseId"><i class="zmdi zmdi-facebook"></i></a>
+                    <a href="https://t.me/share/url?url=https://localhost:44320/ShowCourse/@Model.CourseId"><i class="zmdi zmdi-google-old"></i></a>
+                    <a href="https://t.me/share/url?url=https://localhost:44320/ShowCourse/@Model.CourseId"><i class="zmdi zmdi-twitter"></i></a>
+                    <a href="https://t.me/share/url?url=https://localhost:44320/ShowCourse/@Model.CourseId"><i class="zmdi zmdi-linkedin"></i></a>
                 </div>
 
                 @if (Model.Tags != null)
@@ -197,6 +207,14 @@
         $(function(){
             $("#list-comment").load("../Course/ShowComments/" + @Model.CourseId)
         });
+
+        $(function(){
+            $(".vote").load("../Course/VoteCourse/" + @Model.CourseId)
+        });
+
+        function Vote(value){
+            $(".vote").load("../Course/AddVote/" + @Model.CourseId + "/" + value)
+        }
     </script>
 }
 

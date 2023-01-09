@@ -64,6 +64,8 @@ namespace EP.Infrastructure.Data.Context
 
         public DbSet<CourseComment> CourseComments { get; set; }
 
+        public DbSet<CourseVote> CourseVotes { get; set; }
+
         #endregion
 
         #region Orders
@@ -100,6 +102,11 @@ namespace EP.Infrastructure.Data.Context
                 .HasOne(cm => cm.User)
                 .WithMany(cm => cm.CourseComments)
                 .HasForeignKey(cm => cm.UserId).OnDelete(DeleteBehavior.ClientSetNull);
+
+            modelBuilder.Entity<CourseVote>()
+                .HasOne(cv => cv.User)
+                .WithMany(cv => cv.Votes)
+                .HasForeignKey(cv => cv.UserId).OnDelete(DeleteBehavior.ClientSetNull);
 
             base.OnModelCreating(modelBuilder);
         }

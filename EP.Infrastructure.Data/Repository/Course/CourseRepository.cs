@@ -133,6 +133,33 @@ namespace EP.Infrastructure.Data.Repository.Course
             _context.CourseGroupes.Update(courseGroup);
         }
 
+        public void AddCourseVote(CourseVote courseVote)
+        {
+            _context.CourseVotes.Add(courseVote);
+        }
+
+        public CourseVote GetCourseVoteByUserIdAndCourseId(int userId, int courseId)
+        {
+            return _context.CourseVotes.FirstOrDefault(cv => cv.UserId == userId && cv.CourseId == courseId);
+        }
+
+        public void UpdateCourseVote(CourseVote courseVote)
+        {
+            _context.CourseVotes.Update(courseVote);
+        }
+
+        public Tuple<int, int> GetNumberOfVotes(int courseId)
+        {
+            var votes = _context.CourseVotes.Where(cv => cv.CourseId == courseId).Select(cv => cv.VoteValue);
+
+            return Tuple.Create(votes.Count(cv => cv), votes.Count(cv => !cv));
+        }
+
+        public bool IsCourseFree(int courseId)
+        {
+            return _context.Courses.Any(c => c.CourseId == courseId && c.CoursePrice == 0);
+        }
+
         public void SaveChanges()
         {
             _context.SaveChanges();

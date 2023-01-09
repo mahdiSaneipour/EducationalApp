@@ -86,6 +86,7 @@ namespace EP.Domain.Entities.Course
 
         public List<CourseComment> CourseComments { get; set; }
 
+        public List<CourseVote> Votes { get; set; }
         #endregion
     }
 }

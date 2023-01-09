@@ -30,6 +30,8 @@ namespace EP.Core.Interfaces.Course
 
         public SelectList GetAllCourseStatusesAsSelectList(int? selected = 0);
 
+        public Tuple<int, int> GetNumberOfVotes(int courseId);
+
         public SelectList GetAllTeachersAsSelectList(int? selected = 0);
 
         public List<CourseViewModel> GetAllCoursesForAdmin();
@@ -64,11 +66,15 @@ namespace EP.Core.Interfaces.Course
 
         public bool IsCourseExist(int courseId);
 
+        public bool IsAccessToVote(int userId, int courseId);
+
         public Tuple<List<CourseComment>, int> GetCourseCommentsByCourseId(int courseId, int pageId);
 
         public int AddCourseComment(CourseComment courseComment);
 
         public int AddCourseGroup(CourseGroup courseGroup);
+
+        public int AddCourseVote(int userId, int courseId, bool vote);
 
         public void EditCourseGroup(CourseGroup courseGroup);
 

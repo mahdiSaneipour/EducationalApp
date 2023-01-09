@@ -1,0 +1,9 @@
+﻿@model Tuple<int, int>
+
+<div class="col-md-12">
+	<p class="text-black">لطفا رای دهید</p>
+	<p>
+		<a class="btn btn-success" onclick="Vote(true)">میپسندم (@Model.Item1)</a>
+		<a class="btn btn-danger" onclick="Vote(false)">نمیپسندم (@Model.Item2)</a>
+	</p>
+</div>
