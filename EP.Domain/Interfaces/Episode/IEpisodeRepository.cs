@@ -19,6 +19,8 @@ namespace EP.Domain.Interfaces.Episode
 
         public bool IsEpisodeFree(int episodeId);
 
+        public bool IsEpisodeExistInCourse(int episodeId, int courseId);
+
         #endregion
 
         #region ADD

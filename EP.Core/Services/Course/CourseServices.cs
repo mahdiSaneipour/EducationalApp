@@ -475,8 +475,12 @@ namespace EP.Core.Services.Course
 
         public bool IsUserAccessToEpisode(int userId, int episodeId, int courseId)
         {
-            if (_userRepository.IsUserInCourse(userId, courseId) || _episodeRepository.IsEpisodeFree(episodeId)) {
-                return true;
+            if (_episodeRepository.IsEpisodeExistInCourse(episodeId, courseId))
+            {
+                if (_userRepository.IsUserInCourse(userId, courseId) || _episodeRepository.IsEpisodeFree(episodeId))
+                {
+                    return true;
+                }
             }
 
             return false;

@@ -46,16 +46,19 @@ namespace EP.Infrastructure.Data.Repository.Episode
             }).FirstOrDefault();
         }
 
-
         public CourseEpisode GetEpisodeByEpisodeId(int episodeId)
         {
             return _context.Episodes.FirstOrDefault(e => e.EpisodeId == episodeId);
         }
 
-
         public bool IsEpisodeFree(int episodeId)
         {
             return _context.Episodes.Any(e => e.EpisodeId == episodeId && e.IsFree == true);
+        }
+
+        public bool IsEpisodeExistInCourse(int episodeId, int courseId)
+        {
+            return _context.Episodes.Any(e => e.EpisodeId == episodeId && e.CourseId == courseId);
         }
 
         #endregion

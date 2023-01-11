@@ -24,9 +24,8 @@ namespace EP.Web.Pages.Admin.Episode
             Episode = _episodeService.GetEpisodeByEpisodeId(episodeId);
         }
 
-        public IActionResult OnPost()
+        public IActionResult OnPost(int? courseId)
         {
-            int courseId = Episode.CourseId;
             _episodeService.DeleteEpisode(Episode);
 
             return RedirectToPage("Index", new { courseId = courseId });

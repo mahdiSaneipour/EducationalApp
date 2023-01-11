@@ -7,6 +7,7 @@
     ViewData["Title"] = Model.CourseName;
     int userId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
     bool isInCourse = _userAccountServices.IsUserInCourse(userId, Model.CourseId);
+    EP.Domain.Entities.Course.CourseEpisode onlineEpisode = ViewBag.Episode as EP.Domain.Entities.Course.CourseEpisode;
 }
 
 <div class="container">
@@ -42,6 +43,13 @@
 
                     </div>
 
+                    @if (onlineEpisode != null)
+                    {
+                        <video style="width:100%" poster="~/Images/course-images/normal-size/@Model.CourseImage" controls>
+                            <source src="~/videos/episode/@onlineEpisode.EpisodeDemoFile" />
+                        </video>
+                    }
+
                     @if(Model.CoursePrice != 0 && !isInCourse){
                         <div class="alert alert-info">
                             <p>لطفا ابتدا دوره را خریداری کنید</p>
@@ -52,7 +60,7 @@
                         @foreach (var item in Model.Episodes)
                         {
                             <li>
-                                @if(item.IsFree || isInCourse)
+                                @if((item.IsFree || isInCourse) && User.Identity.IsAuthenticated)
                                 {
                                     <h3>
                                         <a asp-action="DownloadEpisode"
@@ -74,6 +82,17 @@
                                 {
                                     <i> نقدی </i>
                                 }
+
+                                @if ((item.IsFree || isInCourse) && User.Identity.IsAuthenticated)
+                                {
+                                    <a asp-action="ShowCourse"
+                                        asp-route-courseId="@item.CourseId"
+                                        asp-route-episodeId="@item.EpisodeId">تماشا</a>
+                                } else
+                                {
+                                    <a>تماشا</a>
+                                }
+
                                 <span>@item.EpisodeTime</span>
                             </li>
 

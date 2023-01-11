@@ -1,8 +1,10 @@
 ﻿using EP.Core.DTOs.MainPageViewModel;
 using EP.Core.Enums.Course;
 using EP.Core.Interfaces.Course;
+using EP.Core.Interfaces.Episode;
 using EP.Core.Interfaces.Order;
 using EP.Domain.Entities.Course;
+using EP.Domain.Entities.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -13,11 +15,14 @@ namespace EP.Web.Controllers
     {
         private readonly ICourseServices _courseServices;
         private readonly IOrderServices _orderServices;
+        private readonly IEpisodeServices _episodeServices;
 
-        public CourseController(ICourseServices courseServices, IOrderServices orderServices)
+        public CourseController(ICourseServices courseServices, IOrderServices orderServices,
+            IEpisodeServices episodeServices)
         {
             _courseServices = courseServices;
             _orderServices = orderServices;
+            _episodeServices = episodeServices;
         }
 
         public IActionResult Index(int pageId = 1,
@@ -40,10 +45,20 @@ namespace EP.Web.Controllers
             return View(result);
         }
 
-        [Route("ShowCourse/{courseId}")]
-        public IActionResult ShowCourse(int courseId)
+        [Route("ShowCourse/{courseId}/{episodeId?}")]
+        public IActionResult ShowCourse(int courseId, int? episodeId = 0)
         {
             Domain.Entities.Course.Course course = _courseServices.GetCourseByCourseIdForShowCourse(courseId);
+
+            if (episodeId != 0)
+            {
+                int userId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+                if (_courseServices.IsUserAccessToEpisode(userId, (int)episodeId, courseId) && User.Identity.IsAuthenticated)
+                {
+                    ViewBag.Episode = _episodeServices.GetEpisodeByEpisodeId((int)episodeId);
+                }
+            }
 
             return View(course);
         }
@@ -61,7 +76,7 @@ namespace EP.Web.Controllers
         {
             int userId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            if (_courseServices.IsUserAccessToEpisode(userId, episodeId, courseId))
+            if (_courseServices.IsUserAccessToEpisode(userId, episodeId, courseId) && User.Identity.IsAuthenticated)
             {
                 Tuple<string, string> result = _courseServices.DownloadCourseFile(episodeId);
 
@@ -95,7 +110,7 @@ namespace EP.Web.Controllers
         {
             int userId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            if (_courseServices.IsAccessToVote(userId, courseId))
+            if (_courseServices.IsAccessToVote(userId, courseId) && User.Identity.IsAuthenticated)
             {
                 return PartialView("Partial Views/_VoteCoursePartialView", _courseServices.GetNumberOfVotes(courseId));
             } else
@@ -112,6 +127,19 @@ namespace EP.Web.Controllers
             _courseServices.AddCourseVote(userId, courseId, vote);
 
             return PartialView("Partial Views/_VoteCoursePartialView", _courseServices.GetNumberOfVotes(courseId));
+        }
+
+        
+        public IActionResult OnlineShow(int episodeId, int courseId)
+        {
+            int userId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            if (_courseServices.IsUserAccessToEpisode(userId, episodeId, courseId) && User.Identity.IsAuthenticated)
+            { 
+                return RedirectToPage("ShowCourse", new { episodeId = episodeId, courseId = courseId });
+            }
+
+            return RedirectToPage("ShowCourse", new { courseId = courseId });
         }
     }
 }

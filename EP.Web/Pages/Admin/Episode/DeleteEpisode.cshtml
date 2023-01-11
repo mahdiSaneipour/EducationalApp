@@ -11,8 +11,8 @@
         <div class="panel-body">
             <form method="post">
 
-                <input asp-for="Episode.EpisodeId" hidden />
-
+                <input asp-for="Episode.EpisodeId" hidden/>
+                <input name="courseId" value="@Model.Episode.CourseId" hidden/>
                 <dl class="dl-horizontal">
                     <dt>نام قسمت</dt>
                     <dd>@Model.Episode.EpisodeTitle</dd>
