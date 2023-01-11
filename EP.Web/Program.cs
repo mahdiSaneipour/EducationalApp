@@ -105,6 +105,26 @@ services.AddRazorPages();
 
 var app = builder.Build();
 
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path.Value.ToString().ToLower().StartsWith("/videos/episode"))
+    {
+        string callingUrl = context.Request.Headers["Referer"].ToString();
+        if (callingUrl != "" && (callingUrl.ToLower().StartsWith("https://localhost:44320/")
+        || callingUrl.ToLower().StartsWith("http://localhost:44320/")))
+        {
+            await next.Invoke();
+        }
+        else
+        {
+            context.Response.Redirect("/Login");
+        }
+    } else
+    {
+        await next.Invoke();
+    }
+});
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
