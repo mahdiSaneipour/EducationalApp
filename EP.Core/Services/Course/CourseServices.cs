@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SharpCompress.Archives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -626,16 +627,32 @@ namespace EP.Core.Services.Course
             {
                 result = _episodeRepository.GetEpisodeFileNameByEpisodeId(episodeId);
 
-                string fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/episode/", result);
+                string fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/videos/episode", result);
 
-                if (!System.IO.File.Exists(fullPath))
+                string addressMp4 = fullPath.Replace(".rar", ".mp4");
+
+                Console.WriteLine("addressMp4 : " + addressMp4);
+
+                if (!System.IO.File.Exists(addressMp4))
                 {
+                    string rarPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/videos/episode", result);
+
+                    var archive = ArchiveFactory.Open(rarPath).Entries.OrderBy(r => r.Size);
+
+                    foreach (var en in archive)
+                    {
+                        if (Path.GetExtension(en.Key) == ".mp4")
+                        {
+                            en.WriteTo(System.IO.File.Create(rarPath.Replace(".rar", ".mp4")));
+                            result = result.Replace(".rar", ".mp4");
+                        }
+                    }
 
                 }
 
             }
 
-            return result;
+            return result.Replace(".rar", ".mp4");
         }
     }
 }
