@@ -82,6 +82,11 @@ namespace EP.Infrastructure.Data.Repository.Episode
         #endregion
 
 
+        public string GetEpisodeFileNameByEpisodeId(int episodeId)
+        {
+            return _context.Episodes.FirstOrDefault(e => e.EpisodeId == episodeId).EpisodeDemoFile;
+        }
+
         public void SaveChanges()
         {
             _context.SaveChanges();

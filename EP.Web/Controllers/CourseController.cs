@@ -54,9 +54,9 @@ namespace EP.Web.Controllers
             {
                 int userId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-                if (_courseServices.IsUserAccessToEpisode(userId, (int)episodeId, courseId) && User.Identity.IsAuthenticated)
+                if (_courseServices.IsUserAccessToEpisode(userId, (int) episodeId, courseId) && User.Identity.IsAuthenticated)
                 {
-                    ViewBag.Episode = _episodeServices.GetEpisodeByEpisodeId((int)episodeId);
+                    ViewBag.Episode = _courseServices.ShowOnlineEpisode(userId, courseId, (int) episodeId);
                 }
             }
 

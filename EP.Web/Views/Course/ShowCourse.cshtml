@@ -7,7 +7,7 @@
     ViewData["Title"] = Model.CourseName;
     int userId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
     bool isInCourse = _userAccountServices.IsUserInCourse(userId, Model.CourseId);
-    EP.Domain.Entities.Course.CourseEpisode onlineEpisode = ViewBag.Episode as EP.Domain.Entities.Course.CourseEpisode;
+    string onlineEpisode = ViewBag.Episode;
 }
 
 <div class="container">
@@ -46,7 +46,7 @@
                     @if (onlineEpisode != null)
                     {
                         <video style="width:100%" poster="~/Images/course-images/normal-size/@Model.CourseImage" controls>
-                            <source src="~/videos/episode/@onlineEpisode.EpisodeDemoFile" />
+                            <source src="~/videos/episode/@onlineEpisode" />
                         </video>
                     }
 

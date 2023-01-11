@@ -36,6 +36,8 @@ namespace EP.Core.Interfaces.Course
 
         public List<CourseViewModel> GetAllCoursesForAdmin();
 
+        public string ShowOnlineEpisode(int userId, int CourseId, int episodeId);
+
         public Domain.Entities.Course.Course GetCourseByCourseId(int courseId);
 
         public Tuple<List<BoxCourseViewModel>, int> GetAllCourseByFilter(int pageId = 1,

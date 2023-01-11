@@ -617,5 +617,25 @@ namespace EP.Core.Services.Course
                 return false;
             }
         }
+
+        public string ShowOnlineEpisode(int userId, int courseId, int episodeId)
+        {
+            string result = "";
+
+            if (IsUserAccessToEpisode(userId, (int)episodeId, courseId))
+            {
+                result = _episodeRepository.GetEpisodeFileNameByEpisodeId(episodeId);
+
+                string fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/episode/", result);
+
+                if (!System.IO.File.Exists(fullPath))
+                {
+
+                }
+
+            }
+
+            return result;
+        }
     }
 }

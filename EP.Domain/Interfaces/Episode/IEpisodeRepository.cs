@@ -21,6 +21,8 @@ namespace EP.Domain.Interfaces.Episode
 
         public bool IsEpisodeExistInCourse(int episodeId, int courseId);
 
+        public string GetEpisodeFileNameByEpisodeId(int episodeId);
+
         #endregion
 
         #region ADD
