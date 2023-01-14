@@ -442,17 +442,7 @@ namespace EP.Core.Services.Course
 
             int skip = (pageId - 1) * take;
 
-            int pageCount = courses.Select(c =>
-
-                new BoxCourseViewModel()
-                {
-                    CourseId = c.CourseId,
-                    CourseImage = c.CourseImage,
-                    CoursePrice = c.CoursePrice,
-                    CourseTime = new TimeSpan((long)c.Episodes.Sum(e => e.EpisodeTime.Ticks)),
-                    CourseTitle = c.CourseName
-                }
-            ).Count() / take;
+            int pageCount = courses.Count() / take;
 
             var query = courses.Select(c =>
 

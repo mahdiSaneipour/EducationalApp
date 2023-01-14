@@ -18,7 +18,7 @@ namespace EP.Web.Controllers
         }        
         public IActionResult Index()
         {
-            Tuple<List<BoxCourseViewModel>, int> result = _courseServices.GetAllCourseByFilter();
+            List<BoxCourseViewModel> result = _courseServices.GetAllCourseByFilter().Item1;
 
             ViewData["PopularCourses"] = _courseServices.GetPopularCourses();
 

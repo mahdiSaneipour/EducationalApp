@@ -160,6 +160,11 @@ namespace EP.Infrastructure.Data.Repository.Course
             return _context.Courses.Any(c => c.CourseId == courseId && c.CoursePrice == 0);
         }
 
+        public List<string> GetCourseNameAsSearch(string filter)
+        {
+            return _context.Courses.Where(c => c.CourseName.Contains(filter)).Select(c => c.CourseName).ToList();
+        }
+
         public void SaveChanges()
         {
             _context.SaveChanges();

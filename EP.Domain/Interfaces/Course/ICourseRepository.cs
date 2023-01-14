@@ -26,6 +26,8 @@ namespace EP.Domain.Interfaces.Course
 
         public List<CourseLevel> GetAllCourseLevels();
 
+        public List<string> GetCourseNameAsSearch(string filter);
+
         public IEnumerable<Domain.Entities.Course.Course> GetPopularCourses();
 
         public List<CourseStatus> GetAllCourseStatuses();

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EP.Web.Api.Admin
 {
+    [ApiController]
     public class ApiAdminController : Controller
     {
         private readonly ICourseServices _courseService;
@@ -17,6 +18,7 @@ namespace EP.Web.Api.Admin
             _courseService = courseService;
         }
 
+        [Produces("application/json")]
         [Route("Api/Admin/GetCourseGroupsByParentId/{parentId}")]
         public IActionResult GetCourseGroupsByParentId(int parentId)
         {
@@ -25,6 +27,7 @@ namespace EP.Web.Api.Admin
         }
 
         [HttpPost]
+        [Produces("application/json")]
         [Route("Api/Admin/UploadImageCourseAndDeletePreviousOne")]
         public IActionResult UploadImageCourseAndDeletePreviousOne(IFormFile avatar, string previousCourseImage)
         {
@@ -85,6 +88,7 @@ namespace EP.Web.Api.Admin
             return result;
         }
 
+        [Produces("application/json")]
         [Route("Api/Admin/UploadImageForCourseDescription")]
         public IActionResult UploadImageForCourseDescription(List<IFormFile> files)
         {

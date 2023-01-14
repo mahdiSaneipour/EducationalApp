@@ -1,9 +1,11 @@
 ﻿@using EP.Core.DTOs.MainPageViewModel;
-@model Tuple<List<BoxCourseViewModel>, int>
+@model List<BoxCourseViewModel>
 @{
     ViewData["Title"] = "صفحه اصلی";
     List<BoxCourseViewModel> popularCourses = ViewData["PopularCourses"] as List<BoxCourseViewModel>;
 }
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css" integrity="sha512-ELV+xyi8IhEApPS/pSj66+Jiw+sOT1Mqkzlh8ExXihe4zfqbWkxPRi8wptXIO9g73FSlhmquFlUOuMSoXz5IRw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <div class="container">
     <section class="terms-items">
@@ -13,10 +15,16 @@
         </header>
         <div class="row">
             <!-- col -->
-            @foreach (var item in Model.Item1)
-            {
-                <partial name="Partial Views/_BoxCoursePartialView" model="item"/>
-            }
+            
+            <cache expires-after="@TimeSpan.FromMinutes(1)">
+                @foreach (var item in Model)
+                {
+
+                    <partial name="Partial Views/_BoxCoursePartialView" model="item" />
+
+                }
+            </cache>
+
             <!-- /col -->
         </div>
     </section>
@@ -30,10 +38,13 @@
         </header>
         <div class="row">
             <!-- col -->
-            @foreach (var item in popularCourses)
-            {
-                <partial name="Partial Views/_BoxCoursePartialView" model="item" />
-            }
+            <cache expires-after="@TimeSpan.FromMinutes(1)">
+                @foreach (var item in popularCourses)
+                {
+                    <partial name="Partial Views/_BoxCoursePartialView" model="item" />
+                }
+            </cache>
+
             <!-- /col -->
         </div>
     </section>
@@ -48,8 +59,19 @@
     </header>
     <div class="search-form">
         <form asp-controller="Course">
-            <input type="text" name="filter" placeholder="چی دوست داری یاد بگیری ؟">
+            <input type="text" name="filter" id="filter" placeholder="چی دوست داری یاد بگیری ؟">
             <button><i class="zmdi zmdi-search"></i></button>
         </form>
     </div>
+}
+
+@section Scripts {
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function (){
+            $("#filter").autocomplete({
+                source: 'api/course/search'
+            });
+        })
+    </script>
 }
