@@ -1,6 +1,7 @@
 ﻿using EP.Domain.Entities.Course;
 using EP.Domain.Entities.Order;
 using EP.Domain.Entities.Permission;
+using EP.Domain.Entities.Question;
 using EP.Domain.Entities.User;
 using EP.Domain.Entities.Wallet;
 using Microsoft.EntityFrameworkCore;
@@ -78,6 +79,14 @@ namespace EP.Infrastructure.Data.Context
 
         #endregion
 
+        #region Questions
+
+        public DbSet<Question> Questions { get; set; }
+
+        public DbSet<Answer> Answer { get; set; }
+
+        #endregion
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasQueryFilter(u => !u.IsDelete);
@@ -107,6 +116,16 @@ namespace EP.Infrastructure.Data.Context
                 .HasOne(cv => cv.User)
                 .WithMany(cv => cv.Votes)
                 .HasForeignKey(cv => cv.UserId).OnDelete(DeleteBehavior.ClientSetNull);
+
+            modelBuilder.Entity<Question>()
+                .HasOne(q => q.Course)
+                .WithMany(q => q.Questions)
+                .HasForeignKey(q => q.CourseId).OnDelete(DeleteBehavior.ClientSetNull);
+
+            modelBuilder.Entity<Answer>()
+                .HasOne(a => a.Question)
+                .WithMany(a => a.Answers)
+                .HasForeignKey(a => a.QuestionId).OnDelete(DeleteBehavior.ClientSetNull);
 
             base.OnModelCreating(modelBuilder);
         }

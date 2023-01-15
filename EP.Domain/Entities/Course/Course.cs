@@ -1,4 +1,5 @@
 ﻿using EP.Domain.Entities.Order;
+using EP.Domain.Entities.Question;
 using EP.Domain.Entities.User;
 using System;
 using System.Collections.Generic;
@@ -87,6 +88,9 @@ namespace EP.Domain.Entities.Course
         public List<CourseComment> CourseComments { get; set; }
 
         public List<CourseVote> Votes { get; set; }
+
+        public List<Question.Question> Questions { get; set; }
+
         #endregion
     }
 }

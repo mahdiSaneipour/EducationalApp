@@ -72,6 +72,10 @@ namespace EP.Domain.Entities.User
 
         public List<CourseVote> Votes { get; set; }
 
+        public List<Question.Question> Questions { get; set; }
+
+        public List<Question.Answer> Answers { get; set; }
+
         #endregion
     }
 }
