@@ -1,0 +1,103 @@
+﻿@model ShowForumViewModel
+
+@{
+    ViewData["Title"] = Model.Question.Title;
+    int userId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+}
+
+<link rel="stylesheet" type="text/css" href="/css/custom.css">
+
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/"> تاپ لرن </a></li>
+            <li class="breadcrumb-item active"><a asp-action="Index"> سوالات </a></li>
+            <li class="breadcrumb-item active" aria-current="page"> @Model.Question.Title </li>
+        </ul>
+    </nav>
+</div>
+
+<div class="container">
+    <section class="term-content">
+        <header><h1> @Model.Question.Title </h1></header>
+        <div class="row">
+
+            <div class="col-md-8 col-sm-12 col-xs-12 pull-left">
+                <section class="term-description">
+
+                    @Html.Raw(Model.Question.Body)
+
+                    <div class="comment-list col-md-12">
+
+                        @foreach(var answer in Model.Answers){
+                            <div class="row question-box @((Model.Question.AnswerId == answer.AnswerId)? "question-box-true" : "")">
+                                <div class="col-md-2">
+                                    <img class="q-img" src="/images/profile-images/@answer.User.UserAvatar">
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <h3>@answer.User.UserName</h3>
+                                            <span>@answer.CreateDate.ToSolarCalendar()</span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            @if(userId == Model.Question.UserId){
+                                                <a class="btn btn-success" asp-action="SetAnswerForQuestion"
+                                                asp-route-answerId="@answer.AnswerId"
+                                                asp-route-questionId="@Model.Question.QuestionId">پاسخ صحیح</a>
+                                            }
+                                        </div>
+                                    </div>
+                                    <p>
+                                        @Html.Raw(answer.BodyAnswer)
+                                    </p>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+
+
+                </section>
+
+                
+                <div class="col-md-12">
+                    <form asp-action="AddAnswer">
+                        <input name="questionId" value="@Model.Question.QuestionId" hidden/>
+                        <textarea id="editor" name="answerBody" placeholder="متن پاسخ">
+
+                        </textarea>
+                        <br />
+                        <button class="btn btn-success">ثبت جواب</button>
+                    </form>
+                </div>
+
+            </div>
+
+            <aside class="col-md-4 col-sm-12 col-xs-12 pull-right">
+
+                <article class="teacher-info">
+                    <img src="/images/profile-images/@Model.Question.User.UserAvatar">
+                    <h2> سوال از : @Model.Question.User.UserName </h2>
+                </article>
+
+                <article class="term-info">
+                    <h2> مشخصات سوال </h2>
+                    <ul>
+                        <li>سوال : @Model.Question.Title </li>
+                        <li>تاریخ ثبت سوال : @Model.Question.CreateDate.ToSolarCalendar() </li>
+                        <li>تاریخ آخرین جواب : @Model.Question.ModifiedDate.ToSolarCalendar()</li>
+                        <li>دوره : @Model.Question.Course.CourseName</li>
+                    </ul>
+                </article>
+
+            </aside>
+
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <script src="~/ckeditor5/build/ckeditor.js"></script>
+    <script src="~/admin/js/custom/ckeditor-config.js"></script>
+}

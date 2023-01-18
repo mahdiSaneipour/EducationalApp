@@ -33,6 +33,9 @@ namespace EP.Domain.Entities.Question
         [ForeignKey("UserId")]
         public User.User User { get; set; }
 
+        [InverseProperty("Answer")]
+        public Question AnswerQuestion { get; set; }
+
         #endregion
     }
 }

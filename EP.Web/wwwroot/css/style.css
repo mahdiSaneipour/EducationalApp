@@ -711,11 +711,11 @@ main#home-page{
 .term-content .term-description{
     padding: 25px 25px 10px
 }
-.term-content .term-description img{
+/*.term-content .term-description img{
     width: 100%;
     margin-bottom: 20px;
     display: block;
-}
+}*/
 .term-content .term-description h2{
     font-size: 22px;
     line-height: 25px;

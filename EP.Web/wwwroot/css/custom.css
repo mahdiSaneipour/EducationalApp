@@ -9,3 +9,25 @@
 .background-cover {
     margin:10px;
 }
+
+
+.question-box .q-img {
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+    right: 0;
+    border: 2px solid #ebebeb;
+    top: 15px
+}
+
+.question-box {
+    background-color: #5e5e5e14;
+    padding: 10px;
+    margin: 10px -15px 10px -15px;
+    border-radius: 5px;
+}
+
+.question-box-true {
+    border: 2px solid green !important;
+}
+

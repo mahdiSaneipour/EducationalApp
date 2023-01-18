@@ -1,0 +1,60 @@
+﻿@model Tuple<List<Question>, int>
+
+@{
+    ViewData["Title"] = "انجمن";
+    int currentPage = ViewBag.CurrentPage;
+    int courseId = ViewBag.CourseId;
+}
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="comment-list col-md-8">
+    @if (courseId != 0)
+    {
+        <a class="btn btn-info" asp-action="CreateQuestion" asp-route-courseId="@courseId">پرسش پاسخ</a>
+    }   
+    @foreach (var question in Model.Item1)
+    {
+        <div class="row question-box">
+            <div class="col-md-2">
+                <img class="q-img" src="/images/profile-images/@question.User.UserAvatar">
+            </div>
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-9">
+                        <a asp-action="ShowQuestion" asp-route-questionId="@question.QuestionId">@question.Title</a>
+                        <br/>
+                        <span>@question.CreateDate.ToSolarCalendar()</span>
+                    </div>
+                </div>
+                <p>
+                    @question.Course.CourseName
+                </p>
+            </div>
+        </div>
+    }
+    <div class="col-md-2"></div>
+
+    <div class="row col-md-12">
+        <div class="col-sm-5"></div>
+        <div class="col-sm-6">
+            <div class="dataTables_paginate paging_simple_numbers" id="dataTables-example_paginate">
+                <ul class="pagination">
+                    @for (var i = 1; i <= Model.Item2; i++)
+                    {
+                        <li class="paginate_button @((i==currentPage) ? "active" : "")" aria-controls="dataTables-example" tabindex="0">
+                                @if(courseId == 0)
+                                {
+                                    <a asp-action="Index" asp-route-pageId="@i">@i</a>
+                                } else {
+                                    <a asp-action="Index" asp-route-courseId="@courseId" asp-route-pageId="@i">@i</a>
+                                }
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>

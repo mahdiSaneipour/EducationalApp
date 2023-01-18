@@ -19,6 +19,8 @@ namespace EP.Domain.Entities.Question
         [Required]
         public int UserId { get; set; }
 
+        public int ?AnswerId { get; set; }
+
         [Display(Name = "سرتیتر")]     
         [Required(ErrorMessage = "فیلد {0} نمیتواند خالی باشد")]
         [MaxLength(200,ErrorMessage = "{0} نمیتواند بیشتر از {1} کاراکتر باشد")]
@@ -41,6 +43,9 @@ namespace EP.Domain.Entities.Question
 
         [ForeignKey("CourseId")]
         public Course.Course Course { get; set; }
+
+        [ForeignKey("AnswerId")]
+        public Answer Answer { get; set; }
 
         #endregion
     }

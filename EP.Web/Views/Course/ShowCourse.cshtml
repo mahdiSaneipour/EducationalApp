@@ -206,6 +206,9 @@
                     </div>
                 }
 
+                <a class="btn btn-block btn-warning" asp-controller="Forum"
+                asp-action="Index" asp-route-courseId="@Model.CourseId">پرسش و پاسخ</a>
+
             </aside>
         </div>
     </section>
@@ -216,7 +219,6 @@
     <script>
         function CommentSuccess(){
             $("#comment-text").val("");
-
         }
 
         function ChangePage(i){
